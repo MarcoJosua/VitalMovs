@@ -1,4 +1,4 @@
-package com.vitalmovs.serviceImpl;
+package com.vitalmovs.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

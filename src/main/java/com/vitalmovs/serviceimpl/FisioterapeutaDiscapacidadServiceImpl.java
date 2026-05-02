@@ -1,4 +1,4 @@
-package com.vitalmovs.services.impl;
+package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.FisioterapeutaDiscapacidadDTO;
 import com.vitalmovs.entities.Fisioterapeuta;
