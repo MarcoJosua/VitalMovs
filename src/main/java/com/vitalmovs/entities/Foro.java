@@ -20,9 +20,9 @@ public class Foro {
     private String titulo;
     private String descripcion;
 
-    //@ManyToOne
-    //@JoinColumn(name="tipoDiscapacidad_id")
-    //private TipoDiscapacidad tipoDiscapacidad;
+    @ManyToOne
+    @JoinColumn(name="tipoDiscapacidad_id")
+    private TipoDiscapacidad tipoDiscapacidad;
 
     @OneToMany(mappedBy = "foro", fetch = FetchType.EAGER)
     private List<Publicacion> publicaciones;

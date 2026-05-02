@@ -11,5 +11,5 @@ public class ForoDTO {
     private Long id;
     private String titulo;
     private String descripcion;
-    //private Long tipoDiscapacidadId;
+    private Long tipoDiscapacidadId;
 }

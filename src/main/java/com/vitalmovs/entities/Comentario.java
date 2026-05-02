@@ -23,8 +23,8 @@ public class Comentario {
     @JoinColumn(name="publicacion_id")
     private Publicacion publicacion;
 
-    //@ManyToOne
-    //@JoinColumn(name="paciente_id")
-    //private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name="paciente_id")
+    private Paciente paciente;
 
 }

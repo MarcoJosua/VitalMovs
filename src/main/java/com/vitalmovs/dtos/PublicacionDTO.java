@@ -15,5 +15,5 @@ public class PublicacionDTO {
     private String contenido;
     private LocalDate fechaPublicacion;
     private Long foroId;
-    //private Long pacienteId;
+    private Long pacienteId;
 }

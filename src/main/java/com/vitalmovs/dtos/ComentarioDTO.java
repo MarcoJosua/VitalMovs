@@ -14,5 +14,5 @@ public class ComentarioDTO {
     private String contenido;
     private LocalDate fechaComentario;
     private Long publicacionId;
-    //private Long pacienteId;
+    private Long pacienteId;
 }

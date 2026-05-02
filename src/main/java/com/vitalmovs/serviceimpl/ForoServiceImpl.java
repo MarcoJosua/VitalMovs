@@ -2,9 +2,11 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.ForoDTO;
 import com.vitalmovs.entities.Foro;
+import com.vitalmovs.entities.TipoDiscapacidad;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.ForoRepository;
 import com.vitalmovs.services.ForoService;
+import com.vitalmovs.services.TipoDiscapacidadService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,8 @@ public class ForoServiceImpl implements ForoService {
     @Autowired
     private ForoRepository foroRepository;
 
-    //@Autowired
-    //private TipoDiscapacidadService tipoDiscapacidadService;
+    @Autowired
+    private TipoDiscapacidadService tipoDiscapacidadService;
 
     @Override
     public Foro add(Foro foro) {
@@ -40,11 +42,12 @@ public class ForoServiceImpl implements ForoService {
 
     @Override
     public ForoDTO addDTO(ForoDTO foroDTO) {
-        // TipoDiscapacidad tipoDiscapacidad = tipoDiscapacidadService.findById(foroDTO.getTipoDiscapacidadId());
+        TipoDiscapacidad tipoDiscapacidad = tipoDiscapacidadService.findById(foroDTO.getTipoDiscapacidadId());
         Foro newForo = new Foro(
                 null,
                 foroDTO.getTitulo(),
                 foroDTO.getDescripcion(),
+                tipoDiscapacidad,
                 null
         );
         newForo = add(newForo);
@@ -65,7 +68,8 @@ public class ForoServiceImpl implements ForoService {
             foroDTOList.add(new ForoDTO(
                     f.getId(),
                     f.getTitulo(),
-                    f.getDescripcion()
+                    f.getDescripcion(),
+                    f.getTipoDiscapacidad().getId()
             ));
         }
         return foroDTOList;

@@ -2,10 +2,12 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.PublicacionDTO;
 import com.vitalmovs.entities.Foro;
+import com.vitalmovs.entities.Paciente;
 import com.vitalmovs.entities.Publicacion;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.PublicacionRepository;
 import com.vitalmovs.services.ForoService;
+import com.vitalmovs.services.PacienteService;
 import com.vitalmovs.services.PublicacionService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,8 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Autowired
     private ForoService foroService;
 
-    //@Autowired
-    //private PacienteService pacienteService;
+    @Autowired
+    private PacienteService pacienteService;
 
     @Override
     public Publicacion add(Publicacion publicacion) {
@@ -45,7 +47,7 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Override
     public PublicacionDTO addDTO(PublicacionDTO publicacionDTO) {
         Foro foro = foroService.findById(publicacionDTO.getForoId());
-        // Paciente paciente = pacienteService.findById(publicacionDTO.getPacienteId());
+        Paciente paciente = pacienteService.findById(publicacionDTO.getPacienteId());
 
         Publicacion newPublicacion = new Publicacion(
                 null,
@@ -53,7 +55,7 @@ public class PublicacionServiceImpl implements PublicacionService {
                 publicacionDTO.getContenido(),
                 publicacionDTO.getFechaPublicacion(),
                 foro,
-                //paciente,
+                paciente,
                 null
         );
 
@@ -82,8 +84,8 @@ public class PublicacionServiceImpl implements PublicacionService {
                     p.getTitulo(),
                     p.getContenido(),
                     p.getFechaPublicacion(),
-                    p.getForo().getId()
-                    //p.getPaciente().getId()
+                    p.getForo().getId(),
+                    p.getPaciente().getId()
             ));
         }
         return publicacionDTOList;

@@ -25,9 +25,9 @@ public class Publicacion {
     @JoinColumn(name="foro_id")
     private Foro foro;
 
-    //@ManyToOne
-    //@JoinColumn(name="paciente_id")
-    //private Paciente paciente;
+    @ManyToOne
+    @JoinColumn(name="paciente_id")
+    private Paciente paciente;
 
     @OneToMany(mappedBy = "publicacion", fetch = FetchType.EAGER)
     private List<Comentario> comentarios;

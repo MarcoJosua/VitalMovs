@@ -2,10 +2,12 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.ComentarioDTO;
 import com.vitalmovs.entities.Comentario;
+import com.vitalmovs.entities.Paciente;
 import com.vitalmovs.entities.Publicacion;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.ComentarioRepository;
 import com.vitalmovs.services.ComentarioService;
+import com.vitalmovs.services.PacienteService;
 import com.vitalmovs.services.PublicacionService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,8 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Autowired
     private PublicacionService publicacionService;
 
-    //@Autowired
-    //private PacienteService pacienteService;
+    @Autowired
+    private PacienteService pacienteService;
 
     @Override
     public Comentario add(Comentario comentario) {
@@ -40,14 +42,14 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Override
     public ComentarioDTO addDTO(ComentarioDTO comentarioDTO) {
         Publicacion publicacion = publicacionService.findById(comentarioDTO.getPublicacionId());
-        // Paciente paciente = pacienteService.findById(comentarioDTO.getPacienteId());
+        Paciente paciente = pacienteService.findById(comentarioDTO.getPacienteId());
 
         Comentario newComentario = new Comentario(
                 null,
                 comentarioDTO.getContenido(),
                 comentarioDTO.getFechaComentario(),
-                publicacion
-                //paciente,
+                publicacion,
+                paciente
         );
 
         newComentario = add(newComentario);
@@ -74,8 +76,8 @@ public class ComentarioServiceImpl implements ComentarioService {
                     c.getId(),
                     c.getContenido(),
                     c.getFechaComentario(),
-                    c.getPublicacion().getId()
-                    //p.getPaciente().getId()
+                    c.getPublicacion().getId(),
+                    c.getPaciente().getId()
             ));
         }
         return comentarioDTOList;
