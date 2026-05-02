@@ -3,7 +3,7 @@ package com.vitalmovs.services.impl;
 import com.vitalmovs.dtos.FisioterapeutaDTO;
 import com.vitalmovs.entities.Fisioterapeuta;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
-import com.vitalmovs.exceptions.ValidationException;
+import jakarta.validation.ValidationException;
 import com.vitalmovs.repositories.FisioterapeutaRepository;
 import com.vitalmovs.services.FisioterapeutaService;
 import org.springframework.beans.factory.annotation.Autowired;
