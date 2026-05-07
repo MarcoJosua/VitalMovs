@@ -14,7 +14,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
 
 @SpringBootApplication
 public class VitalMovsApplication {
@@ -32,6 +31,8 @@ public class VitalMovsApplication {
             FisioterapeutaService fisioterapeutaService
     ){
         return args -> {
+
+            // Creacion de datos
 
 
             Authority authority1 = authorityService.add(new Authority(null,"ROLE_ADMIN",null));
