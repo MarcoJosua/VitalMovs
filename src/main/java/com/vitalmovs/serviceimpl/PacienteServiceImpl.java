@@ -2,9 +2,11 @@ package com.vitalmovs.serviceimpl;
  
 import com.vitalmovs.dtos.PacienteDTO;
 import com.vitalmovs.entities.Paciente;
+import com.vitalmovs.entities.User;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.PacienteRepository;
 import com.vitalmovs.services.PacienteService;
+import com.vitalmovs.services.UserService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class PacienteServiceImpl implements PacienteService {
  
     @Autowired
     private PacienteRepository pacienteRepository;
+
+    //Security
+    @Autowired
+    private UserService userService;
  
     @Override
     public Paciente add(Paciente paciente) {
@@ -32,12 +38,14 @@ public class PacienteServiceImpl implements PacienteService {
  
     @Override
     public PacienteDTO addDTO(PacienteDTO pacienteDTO) {
+        User user = userService.findById(pacienteDTO.getUserId()); //Security
         Paciente newPaciente = new Paciente(
                 null,
                 pacienteDTO.getNombre(),
                 pacienteDTO.getApellido(),
                 pacienteDTO.getEdad(),
                 pacienteDTO.getSexo(),
+                user,
                 null
         );
         newPaciente = add(newPaciente);
@@ -65,7 +73,8 @@ public class PacienteServiceImpl implements PacienteService {
                     p.getNombre(),
                     p.getApellido(),
                     p.getEdad(),
-                    p.getSexo()
+                    p.getSexo(),
+                    p.getUser().getId()
             ));
         }
         return pacienteDTOList;

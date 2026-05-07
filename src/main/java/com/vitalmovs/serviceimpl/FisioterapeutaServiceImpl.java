@@ -2,7 +2,9 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.FisioterapeutaDTO;
 import com.vitalmovs.entities.Fisioterapeuta;
+import com.vitalmovs.entities.User;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
+import com.vitalmovs.services.UserService;
 import jakarta.validation.ValidationException;
 import com.vitalmovs.repositories.FisioterapeutaRepository;
 import com.vitalmovs.services.FisioterapeutaService;
@@ -17,6 +19,11 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
     @Autowired
     private FisioterapeutaRepository fisioterapeutaRepository;
 
+
+    //Security
+    @Autowired
+    private UserService userService;
+
     @Override
     public Fisioterapeuta add(Fisioterapeuta fisioterapeuta) {
         if (fisioterapeuta.getNombre().isBlank())
@@ -30,7 +37,8 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
 
     @Override
     public FisioterapeutaDTO addDTO(FisioterapeutaDTO dto) {
-        Fisioterapeuta f = new Fisioterapeuta(null, dto.getNombre(), dto.getApellido(), dto.getEspecialidad(), null);
+        User user = userService.findById(dto.getUserId()); //Security
+        Fisioterapeuta f = new Fisioterapeuta(null, dto.getNombre(), dto.getApellido(), dto.getEspecialidad(), user, null);
         f = add(f);
         dto.setId(f.getId());
         return dto;
@@ -45,7 +53,7 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
     public List<FisioterapeutaDTO> listAllDTO() {
         List<FisioterapeutaDTO> dtoList = new ArrayList<>();
         for (Fisioterapeuta f : listAll()) {
-            dtoList.add(new FisioterapeutaDTO(f.getId(), f.getNombre(), f.getApellido(), f.getEspecialidad()));
+            dtoList.add(new FisioterapeutaDTO(f.getId(), f.getNombre(), f.getApellido(), f.getEspecialidad(),f.getUser().getId()));
         }
         return dtoList;
     }

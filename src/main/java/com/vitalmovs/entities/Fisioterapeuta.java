@@ -1,5 +1,6 @@
 package com.vitalmovs.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,13 @@ public class Fisioterapeuta {
     private String nombre;
     private String apellido;
     private String especialidad;
+
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     @OneToMany(mappedBy = "fisioterapeuta", fetch = FetchType.EAGER)
     private List<FisioterapeutaDiscapacidad> fisioterapeutaDiscapacidades;

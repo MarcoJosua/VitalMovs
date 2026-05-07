@@ -1,16 +1,15 @@
 package com.vitalmovs.dtos;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class FisioterapeutaDTO {
+public class UserDTO {
     private Long id;
-    private String nombre;
-    private String apellido;
-    private String especialidad;
-    private Long userId;
+    private String username;
+    private String password;
+    private String authorities;
+
 }

@@ -14,4 +14,5 @@ public class PacienteDTO {
     private String apellido;
     private Integer edad;
     private String sexo;
+    private Long userId;
 }
