@@ -19,7 +19,7 @@ public class PlanEjercicio {
     private Integer orden;
 
     @ManyToOne
-    @JoinColumn(name = "plan_id")
+    @JoinColumn(name = "plan_Rehabilitacion_id")
     private PlanRehabilitacion planRehabilitacion;
 
     @ManyToOne

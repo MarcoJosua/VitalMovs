@@ -27,10 +27,10 @@ public class SecurityConfiguration {
 
 
             // -- Login
-            "/arqui_movie/users/login/**",
+            "/vitalmovs/users/login/**",
 
             // -- Registro de nuevo usuarios
-            "/arqui_movie/users/register/**",
+            "/vitalmovs/users/register/**",
 
     };
 
@@ -79,14 +79,26 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(
 
                 (auth) -> auth
-             //           .anyRequest().permitAll()
 
                         .requestMatchers(AUTH_WHITELIST).permitAll()
-
-                        .requestMatchers(HttpMethod.GET,"/arqui_movie/directors/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
-                        .requestMatchers(HttpMethod.PUT,"/arqui_movie/directors/**").hasAnyAuthority("ROLE_ADMIN","ROLE_ASSIST")
-                        .requestMatchers(HttpMethod.POST,"/arqui_movie/directors/**").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/arqui_movie/directors/**").hasAnyAuthority("ROLE_ADMIN")
+                        //.anyRequest().permitAll()
+                        //Authorization Foro
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/foros/{pacienteId}").hasAnyAuthority("ROLE_ADMIN","ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/foros/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/foros/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/foros/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/foros/**").hasAnyAuthority("ROLE_ADMIN")
+                         //Authorization Publicacion
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/foros/publicaciones/relevancia/{foroId}").hasAnyAuthority("ROLE_ADMIN","ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/publicaciones/{foroId}").hasAnyAuthority("ROLE_ADMIN","ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/publicaciones/**").hasAnyAuthority("ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/publicaciones/**").hasAnyAuthority("ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/publicaciones/**").hasAnyAuthority("ROLE_PACIENTE")
+                         //Authorization Comentario
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
 
                         .anyRequest().authenticated()
 

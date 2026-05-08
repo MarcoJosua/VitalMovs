@@ -24,14 +24,10 @@ public class Paciente {
     private Integer edad;
     private String sexo;
 
-
-
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-
 
     @OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER)
     private List<PacienteDiscapacidad> pacienteDiscapacidades;

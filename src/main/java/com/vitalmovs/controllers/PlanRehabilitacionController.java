@@ -28,7 +28,7 @@ public class PlanRehabilitacionController {
     // POST: Insertar
     @PostMapping("/PlanRehabilitacion")
     public ResponseEntity<PlanRehabilitacion> add(@RequestBody PlanRehabilitacion planRehabilitacion) {
-        planRehabilitacionService.insert(planRehabilitacion);
+        planRehabilitacionService.add(planRehabilitacion);
         // Retornamos HttpStatus.CREATED tal como lo hace tu equipo
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

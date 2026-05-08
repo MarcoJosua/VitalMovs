@@ -15,7 +15,7 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
     private PlanRehabilitacionRepository pR; // Iniciales de PlanRehabilitacionRepository
 
     @Override
-    public void insert(PlanRehabilitacion planRehabilitacion) {
+    public void add(PlanRehabilitacion planRehabilitacion) {
         pR.save(planRehabilitacion);
     }
 

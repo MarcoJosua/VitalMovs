@@ -29,6 +29,6 @@ public class Publicacion {
     @JoinColumn(name="paciente_id")
     private Paciente paciente;
 
-    @OneToMany(mappedBy = "publicacion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Comentario> comentarios;
 }

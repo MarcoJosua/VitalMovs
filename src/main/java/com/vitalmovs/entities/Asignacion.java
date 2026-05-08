@@ -3,6 +3,8 @@ package com.vitalmovs.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,7 +20,7 @@ public class Asignacion {
 
 
     private String mensaje;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String estado;
 
     // Relación de Uno a Uno con PlanRehabilitacion (La PK está en esta tabla)
@@ -26,15 +28,13 @@ public class Asignacion {
     @OneToOne(mappedBy = "asignacion", fetch = FetchType.EAGER)
     private PlanRehabilitacion planRehabilitacion;
 
-    /*
-    // Relación de Muchos a Uno con Paciente (FK está en esta tabla)
+
     @ManyToOne
     @JoinColumn(name="paciente_id")
-    private Paciente paciente;*/
+    private Paciente paciente;
 
-    /*// Relación de Muchos a Uno con Fisioterapeuta (FK está en esta tabla)
     @ManyToOne
     @JoinColumn(name="fisioterapeuta_id")
-    private Fisioterapeuta fisioterapeuta;*/
+    private Fisioterapeuta fisioterapeuta;
 
 }

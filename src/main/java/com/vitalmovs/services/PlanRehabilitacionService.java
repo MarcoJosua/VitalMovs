@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PlanRehabilitacionService {
 
-    public void insert(PlanRehabilitacion planRehabilitacion); // C
+    public void add(PlanRehabilitacion planRehabilitacion); // C
     public void update(PlanRehabilitacion planRehabilitacion); // U: Update
     public List<PlanRehabilitacion> list();                    // R
     public void delete(Long idPlan);                           // D

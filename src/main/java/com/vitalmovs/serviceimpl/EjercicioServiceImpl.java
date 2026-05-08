@@ -36,7 +36,8 @@ public class EjercicioServiceImpl implements EjercicioService {
         Ejercicio newEjercicio = new Ejercicio(
                 null,
                 ejercicioDTO.getNombre(),
-                ejercicioDTO.getDescripcion()
+                ejercicioDTO.getDescripcion(),
+                null
         );
         newEjercicio = add(newEjercicio);
         ejercicioDTO.setId(newEjercicio.getId());

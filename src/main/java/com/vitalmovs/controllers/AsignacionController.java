@@ -27,7 +27,7 @@ public class AsignacionController {
     // POST: Insertar
     @PostMapping("/Asignacion")
     public ResponseEntity<Asignacion> add(@RequestBody Asignacion asignacion) {
-        asignacionService.insert(asignacion);
+        asignacionService.add(asignacion);
         // Retornamos HttpStatus.CREATED tal como lo hace tu equipo
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

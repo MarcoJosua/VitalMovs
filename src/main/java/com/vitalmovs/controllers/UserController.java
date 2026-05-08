@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/arqui_movie")  // El grupo de peticiones que se van a escuchar con este Controller
-// http://localhost:8080/arqui_movie
+@RequestMapping("/vitalmovs")  // El grupo de peticiones que se van a escuchar con este Controller
+// http://localhost:8080/vitalmovs
 public class UserController {
 
     @Autowired

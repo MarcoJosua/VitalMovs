@@ -69,27 +69,7 @@ public class PublicacionServiceImpl implements PublicacionService {
         return publicacionRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Publicacion> listByForoId(Long foroId) {
-        return publicacionRepository.findByForo_Id(foroId);
-    }
 
-    @Override
-    public List<PublicacionDTO> listByForoIdDTO(Long foroId) {
-        List<Publicacion> publicacionList = listByForoId(foroId);
-        List<PublicacionDTO> publicacionDTOList = new ArrayList<>();
-        for (Publicacion p : publicacionList) {
-            publicacionDTOList.add(new PublicacionDTO(
-                    p.getId(),
-                    p.getTitulo(),
-                    p.getContenido(),
-                    p.getFechaPublicacion(),
-                    p.getForo().getId(),
-                    p.getPaciente().getId()
-            ));
-        }
-        return publicacionDTOList;
-    }
 
     @Override
     public Publicacion update(Publicacion publicacion) {
@@ -108,14 +88,49 @@ public class PublicacionServiceImpl implements PublicacionService {
         }
 
         publicacion = publicacionRepository.save(oldPublicacion);
-        return  publicacion;
+        return publicacion;
     }
 
     @Override
     public void delete(Long id) {
-        if(findById(id) == null){
-            throw new ResourceNotFoundException("No se encontro la publicacion con id: "+id.toString());
+        Publicacion publicacion = findById(id);
+        if (publicacion == null) {
+            throw new ResourceNotFoundException("No se encontro la publicacion con id: " + id);
         }
-        publicacionRepository.deleteById(id);
+        publicacionRepository.delete(publicacion);
+    }
+
+    @Override
+    public List<Publicacion> listarPublicacionesPorForoFecha(Long foroId) {
+        return publicacionRepository.findByForo_IdOrderByFechaPublicacionDesc(foroId);
+    }
+
+    @Override
+    public List<PublicacionDTO> listarPublicacionesPorForoFechaDTO(Long foroId) {
+        List<Publicacion> publicacionList = listarPublicacionesPorForoFecha(foroId);
+        List<PublicacionDTO> publicacionDTOList = new ArrayList<>();
+        for (Publicacion p : publicacionList) {
+            publicacionDTOList.add(new PublicacionDTO(
+                    p.getId(),
+                    p.getTitulo(),
+                    p.getContenido(),
+                    p.getFechaPublicacion(),
+                    p.getForo().getId(),
+                    p.getPaciente().getId()
+            ));
+        }
+        return publicacionDTOList;
+    }
+
+    @Override
+    public List<PublicacionDTO> listarPublicacionesPorRelevanciaDTO(Long foroId) {
+        List<Publicacion> publicacionList = publicacionRepository.listarPublicacionesPorRelevancia(foroId);
+        List<PublicacionDTO> publicacionDTOList = new ArrayList<>();
+        for (Publicacion p : publicacionList) {
+            publicacionDTOList.add(new PublicacionDTO(
+                    p.getId(), p.getTitulo(), p.getContenido(), p.getFechaPublicacion(), p.getForo().getId(), p.getPaciente().getId()
+            ));
+        }
+        return publicacionDTOList;
     }
 }

@@ -15,7 +15,7 @@ public class AsignacionServiceImpl implements AsignacionService {
     private AsignacionRepository aR; // Inyectamos el repositorio
 
     @Override
-    public void insert(Asignacion asignacion) {
+    public void add(Asignacion asignacion) {
         aR.save(asignacion); // Sirve para insertar y actualizar
     }
 

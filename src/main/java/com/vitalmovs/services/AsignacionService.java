@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AsignacionService {
 
-    public void insert(Asignacion asignacion); // C: Create
+    public void add(Asignacion asignacion); // C: Create
     public void update(Asignacion asignacion); // U: Update
     public List<Asignacion> list();            // R: Read
     public void delete(Long idAsignacion);    // D: Delete

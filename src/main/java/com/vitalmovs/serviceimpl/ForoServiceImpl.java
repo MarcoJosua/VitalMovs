@@ -1,6 +1,7 @@
 package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.ForoDTO;
+import com.vitalmovs.dtos.ForoVistaDTO;
 import com.vitalmovs.entities.Foro;
 import com.vitalmovs.entities.TipoDiscapacidad;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
@@ -69,7 +70,7 @@ public class ForoServiceImpl implements ForoService {
                     f.getId(),
                     f.getTitulo(),
                     f.getDescripcion(),
-                    f.getTipoDiscapacidad().getId()
+                    f.getTipoDiscapacidad() != null ? f.getTipoDiscapacidad().getId() : null // Esto se hace porque habra un foro general
             ));
         }
         return foroDTOList;
@@ -99,9 +100,17 @@ public class ForoServiceImpl implements ForoService {
 
     @Override
     public void delete(Long id) {
-        if(findById(id) == null){
+        Foro foro = findById(id);
+        if(foro == null){
             throw new ResourceNotFoundException("No se encontro el foro con id: "+id.toString());
         }
-        foroRepository.deleteById(id);
+        foroRepository.delete(foro);
     }
+
+    @Override
+    public List<ForoVistaDTO> listarForosVisiblesConResumenPorPaciente(Long pacienteId) {
+        return foroRepository.listarForosVisiblesConResumenPorPaciente(pacienteId);
+    }
+
+
 }

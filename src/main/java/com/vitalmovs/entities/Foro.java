@@ -21,10 +21,10 @@ public class Foro {
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(name="tipoDiscapacidad_id")
+    @JoinColumn(name="tipo_Discapacidad_id")
     private TipoDiscapacidad tipoDiscapacidad;
 
-    @OneToMany(mappedBy = "foro", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "foro", cascade = CascadeType.REMOVE, orphanRemoval = true , fetch = FetchType.EAGER) // Se agrego Remove y orphan para poder borrar foro y tambien borrar sus asociados
     private List<Publicacion> publicaciones;
 
 }
