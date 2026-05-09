@@ -42,4 +42,24 @@ public class PlanEjercicioController {
         planEjercicioService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/planEjercicio/repeticiones/{repeticiones}")
+    public ResponseEntity<List<PlanEjercicioDTO>> buscarPorRepeticionesMayoresOIguales(@PathVariable("repeticiones") Integer repeticiones) {
+        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorRepeticionesMayoresOIgualesDTO(repeticiones);
+        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
+    }
+    @GetMapping("/planEjercicio/planOrdenado/{planId}")
+    public ResponseEntity<List<PlanEjercicioDTO>> buscarEjerciciosDePlanOrdenados(@PathVariable("planId") Long planId) {
+        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarEjerciciosDePlanOrdenadosDTO(planId);
+        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
+    }
+    @GetMapping("/planEjercicio/orden/{orden}")
+    public ResponseEntity<List<PlanEjercicioDTO>> buscarPorOrdenNative(@PathVariable("orden") Integer orden) {
+        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorOrdenNativeDTO(orden);
+        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
+    }
+    @GetMapping("/planEjercicio/dia/{dia}")
+    public ResponseEntity<List<PlanEjercicioDTO>> buscarPorDiaNative(@PathVariable("dia") String dia) {
+        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorDiaNativeDTO(dia);
+        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
+    }
 }

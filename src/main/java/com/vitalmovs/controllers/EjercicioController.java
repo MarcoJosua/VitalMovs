@@ -37,4 +37,14 @@ public class EjercicioController {
         ejercicioService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/ejercicio/buscar/{texto}")
+    public ResponseEntity<List<EjercicioDTO>> buscarPorNombreODescripcion(@PathVariable("texto") String texto) {
+        List<EjercicioDTO> ejercicios = ejercicioService.buscarPorNombreODescripcionDTO(texto);
+        return new ResponseEntity<>(ejercicios, HttpStatus.OK);
+    }
+    @GetMapping("/ejercicio/buscarNative/{nombre}")
+    public ResponseEntity<List<EjercicioDTO>> buscarPorNombreNative(@PathVariable("nombre") String nombre) {
+        List<EjercicioDTO> ejercicios = ejercicioService.buscarPorNombreNativeDTO(nombre);
+        return new ResponseEntity<>(ejercicios, HttpStatus.OK);
+    }
 }

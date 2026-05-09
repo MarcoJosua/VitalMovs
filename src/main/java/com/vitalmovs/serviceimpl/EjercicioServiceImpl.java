@@ -64,28 +64,73 @@ public class EjercicioServiceImpl implements EjercicioService {
 
     @Override
     public Ejercicio findById(Long id) {
+        if (id == null) {
+            return null;
+        }
         return ejercicioRepository.findById(id).orElse(null);
     }
     @Override
     public Ejercicio update(Ejercicio ejercicio) {
+        if (ejercicio.getId() == null) {
+            throw new ValidationException("Debe ingresar el id del ejercicio");
+        }
         Ejercicio foundEjercicio = findById(ejercicio.getId());
         if (foundEjercicio == null) {
-            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + ejercicio.getId().toString());
+            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + ejercicio.getId());
         }
         if (ejercicio.getNombre() != null && !ejercicio.getNombre().isBlank()) {
+            List<Ejercicio> ejerciciosConMismoNombre = ejercicioRepository.findByNombre(ejercicio.getNombre());
+            if (!ejerciciosConMismoNombre.isEmpty()
+                    && !ejerciciosConMismoNombre.get(0).getId().equals(ejercicio.getId())) {
+                throw new ValidationException("El ejercicio: " + ejercicio.getNombre() + " ya esta registrado");
+            }
             foundEjercicio.setNombre(ejercicio.getNombre());
         }
         if (ejercicio.getDescripcion() != null && !ejercicio.getDescripcion().isBlank()) {
             foundEjercicio.setDescripcion(ejercicio.getDescripcion());
         }
-        ejercicio = ejercicioRepository.save(foundEjercicio);
-        return ejercicio;
+        return ejercicioRepository.save(foundEjercicio);
     }
     @Override
     public void delete(Long id) {
+        if (id == null) {
+            throw new ValidationException("Debe ingresar el id del ejercicio");
+        }
         if (findById(id) == null) {
-            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + id.toString());
+            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + id);
         }
         ejercicioRepository.deleteById(id);
+    }
+    @Override
+    public List<EjercicioDTO> buscarPorNombreODescripcionDTO(String texto) {
+        if (texto == null || texto.isBlank()) {
+            throw new ValidationException("Debe ingresar un texto de busqueda");
+        }
+        List<Ejercicio> ejercicioList = ejercicioRepository.buscarPorNombreODescripcion(texto);
+        List<EjercicioDTO> ejercicioDTOList = new ArrayList<>();
+        for (Ejercicio e : ejercicioList) {
+            ejercicioDTOList.add(new EjercicioDTO(
+                    e.getId(),
+                    e.getNombre(),
+                    e.getDescripcion()
+            ));
+        }
+        return ejercicioDTOList;
+    }
+    @Override
+    public List<EjercicioDTO> buscarPorNombreNativeDTO(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            throw new ValidationException("Debe ingresar el nombre del ejercicio");
+        }
+        List<Ejercicio> ejercicioList = ejercicioRepository.buscarPorNombreNative(nombre);
+        List<EjercicioDTO> ejercicioDTOList = new ArrayList<>();
+        for (Ejercicio e : ejercicioList) {
+            ejercicioDTOList.add(new EjercicioDTO(
+                    e.getId(),
+                    e.getNombre(),
+                    e.getDescripcion()
+            ));
+        }
+        return ejercicioDTOList;
     }
 }
