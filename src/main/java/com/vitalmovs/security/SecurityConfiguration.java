@@ -99,19 +99,32 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
                         .requestMatchers(HttpMethod.POST,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
                         .requestMatchers(HttpMethod.DELETE,"/vitalmovs/comentarios/**").hasAnyAuthority("ROLE_PACIENTE")
-
                         //Authorization Fisioterapeuta
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/fisioterapeuta/fisioterapeutas").hasAnyAuthority("ROLE_ADMIN", "ROLE_PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/fisioterapeuta/{fisioterapeutaId}").hasAnyAuthority("ROLE_ADMIN", "ROLE_PACIENTE", "ROLE_FISIOTERAPEUTA")
                         .requestMatchers(HttpMethod.POST,"/vitalmovs/fisioterapeuta").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/vitalmovs/fisioterapeuta").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/vitalmovs/fisioterapeuta/{fisioterapeutaId}").hasAnyAuthority("ROLE_ADMIN")
-
                         //Authorization FisioterapeutaDiscapacidad
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/fisioterapeutaDiscapacidad/fisioterapeuta/{fisioterapeutaId}").hasAnyAuthority("ROLE_ADMIN", "ROLE_FISIOTERAPEUTA")
                         .requestMatchers(HttpMethod.POST,"/vitalmovs/fisioterapeutaDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/vitalmovs/fisioterapeutaDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/vitalmovs/fisioterapeutaDiscapacidad/{fdId}").hasAnyAuthority("ROLE_ADMIN")
+                        //Authorization Paciente
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/paciente/pacientes").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/Paciente").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/Paciente").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/Paciente/**").hasAnyAuthority("ROLE_ADMIN")
+                        //Authorization TipoDiscapacidad
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/tipoDiscapacidad/tipos").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/TipoDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/TipoDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/TipoDiscapacidad/**").hasAnyAuthority("ROLE_ADMIN")
+                        //Authoritazion PacienteDiscapacidad
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/pacienteDiscapacidad/paciente/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.DELETE,"/vitalmovs/PacienteDiscapacidad/**").hasAnyAuthority("ROLE_ADMIN")          
 
 
 
