@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
  
 public interface TipoDiscapacidadRepository extends JpaRepository<TipoDiscapacidad, Long> {
-    List<TipoDiscapacidad> findByNombre(String nombre);
-
-
     // 1. Method Query — busca por nombre exacto
     List<TipoDiscapacidad> findByNombre(String nombre);
 
