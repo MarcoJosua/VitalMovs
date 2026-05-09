@@ -14,4 +14,8 @@ public interface PlanEjercicioService {
     List<PlanEjercicioDTO> listByEjercicioIdDTO(Long ejercicioId);
     PlanEjercicio update(PlanEjercicio planEjercicio);
     void delete(Long id);
+    List<PlanEjercicioDTO> buscarPorRepeticionesMayoresOIgualesDTO(Integer repeticiones);
+    List<PlanEjercicioDTO> buscarEjerciciosDePlanOrdenadosDTO(Long planId);
+    List<PlanEjercicioDTO> buscarPorOrdenNativeDTO(Integer orden);
+    List<PlanEjercicioDTO> buscarPorDiaNativeDTO(String dia);
 }

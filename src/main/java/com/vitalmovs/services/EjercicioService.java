@@ -12,4 +12,6 @@ public interface EjercicioService {
     Ejercicio findById(Long id);
     Ejercicio update(Ejercicio ejercicio);
     void delete(Long id);
+    List<EjercicioDTO> buscarPorNombreODescripcionDTO(String texto);
+    List<EjercicioDTO> buscarPorNombreNativeDTO(String nombre);
 }

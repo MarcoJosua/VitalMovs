@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 @Repository
 public interface FisioterapeutaRepository extends JpaRepository<Fisioterapeuta, Long> {
     // 1. METHOD QUERY — Spring genera la query automáticamente por el nombre del método
