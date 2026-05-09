@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
  
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
-    List<Paciente> findByNombre(String nombre);
+    
      // 1. Method Query — Spring genera el SQL por el nombre del método
     List<Paciente> findByNombre(String nombre);
 
