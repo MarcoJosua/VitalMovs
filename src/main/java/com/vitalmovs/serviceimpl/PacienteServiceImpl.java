@@ -26,11 +26,20 @@ public class PacienteServiceImpl implements PacienteService {
  
     @Override
     public Paciente add(Paciente paciente) {
-        if (paciente.getNombre().isBlank()) {
+        if (paciente.getNombre() == null || paciente.getNombre().isBlank()) {
             throw new ValidationException("El nombre del paciente no puede estar en blanco");
         }
-        if (paciente.getApellido().isBlank()) {
+        if (paciente.getApellido() == null || paciente.getApellido().isBlank()) {
             throw new ValidationException("El apellido del paciente no puede estar en blanco");
+        }
+        if (paciente.getEdad() == null) {
+            throw new ValidationException("La edad del paciente no puede estar en blanco");
+        }
+        if (paciente.getSexo() == null || paciente.getSexo().isBlank()) {
+            throw new ValidationException("El sexo del paciente no puede estar en blanco");
+        }
+        if (paciente.getUser() == null) {
+            throw new ValidationException("El usuario asociado al paciente no puede estar en blanco");
         }
         paciente = pacienteRepository.save(paciente);
         return paciente;
