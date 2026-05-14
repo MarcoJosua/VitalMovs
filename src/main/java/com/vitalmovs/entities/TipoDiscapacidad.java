@@ -1,5 +1,6 @@
 package com.vitalmovs.entities;
- 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,8 @@ public class TipoDiscapacidad {
  
     private String nombre;
     private String descripcion;
- 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoDiscapacidad", fetch = FetchType.EAGER)
     private List<PacienteDiscapacidad> pacienteDiscapacidades;
 }
