@@ -28,7 +28,8 @@ public class Paciente {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+ 
+    @JsonIgnore
     @OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER)
     private List<PacienteDiscapacidad> pacienteDiscapacidades;
 }
