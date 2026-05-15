@@ -1,42 +1,150 @@
 package com.vitalmovs.serviceimpl;
 
+import com.vitalmovs.dtos.PlanRehabilitacionDTO;
+import com.vitalmovs.entities.Asignacion;
+import com.vitalmovs.entities.Estadistica;
+import com.vitalmovs.exceptions.ResourceNotFoundException;
+import com.vitalmovs.repositories.AsignacionRepository;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vitalmovs.entities.PlanRehabilitacion;
 import com.vitalmovs.repositories.PlanRehabilitacionRepository;
 import com.vitalmovs.services.PlanRehabilitacionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService {
 
     @Autowired
-    private PlanRehabilitacionRepository pR; // Iniciales de PlanRehabilitacionRepository
+    private PlanRehabilitacionRepository planRehabilitacionRepository;
+
+    @Autowired
+    private AsignacionRepository asignacionRepository;
+
+    // ─── add ────────────────────────────────────────────────────────────────
 
     @Override
-    public void add(PlanRehabilitacion planRehabilitacion) {
-        pR.save(planRehabilitacion);
+    public PlanRehabilitacion add(PlanRehabilitacion planRehabilitacion) {
+        if (planRehabilitacion.getNombre().isBlank()) {
+            throw new ValidationException("El nombre del plan no puede estar en blanco");
+        }
+        if (planRehabilitacion.getDescripcion().isBlank()) {
+            throw new ValidationException("La descripcion del plan no puede estar en blanco");
+        }
+        if (planRehabilitacion.getFecha_inicio() == null) {
+            throw new ValidationException("La fecha de inicio del plan no puede estar en blanco");
+        }
+        return planRehabilitacionRepository.save(planRehabilitacion);
     }
 
-    @Override
-    public void update(PlanRehabilitacion planRehabilitacion) {
-        pR.save(planRehabilitacion);
-    }
+    // ─── addDTO ──────────────────────────────────────────────────────────────
 
     @Override
-    public List<PlanRehabilitacion> list() {
-        return pR.findAll();
+    public PlanRehabilitacionDTO addDTO(PlanRehabilitacionDTO planRehabilitacionDTO) {
+        Asignacion asignacion = asignacionRepository
+                .findById(planRehabilitacionDTO.getAsignacionId()).orElse(null);
+
+        PlanRehabilitacion nuevoPlan = new PlanRehabilitacion(
+                null,                                    // id autogenerado
+                planRehabilitacionDTO.getNombre(),
+                planRehabilitacionDTO.getDescripcion(),
+                planRehabilitacionDTO.getFecha_inicio(),
+                asignacion,
+                null                                     // estadistica se agrega aparte
+        );
+
+        nuevoPlan = add(nuevoPlan);
+        planRehabilitacionDTO.setId(nuevoPlan.getId());
+        return planRehabilitacionDTO;
     }
 
-    @Override
-    public void delete(Long idPlan) {
-        pR.deleteById(idPlan);
-    }
+    // ─── findById ────────────────────────────────────────────────────────────
 
     @Override
-    public PlanRehabilitacion listId(Long idPlan) {
-        return pR.findById(idPlan).orElse(new PlanRehabilitacion());
+    public PlanRehabilitacionDTO findById(Long id) {
+        PlanRehabilitacion plan = planRehabilitacionRepository.findById(id).orElse(null);
+        if (plan == null) {
+            throw new ResourceNotFoundException("No se encontro el plan con id: " + id.toString());
+        }
+        return toDTO(plan);
+    }
+
+    // ─── update ──────────────────────────────────────────────────────────────
+
+    @Override
+    public PlanRehabilitacionDTO update(PlanRehabilitacionDTO planRehabilitacionDTO) {
+        PlanRehabilitacion foundPlan = planRehabilitacionRepository
+                .findById(planRehabilitacionDTO.getId()).orElse(null);
+        if (foundPlan == null) {
+            throw new ResourceNotFoundException("No se encontro el plan con id: " + planRehabilitacionDTO.getId().toString());
+        }
+        if (planRehabilitacionDTO.getNombre() != null && !planRehabilitacionDTO.getNombre().isBlank()) {
+            foundPlan.setNombre(planRehabilitacionDTO.getNombre());
+        }
+        if (planRehabilitacionDTO.getDescripcion() != null && !planRehabilitacionDTO.getDescripcion().isBlank()) {
+            foundPlan.setDescripcion(planRehabilitacionDTO.getDescripcion());
+        }
+        if (planRehabilitacionDTO.getFecha_inicio() != null) {
+            foundPlan.setFecha_inicio(planRehabilitacionDTO.getFecha_inicio());
+        }
+
+        planRehabilitacionRepository.save(foundPlan);
+        return toDTO(foundPlan);
+    }
+
+    // ─── delete ──────────────────────────────────────────────────────────────
+
+    @Override
+    public PlanRehabilitacion delete(Long id) {
+        PlanRehabilitacion plan = planRehabilitacionRepository.findById(id).orElse(null);
+        if (plan == null) {
+            throw new ResourceNotFoundException("No se encontro el plan con id: " + id.toString());
+        }
+        planRehabilitacionRepository.delete(plan);
+        return plan;
+    }
+
+    // ─── findAll ─────────────────────────────────────────────────────────────
+
+    @Override
+    public List<Estadistica> findAll() {
+        // Según tu interface retorna List<Estadistica>, delegamos al repositorio de plan
+        // y extraemos las estadísticas de cada uno
+        List<PlanRehabilitacion> planes = planRehabilitacionRepository.findAll();
+        List<Estadistica> estadisticas = new ArrayList<>();
+        for (PlanRehabilitacion p : planes) {
+            if (p.getEstadistica() != null) {
+                estadisticas.addAll(p.getEstadistica());
+            }
+        }
+        return estadisticas;
+    }
+
+    // ─── listAllDTO ──────────────────────────────────────────────────────────
+
+    @Override
+    public List<PlanRehabilitacionDTO> listAllDTO() {
+        List<PlanRehabilitacion> planes = planRehabilitacionRepository.findAll();
+        List<PlanRehabilitacionDTO> planDTOList = new ArrayList<>();
+        for (PlanRehabilitacion p : planes) {
+            planDTOList.add(toDTO(p));
+        }
+        return planDTOList;
+    }
+
+    // ─── Helper: entidad → DTO ───────────────────────────────────────────────
+
+    private PlanRehabilitacionDTO toDTO(PlanRehabilitacion p) {
+        return new PlanRehabilitacionDTO(
+                p.getId(),
+                p.getNombre(),
+                p.getDescripcion(),
+                p.getFecha_inicio(),
+                p.getAsignacion() != null ? p.getAsignacion().getId() : null
+        );
     }
 
 }
