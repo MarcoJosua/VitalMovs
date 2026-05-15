@@ -138,5 +138,9 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         return estadisticaRepository.findByPlanNative(idPlan);
     }
 
+    @Override
+    public List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan) {
+        return estadisticaRepository.obtenerHistorialPorPlan(idPlan);
+    }
 
 }
