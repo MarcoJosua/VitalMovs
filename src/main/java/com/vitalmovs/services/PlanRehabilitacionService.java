@@ -1,4 +1,7 @@
 package com.vitalmovs.services;
+import com.vitalmovs.dtos.EstadisticaDTO;
+import com.vitalmovs.dtos.PlanRehabilitacionDTO;
+import com.vitalmovs.entities.Estadistica;
 import com.vitalmovs.entities.PlanRehabilitacion;
 
 import java.util.List;
@@ -6,9 +9,17 @@ import java.util.List;
 
 public interface PlanRehabilitacionService {
 
-    public void add(PlanRehabilitacion planRehabilitacion); // C
-    public void update(PlanRehabilitacion planRehabilitacion); // U: Update
-    public List<PlanRehabilitacion> list();                    // R
-    public void delete(Long idPlan);                           // D
-    public PlanRehabilitacion listId(Long idPlan);             // Para buscar uno
+    public PlanRehabilitacion add(PlanRehabilitacion planRehabilitacion);
+
+    public PlanRehabilitacionDTO addDTO(PlanRehabilitacionDTO planRehabilitacionDTO);
+
+    public PlanRehabilitacionDTO findById(Long id);
+
+    public List<Estadistica> findAll();
+    public List<PlanRehabilitacionDTO> listAllDTO();
+
+
+    public PlanRehabilitacionDTO update(PlanRehabilitacionDTO planRehabilitacionDTO);
+
+    public PlanRehabilitacion delete(Long id);
 }

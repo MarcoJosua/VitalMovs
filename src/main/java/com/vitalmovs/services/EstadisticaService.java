@@ -1,4 +1,6 @@
 package com.vitalmovs.services;
+import com.vitalmovs.dtos.AsignacionDTO;
+import com.vitalmovs.dtos.EstadisticaDTO;
 import com.vitalmovs.dtos.HistorialDolorDTO;
 import com.vitalmovs.entities.Estadistica;
 
@@ -7,12 +9,20 @@ import java.util.List;
 
 public interface EstadisticaService {
 
-    public void insert(Estadistica estadistica); // C
-    public void update(Estadistica estadistica); // U: Update
-    public List<Estadistica> list();             // R
-    public void delete(Long idEstadistica);      // D
-    public Estadistica listId(Long idEstadistica); // Para buscar antes de editar
-    public List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan);
+    public Estadistica add(Estadistica estadistica);
 
+    public EstadisticaDTO addDTO(EstadisticaDTO estadisticaDTO);
+
+    public EstadisticaDTO findById(Long id);
+
+    public List<Estadistica> findAll();
+    public List<EstadisticaDTO> listAllDTO();
+
+
+    public EstadisticaDTO update(EstadisticaDTO estadisticaDTO);
+
+    public Estadistica delete(Long id);
+
+    List<Estadistica> findByPlanNative(Long idPlan);
 
 }

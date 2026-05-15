@@ -1,15 +1,24 @@
 package com.vitalmovs.services;
 
+import com.vitalmovs.dtos.AsignacionDTO;
+import com.vitalmovs.dtos.ForoDTO;
 import com.vitalmovs.entities.Asignacion;
+import com.vitalmovs.entities.Foro;
 
 import java.util.List;
 
 public interface AsignacionService {
 
-    public void add(Asignacion asignacion); // C: Create
-    public void update(Asignacion asignacion); // U: Update
-    public List<Asignacion> list();            // R: Read
-    public void delete(Long idAsignacion);    // D: Delete
-    public Asignacion listId(Long idAsignacion); // Para el Update (buscar uno)
+    public Asignacion add(Asignacion asignacion);
+
+    public AsignacionDTO addDTO(AsignacionDTO asignacionDTO);
+
+    public AsignacionDTO findById(Long id);
+    public AsignacionDTO update(Asignacion asignacion);
+    public void delete(Long id);
+    public List<Asignacion> listAll();
+    public List<AsignacionDTO> listAllDTO();
+    List<Asignacion> findByPacienteId(Long pacienteId);
+
 
 }
