@@ -133,6 +133,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE,"/vitalmovs/PacienteDiscapacidad/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/tipo/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/contar/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/buscarPaciente/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/buscarTipo/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/contar/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
                         //Authorization Ejercicio
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/ejercicio/ejercicios").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/ejercicio/buscar/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
