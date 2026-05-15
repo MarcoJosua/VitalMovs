@@ -179,6 +179,9 @@ public class SecurityConfiguration {
                         //Native Query - Estadistica por plan
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/estadisticas/plan/**")
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
+
+                        .requestMatchers(HttpMethod.GET, "/vitalmovs/estadisticas/historial/**")
+                        .hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
             
                         .anyRequest().authenticated()
 
