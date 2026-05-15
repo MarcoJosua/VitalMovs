@@ -127,9 +127,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/TipoDiscapacidad/buscarDescripcion/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/TipoDiscapacidad/buscarNombreExacto/**").hasAnyAuthority("ROLE_ADMIN")
                         //Authoritazion PacienteDiscapacidad
-                        .requestMatchers(HttpMethod.GET,"/vitalmovs/pacienteDiscapacidad/paciente/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
-                        .requestMatchers(HttpMethod.POST,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
-                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
+                        .requestMatchers(HttpMethod.GET,"/vitalmovs/pacienteDiscapacidad/paciente/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/vitalmovs/PacienteDiscapacidad").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/vitalmovs/PacienteDiscapacidad/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/tipo/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
                         .requestMatchers(HttpMethod.GET, "/vitalmovs/pacienteDiscapacidad/contar/**").hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA")
