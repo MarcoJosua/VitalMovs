@@ -66,4 +66,10 @@ public class PacienteController {
         List<Paciente> pacientes = pacienteRepository.findByEdadMayorNative(edad);
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
+
+    @GetMapping("/paciente/buscarPorTipo/{tipoId}")  //http://localhost:8080/vitalmovs/paciente/buscarPorTipo/1
+    public ResponseEntity<List<Paciente>> findByTipoDiscapacidad(@PathVariable("tipoId") Long tipoId) {
+    List<Paciente> pacientes = pacienteRepository.findByTipoDiscapacidadJPQL(tipoId);
+    return new ResponseEntity<>(pacientes, HttpStatus.OK);
+}
 }
