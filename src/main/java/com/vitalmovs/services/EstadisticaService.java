@@ -25,4 +25,7 @@ public interface EstadisticaService {
 
     List<Estadistica> findByPlanNative(Long idPlan);
 
+    List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan);
+
+
 }
