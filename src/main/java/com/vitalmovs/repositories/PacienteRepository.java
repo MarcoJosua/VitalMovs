@@ -19,4 +19,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     // 3. Native Query — SQL puro sobre la tabla real
     @Query(value = "SELECT * FROM pacientes WHERE edad > :edad", nativeQuery = true)
     List<Paciente> findByEdadMayorNative(@Param("edad") Integer edad);
+
+    @Query("SELECT p FROM Paciente p JOIN p.pacienteDiscapacidades pd WHERE pd.tipoDiscapacidad.id = :tipoId")
+    List<Paciente> findByTipoDiscapacidadJPQL(@Param("tipoId") Long tipoId);
 }
