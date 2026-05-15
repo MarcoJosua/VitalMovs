@@ -45,4 +45,18 @@ public class FisioterapeutaDiscapacidadController {
         fdService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/fisioterapeutaDiscapacidad/tipo/{tipoDiscapacidadId}")
+    public ResponseEntity<List<FisioterapeutaDiscapacidadDTO>> findByTipoDiscapacidad(
+            @PathVariable("tipoDiscapacidadId") Long tipoDiscapacidadId) {
+        // ✅ BIEN — usas la instancia inyectada fdService
+        List<FisioterapeutaDiscapacidadDTO> list = fdService.listByTipoDiscapacidadIdDTO(tipoDiscapacidadId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @GetMapping("/fisioterapeutaDiscapacidad/native")
+    public ResponseEntity<List<FisioterapeutaDiscapacidad>> findByFisioterapeutaAndTipoNative(
+            @RequestParam Long fisioterapeutaId,
+            @RequestParam Long tipoDiscapacidadId) {
+        List<FisioterapeutaDiscapacidad> list = fdService.findByFisioterapeutaAndTipoNative(fisioterapeutaId, tipoDiscapacidadId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 }
