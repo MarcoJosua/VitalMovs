@@ -16,4 +16,9 @@ public interface EstadisticaRepository extends JpaRepository<Estadistica, Long> 
             "WHERE p.id = :idPlan " +
             "ORDER BY e.fecha DESC")
     List<HistorialDolorDTO> obtenerHistorialPorPlan(@Param("idPlan") Long idPlan);
+
+    @Query(value = "SELECT * FROM estadistica WHERE plan_rehabilitacion_id = :idPlan " +
+            "ORDER BY fecha DESC", nativeQuery = true)
+    List<Estadistica> findByPlanNative(@Param("idPlan") Long idPlan);
+
 }
