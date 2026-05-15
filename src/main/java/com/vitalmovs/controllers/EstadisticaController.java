@@ -1,6 +1,7 @@
 package com.vitalmovs.controllers;
 
 
+import com.vitalmovs.dtos.EstadisticaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,53 +19,48 @@ import java.util.List;
 public class EstadisticaController {
 
     @Autowired
-    private EstadisticaService estadisticaService; // Cambiado de 'eS' para alinear con el estilo de tu grupo
+    EstadisticaService estadisticaService;
 
-    // GET: Listar todo
-    @GetMapping("/estadistica/estadisticas")
-    public  ResponseEntity<List<Estadistica>> listAll() {
-        List<Estadistica> foundEstadisticas = estadisticaService.list();
+    // GET http://localhost:8080/vitalmovs/estadisticas
+    @GetMapping("/estadisticas")
+    public ResponseEntity<List<EstadisticaDTO>> listAll() {
+        List<EstadisticaDTO> foundEstadisticas = estadisticaService.listAllDTO();
         return new ResponseEntity<>(foundEstadisticas, HttpStatus.FOUND);
     }
 
-    // POST: Insertar
-    @PostMapping("/Estadistica")
-    public ResponseEntity<Estadistica> add(@RequestBody Estadistica estadistica) {
-        estadisticaService.insert(estadistica);
-        // Retornamos HttpStatus.CREATED tal como lo hace tu equipo
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    // POST http://localhost:8080/vitalmovs/estadisticas
+    @PostMapping("/estadisticas")
+    public ResponseEntity<EstadisticaDTO> add(@RequestBody EstadisticaDTO estadisticaDTO) {
+        EstadisticaDTO newEstadisticaDTO = estadisticaService.addDTO(estadisticaDTO);
+        return new ResponseEntity<>(newEstadisticaDTO, HttpStatus.CREATED);
     }
 
-    // PUT: Modificar
-    @PutMapping("/Estadistica")
-    public ResponseEntity<Estadistica> update(@RequestBody Estadistica estadistica) {
-        estadisticaService.update(estadistica);
-        // Retornamos HttpStatus.OK tras actualizar
-        return new ResponseEntity<>(HttpStatus.OK);
+    // PUT http://localhost:8080/vitalmovs/estadisticas
+    @PutMapping("/estadisticas")
+    public ResponseEntity<EstadisticaDTO> update(@RequestBody EstadisticaDTO estadisticaDTO) {
+        EstadisticaDTO updatedEstadistica = estadisticaService.update(estadisticaDTO);
+        return new ResponseEntity<>(updatedEstadistica, HttpStatus.OK);
     }
 
-    // DELETE: Eliminar por ID
-    @DeleteMapping("/Estadistica/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
+    // DELETE http://localhost:8080/vitalmovs/estadisticas/1
+    @DeleteMapping("/estadisticas/{estadisticaId}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("estadisticaId") Long id) {
         estadisticaService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // GET: Buscar por ID
-    @GetMapping("/Estadistica/{id}")
-    public ResponseEntity<Estadistica> listId(@PathVariable("id") Long id) {
-        Estadistica foundEstadistica = estadisticaService.listId(id);
+    // GET http://localhost:8080/vitalmovs/estadisticas/1
+    @GetMapping("/estadisticas/{estadisticaId}")
+    public ResponseEntity<EstadisticaDTO> findById(@PathVariable("estadisticaId") Long id) {
+        EstadisticaDTO foundEstadistica = estadisticaService.findById(id);
         return new ResponseEntity<>(foundEstadistica, HttpStatus.FOUND);
     }
 
-    // Importa el DTO arriba si no está: import pe.edu.upc.tp_oliver_web.dtos.HistorialDolorDTO;
-
-    // GET: Query Personalizado - Historial de Dolor por Plan
-    @GetMapping("/Estadistica/historial/{idPlan}")
-    public ResponseEntity<List<HistorialDolorDTO>> obtenerHistorial(@PathVariable("idPlan") Long idPlan) {
-        List<HistorialDolorDTO> historial = estadisticaService.obtenerHistorialPorPlan(idPlan);
-
-        // Retornamos OK y la lista con los datos filtrados
-        return new ResponseEntity<>(historial, HttpStatus.OK);
+    // GET http://localhost:8080/vitalmovs/estadisticas/plan/1
+    @GetMapping("/estadisticas/plan/{planId}")
+    public ResponseEntity<List<Estadistica>> findByPlan(@PathVariable Long planId) {
+        List<Estadistica> estadisticas = estadisticaService.findByPlanNative(planId);
+        return new ResponseEntity<>(estadisticas, HttpStatus.OK);
     }
+
 }

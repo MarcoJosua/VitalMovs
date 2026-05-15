@@ -1,6 +1,7 @@
 package com.vitalmovs.controllers;
 
 
+import com.vitalmovs.dtos.PlanRehabilitacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,42 +17,40 @@ import java.util.List;
 public class PlanRehabilitacionController {
 
     @Autowired
-    private PlanRehabilitacionService planRehabilitacionService; // Cambiado de 'pS' para alinear con el estilo de tu grupo
+    PlanRehabilitacionService planRehabilitacionService;
 
-    // GET: Listar todo
-    @GetMapping("/planRehabilitacion/planes")
-    public ResponseEntity<List<PlanRehabilitacion>> listAll() {
-        List<PlanRehabilitacion> foundPlanes = planRehabilitacionService.list();
+    // GET http://localhost:8080/vitalmovs/planes
+    @GetMapping("/planes")
+    public ResponseEntity<List<PlanRehabilitacionDTO>> listAll() {
+        List<PlanRehabilitacionDTO> foundPlanes = planRehabilitacionService.listAllDTO();
         return new ResponseEntity<>(foundPlanes, HttpStatus.FOUND);
     }
 
-    // POST: Insertar
-    @PostMapping("/PlanRehabilitacion")
-    public ResponseEntity<PlanRehabilitacion> add(@RequestBody PlanRehabilitacion planRehabilitacion) {
-        planRehabilitacionService.add(planRehabilitacion);
-        // Retornamos HttpStatus.CREATED tal como lo hace tu equipo
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    // POST http://localhost:8080/vitalmovs/planes
+    @PostMapping("/planes")
+    public ResponseEntity<PlanRehabilitacionDTO> add(@RequestBody PlanRehabilitacionDTO planRehabilitacionDTO) {
+        PlanRehabilitacionDTO newPlanDTO = planRehabilitacionService.addDTO(planRehabilitacionDTO);
+        return new ResponseEntity<>(newPlanDTO, HttpStatus.CREATED);
     }
 
-    // PUT: Modificar
-    @PutMapping("/PlanRehabilitacion")
-    public ResponseEntity<PlanRehabilitacion> update(@RequestBody PlanRehabilitacion planRehabilitacion) {
-        planRehabilitacionService.update(planRehabilitacion);
-        // Retornamos HttpStatus.OK tras actualizar
-        return new ResponseEntity<>(HttpStatus.OK);
+    // PUT http://localhost:8080/vitalmovs/planes
+    @PutMapping("/planes")
+    public ResponseEntity<PlanRehabilitacionDTO> update(@RequestBody PlanRehabilitacionDTO planRehabilitacionDTO) {
+        PlanRehabilitacionDTO updatedPlan = planRehabilitacionService.update(planRehabilitacionDTO);
+        return new ResponseEntity<>(updatedPlan, HttpStatus.OK);
     }
 
-    // DELETE: Eliminar por ID
-    @DeleteMapping("/PlanRehabilitacion/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
+    // DELETE http://localhost:8080/vitalmovs/planes/1
+    @DeleteMapping("/planes/{planId}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("planId") Long id) {
         planRehabilitacionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // GET: Buscar por ID
-    @GetMapping("/PlanRehabilitacion/{id}")
-    public ResponseEntity<PlanRehabilitacion> listId(@PathVariable("id") Long id) {
-        PlanRehabilitacion foundPlan = planRehabilitacionService.listId(id);
+    // GET http://localhost:8080/vitalmovs/planes/1
+    @GetMapping("/planes/{planId}")
+    public ResponseEntity<PlanRehabilitacionDTO> findById(@PathVariable("planId") Long id) {
+        PlanRehabilitacionDTO foundPlan = planRehabilitacionService.findById(id);
         return new ResponseEntity<>(foundPlan, HttpStatus.FOUND);
     }
 

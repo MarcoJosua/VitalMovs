@@ -1,5 +1,6 @@
 package com.vitalmovs.controllers;
 
+import com.vitalmovs.dtos.AsignacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,43 +16,49 @@ import java.util.List;
 public class AsignacionController {
 
     @Autowired
-    private AsignacionService asignacionService; // Siguiendo el estilo de variable de tu equipo
+    AsignacionService asignacionService;
 
-    // GET: Listar todo (Equivalente a /ejercicio/ejercicios de tu compañero)
-    @GetMapping("/asignacion/asignaciones")
-    public ResponseEntity<List<Asignacion>> listAll() {
-        List<Asignacion> foundAsignaciones = asignacionService.list();
+    // GET http://localhost:8080/vitalmovs/asignaciones
+    @GetMapping("/asignaciones")
+    public ResponseEntity<List<AsignacionDTO>> listAll() {
+        List<AsignacionDTO> foundAsignaciones = asignacionService.listAllDTO();
         return new ResponseEntity<>(foundAsignaciones, HttpStatus.FOUND);
     }
 
-    // POST: Insertar
-    @PostMapping("/Asignacion")
-    public ResponseEntity<Asignacion> add(@RequestBody Asignacion asignacion) {
-        asignacionService.add(asignacion);
-        // Retornamos HttpStatus.CREATED tal como lo hace tu equipo
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    // POST http://localhost:8080/vitalmovs/asignaciones
+    @PostMapping("/asignaciones")
+    public ResponseEntity<AsignacionDTO> add(@RequestBody AsignacionDTO asignacionDTO) {
+        AsignacionDTO newAsignacionDTO = asignacionService.addDTO(asignacionDTO);
+        return new ResponseEntity<>(newAsignacionDTO, HttpStatus.CREATED);
     }
 
-    // PUT: Modificar
-    @PutMapping("/Asignacion")
-    public ResponseEntity<Asignacion> update(@RequestBody Asignacion asignacion) {
-        asignacionService.update(asignacion);
-        // Retornamos HttpStatus.OK tras actualizar
-        return new ResponseEntity<>(HttpStatus.OK);
+    // PUT http://localhost:8080/vitalmovs/asignaciones
+    @PutMapping("/asignaciones")
+    public ResponseEntity<AsignacionDTO> update(@RequestBody Asignacion asignacion) {
+        AsignacionDTO updatedAsignacion = asignacionService.update(asignacion);
+        return new ResponseEntity<>(updatedAsignacion, HttpStatus.OK);
     }
 
-    // DELETE: Eliminar por ID
-    @DeleteMapping("/Asignacion/{AsignacionId}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("AsignacionId") Long id) {
+    // DELETE http://localhost:8080/vitalmovs/asignaciones/1
+    @DeleteMapping("/asignaciones/{asignacionId}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("asignacionId") Long id) {
         asignacionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // GET: Buscar por ID (Tus compañeros no lo mostraron en la foto, pero como tú lo tenías lo adaptamos a su estilo)
-    @GetMapping("/Asignacion/{AsignacionId}")
-    public ResponseEntity<Asignacion> listId(@PathVariable("AsignacionId") Long id) {
-        Asignacion foundAsignacion = asignacionService.listId(id);
+    // GET http://localhost:8080/vitalmovs/asignaciones/1
+    @GetMapping("/asignaciones/{asignacionId}")
+    public ResponseEntity<AsignacionDTO> findById(@PathVariable("asignacionId") Long id) {
+        AsignacionDTO foundAsignacion = asignacionService.findById(id);
         return new ResponseEntity<>(foundAsignacion, HttpStatus.FOUND);
     }
+
+    // GET http://localhost:8080/vitalmovs/asignaciones/paciente/1
+    @GetMapping("/asignaciones/paciente/{pacienteId}")
+    public ResponseEntity<List<Asignacion>> findByPaciente(@PathVariable Long pacienteId) {
+        List<Asignacion> asignaciones = asignacionService.findByPacienteId(pacienteId);
+        return new ResponseEntity<>(asignaciones, HttpStatus.OK);
+    }
+
 
 }
