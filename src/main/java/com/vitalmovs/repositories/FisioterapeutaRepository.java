@@ -23,5 +23,7 @@ public interface FisioterapeutaRepository extends JpaRepository<Fisioterapeuta, 
     // Busca todos los fisioterapeutas de una especialidad específica directamente en la tabla
     @Query(value = "SELECT * FROM fisioterapeuta WHERE especialidad = :especialidad", nativeQuery = true)
     List<Fisioterapeuta> findByEspecialidadNative(@Param("especialidad") String especialidad);
-  
+
+    @Query("SELECT DISTINCT f FROM Fisioterapeuta f JOIN f.fisioterapeutaDiscapacidades fd WHERE fd.tipoDiscapacidad.id IN (SELECT pd.tipoDiscapacidad.id FROM PacienteDiscapacidad pd WHERE pd.paciente.id = :pacienteId)")
+    List<Fisioterapeuta> findByPacienteDiscapacidadesJPQL(@Param("pacienteId") Long pacienteId);
 }
