@@ -84,6 +84,28 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
     }
 
     @Override
+    public List<PlanEjercicio> listAll() {
+        return planEjercicioRepository.findAll();
+    }
+    @Override
+    public List<PlanEjercicioDTO> listAllDTO() {
+        List<PlanEjercicio> planEjercicioList = listAll();
+        List<PlanEjercicioDTO> planEjercicioDTOList = new ArrayList<>();
+
+        for (PlanEjercicio pe : planEjercicioList) {
+            planEjercicioDTOList.add(new PlanEjercicioDTO(
+                    pe.getId(),
+                    pe.getRepeticiones(),
+                    pe.getDias(),
+                    pe.getOrden(),
+                    pe.getPlanRehabilitacion().getId(),
+                    pe.getEjercicio().getId()
+            ));
+        }
+        return planEjercicioDTOList;
+    }
+
+    @Override
     public List<PlanEjercicio> listByPlanId(Long planId) {
         return planEjercicioRepository.findByPlanRehabilitacion_Id(planId);
     }

@@ -17,6 +17,11 @@ public class PlanEjercicioController {
     @Autowired
     PlanEjercicioService planEjercicioService;
 
+    @GetMapping("/planEjercicio/planEjercicios")
+    public ResponseEntity<List<PlanEjercicioDTO>> listAll() {
+        List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listAllDTO();
+        return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.OK);
+    }
     @GetMapping("/planEjercicio/plan/{planId}")
     public ResponseEntity<List<PlanEjercicioDTO>> listByPlanId(@PathVariable("planId") Long planId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByPlanIdDTO(planId);

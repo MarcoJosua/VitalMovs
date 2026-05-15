@@ -8,6 +8,8 @@ public interface PlanEjercicioService {
     PlanEjercicio add(PlanEjercicio planEjercicio);
     PlanEjercicioDTO addDTO(PlanEjercicioDTO planEjercicioDTO);
     PlanEjercicio findById(Long id);
+    List<PlanEjercicio> listAll();
+    List<PlanEjercicioDTO> listAllDTO();
     List<PlanEjercicio> listByPlanId(Long planId);
     List<PlanEjercicioDTO> listByPlanIdDTO(Long planId);
     List<PlanEjercicio> listByEjercicioId(Long ejercicioId);
