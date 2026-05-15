@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.CascadeType;
  
 import java.util.List;
  
@@ -30,6 +31,6 @@ public class Paciente {
     private User user;
  
     @JsonIgnore
-    @OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER)
-    private List<PacienteDiscapacidad> pacienteDiscapacidades;
+@OneToMany(mappedBy = "paciente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+private List<PacienteDiscapacidad> pacienteDiscapacidades;
 }
