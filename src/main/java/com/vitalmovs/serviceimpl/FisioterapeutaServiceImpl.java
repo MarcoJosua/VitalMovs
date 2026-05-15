@@ -121,4 +121,18 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
             throw new ResourceNotFoundException("No se encontró el fisioterapeuta con id: " + id);
         fisioterapeutaRepository.deleteById(id);
     }
+
+    @Override
+    public List<Fisioterapeuta> buscarPorNombreOApellido(String texto) {
+        return fisioterapeutaRepository.buscarPorNombreOApellido(texto);
+    }
+    @Override
+    public List<Fisioterapeuta> findByEspecialidad(String especialidad) {
+        return fisioterapeutaRepository.findByEspecialidadIgnoreCase(especialidad);
+    }
+    @Override
+    public List<Fisioterapeuta> findByEspecialidadNative(String especialidad) {
+        return fisioterapeutaRepository.findByEspecialidadNative(especialidad);
+    }
 }
+
