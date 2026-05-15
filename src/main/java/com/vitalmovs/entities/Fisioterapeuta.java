@@ -32,3 +32,4 @@ public class Fisioterapeuta {
     @OneToMany(mappedBy = "fisioterapeuta", fetch = FetchType.EAGER)
     private List<FisioterapeutaDiscapacidad> fisioterapeutaDiscapacidades;
 }
+
