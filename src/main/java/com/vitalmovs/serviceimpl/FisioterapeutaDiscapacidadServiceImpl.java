@@ -125,4 +125,19 @@ public class FisioterapeutaDiscapacidadServiceImpl implements FisioterapeutaDisc
             throw new ResourceNotFoundException("No se encontró el registro con id: " + id);
         fdRepository.deleteById(id);
     }
+    @Override
+    public List<FisioterapeutaDiscapacidadDTO> listByTipoDiscapacidadIdDTO(Long tipoDiscapacidadId) {
+        List<FisioterapeutaDiscapacidadDTO> dtoList = new ArrayList<>();
+        for (FisioterapeutaDiscapacidad fd : fdRepository.findByTipoDiscapacidadId(tipoDiscapacidadId)) {
+            Long fId = (fd.getFisioterapeuta() != null) ? fd.getFisioterapeuta().getId() : null;
+            Long tId = (fd.getTipoDiscapacidad() != null) ? fd.getTipoDiscapacidad().getId() : null;
+            dtoList.add(new FisioterapeutaDiscapacidadDTO(fd.getId(), fId, tId));
+        }
+
+        return dtoList;
+    }
+    @Override
+    public List<FisioterapeutaDiscapacidad> findByFisioterapeutaAndTipoNative(Long fisioterapeutaId, Long tipoDiscapacidadId) {
+        return fdRepository.findByFisioterapeutaAndTipoNative(fisioterapeutaId, tipoDiscapacidadId);
+    }
 }
