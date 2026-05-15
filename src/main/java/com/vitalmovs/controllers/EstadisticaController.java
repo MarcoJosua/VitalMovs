@@ -63,4 +63,11 @@ public class EstadisticaController {
         return new ResponseEntity<>(estadisticas, HttpStatus.OK);
     }
 
+    // GET http://localhost:8080/vitalmovs/estadisticas/historial/1
+    @GetMapping("/estadisticas/historial/{planId}")
+    public ResponseEntity<List<HistorialDolorDTO>> obtenerHistorial(@PathVariable Long planId) {
+        List<HistorialDolorDTO> historial = estadisticaService.obtenerHistorialPorPlan(planId);
+        return new ResponseEntity<>(historial, HttpStatus.OK);
+    }
+
 }
