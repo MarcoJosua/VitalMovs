@@ -2,6 +2,7 @@ package com.vitalmovs.controllers;
 
 import com.vitalmovs.dtos.FisioterapeutaDTO;
 import com.vitalmovs.entities.Fisioterapeuta;
+import com.vitalmovs.repositories.FisioterapeutaRepository;
 import com.vitalmovs.services.FisioterapeutaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,4 +45,20 @@ public class FisioterapeutaController {
         fisioterapeutaService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/fisioterapeuta/buscar")
+    public ResponseEntity<List<Fisioterapeuta>> buscarPorNombreOApellido(@RequestParam String texto) {
+        List<Fisioterapeuta> result = fisioterapeutaService.buscarPorNombreOApellido(texto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @GetMapping("/fisioterapeuta/especialidad")
+    public ResponseEntity<List<Fisioterapeuta>> findByEspecialidad(@RequestParam String especialidad) {
+        List<Fisioterapeuta> result = fisioterapeutaService.findByEspecialidad(especialidad);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @GetMapping("/fisioterapeuta/especialidad-native")
+    public ResponseEntity<List<Fisioterapeuta>> findByEspecialidadNative(@RequestParam String especialidad) {
+        List<Fisioterapeuta> result = fisioterapeutaService.findByEspecialidadNative(especialidad);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
