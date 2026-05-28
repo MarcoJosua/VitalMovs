@@ -1,56 +1,105 @@
 package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.EstadisticaDTO;
-import com.vitalmovs.entities.PlanRehabilitacion;
+import com.vitalmovs.entities.PlanEjercicio;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
-import com.vitalmovs.repositories.PlanRehabilitacionRepository;
+import com.vitalmovs.repositories.PlanEjercicioRepository;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.vitalmovs.dtos.HistorialDolorDTO;
 import com.vitalmovs.entities.Estadistica;
 import com.vitalmovs.repositories.EstadisticaRepository;
 import com.vitalmovs.services.EstadisticaService;
 
+import java.time.LocalDate;
 import java.util.List;
-
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class EstadisticaServiceImpl implements EstadisticaService {
+
     @Autowired
     private EstadisticaRepository estadisticaRepository;
 
     @Autowired
-    private PlanRehabilitacionRepository planRehabilitacionRepository;
-
-    // ─── add ────────────────────────────────────────────────────────────────
+    private PlanEjercicioRepository planEjercicioRepository;
 
     @Override
     public Estadistica add(Estadistica estadistica) {
-        if (estadistica.getFecha() == null) {
-            throw new ValidationException("La fecha de la estadistica no puede estar en blanco");
-        }
-        if (estadistica.getObservacion().isBlank()) {
-            throw new ValidationException("La observacion de la estadistica no puede estar en blanco");
-        }
-        return estadisticaRepository.save(estadistica);
-    }
 
-    // ─── addDTO ──────────────────────────────────────────────────────────────
+        // Fecha
+        if (estadistica.getFecha() == null) {
+            throw new ValidationException("La fecha de la estadística no puede estar en blanco");
+        }
+
+        if (estadistica.getFecha().isAfter(LocalDate.now())) {
+            throw new ValidationException("La fecha de la estadística no puede ser futura");
+        }
+
+        // Nivel Dolor
+        if (estadistica.getNivelDolor() == null) {
+            throw new ValidationException("El nivel de dolor no puede estar en blanco");
+        }
+
+        if (estadistica.getNivelDolor() < 0 || estadistica.getNivelDolor() > 10) {
+            throw new ValidationException("El nivel de dolor debe estar entre 0 y 10");
+        }
+
+        //Nivel Dificultad
+        if (estadistica.getNivelDificultad() == null) {
+            throw new ValidationException("El nivel de dificultad no puede estar en blanco");
+        }
+
+        if (estadistica.getNivelDificultad() < 0 || estadistica.getNivelDificultad() > 10) {
+            throw new ValidationException("El nivel de dificultad debe estar entre 0 y 10");
+        }
+
+        // Repeticiones
+
+        if (estadistica.getRepeticionesRealizadas() == null) {
+            throw new ValidationException("Las repeticiones realizadas no pueden estar en blanco");
+        }
+
+        if (estadistica.getRepeticionesRealizadas() < 0) {
+            throw new ValidationException("Las repeticiones realizadas no pueden ser negativas");
+        }
+
+        // Duracion
+        if (estadistica.getDuracionRealizada() == null) {
+            throw new ValidationException("La duración realizada no puede estar en blanco");
+        }
+
+        if (estadistica.getDuracionRealizada() < 0) {
+            throw new ValidationException("La duración realizada no puede ser negativa");
+        }
+
+        // Observacion
+        if (estadistica.getObservacion() == null || estadistica.getObservacion().isBlank()) {
+            throw new ValidationException("La observación de la estadística no puede estar en blanco");
+        }
+
+        // Asociacion
+        if (estadistica.getPlanEjercicio() == null || estadistica.getPlanEjercicio().getId() == null) {
+            throw new ValidationException("La estadística debe estar asociada a un plan ejercicio");
+        }
+        estadistica = estadisticaRepository.save(estadistica);
+        return estadistica;
+    }
 
     @Override
     public EstadisticaDTO addDTO(EstadisticaDTO estadisticaDTO) {
-        PlanRehabilitacion planRehabilitacion = planRehabilitacionRepository
-                .findById(estadisticaDTO.getPlanRehabilitacionId()).orElse(null);
+
+        PlanEjercicio planEjercicio = planEjercicioRepository.findById(estadisticaDTO.getPlanEjercicioId()).orElse(null);
 
         Estadistica nuevaEstadistica = new Estadistica(
                 null,                               // id autogenerado
                 estadisticaDTO.getFecha(),
                 estadisticaDTO.getNivelDolor(),
+                estadisticaDTO.getNivelDificultad(),
+                estadisticaDTO.getRepeticionesRealizadas(),
+                estadisticaDTO.getDuracionRealizada(),
                 estadisticaDTO.getObservacion(),
-                planRehabilitacion
+                planEjercicio
         );
 
         nuevaEstadistica = add(nuevaEstadistica);
@@ -61,12 +110,8 @@ public class EstadisticaServiceImpl implements EstadisticaService {
     // ─── findById ────────────────────────────────────────────────────────────
 
     @Override
-    public EstadisticaDTO findById(Long id) {
-        Estadistica estadistica = estadisticaRepository.findById(id).orElse(null);
-        if (estadistica == null) {
-            throw new ResourceNotFoundException("No se encontro la estadistica con id: " + id.toString());
-        }
-        return toDTO(estadistica);
+    public Estadistica findById(Long id) {
+        return estadisticaRepository.findById(id).orElse(null);
     }
 
     // ─── update ──────────────────────────────────────────────────────────────
@@ -109,6 +154,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         return estadisticaRepository.findAll();
     }
 
+
     // ─── listAllDTO ──────────────────────────────────────────────────────────
 
     @Override
@@ -121,17 +167,20 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         return estadisticaDTOList;
     }
 
-    // ─── Helper: entidad → DTO ───────────────────────────────────────────────
-
     private EstadisticaDTO toDTO(Estadistica e) {
         return new EstadisticaDTO(
                 e.getId(),
                 e.getFecha(),
                 e.getNivelDolor(),
+                e.getNivelDificultad(),
+                e.getRepeticionesRealizadas(),
+                e.getDuracionRealizada(),
                 e.getObservacion(),
-                e.getPlanRehabilitacion() != null ? e.getPlanRehabilitacion().getId() : null
+                e.getPlanEjercicio() != null ? e.getPlanEjercicio().getId() : null
         );
     }
+
+    /*
 
     @Override
     public List<Estadistica> findByPlanNative(Long idPlan) {
@@ -143,4 +192,5 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         return estadisticaRepository.obtenerHistorialPorPlan(idPlan);
     }
 
+    */
 }

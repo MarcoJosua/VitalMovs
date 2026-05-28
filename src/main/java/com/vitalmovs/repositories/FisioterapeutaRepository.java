@@ -14,6 +14,8 @@ public interface FisioterapeutaRepository extends JpaRepository<Fisioterapeuta, 
     // Busca fisioterapeutas por especialidad (ignorando mayúsculas/minúsculas)
     List<Fisioterapeuta> findByEspecialidadIgnoreCase(String especialidad);
 
+    boolean existsByUser_Id(Long userid);
+
     // 2. JPQL QUERY — Query en lenguaje de objetos Java (usa nombres de entidad y atributos)
     // Busca fisioterapeutas cuyo nombre o apellido contenga el texto buscado
     @Query("SELECT f FROM Fisioterapeuta f WHERE LOWER(f.nombre) LIKE LOWER(CONCAT('%', :texto, '%')) OR LOWER(f.apellido) LIKE LOWER(CONCAT('%', :texto, '%'))")

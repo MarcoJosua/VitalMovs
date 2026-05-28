@@ -22,6 +22,8 @@ public class PlanRehabilitacion {
     private String nombre;
     private String descripcion;
     private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
+    private String estado;
 
     // RECIBE LA ID DE ASIGNACION (Es la tabla "Hija" en esta relación, tiene la FK)
     // Se usa @JoinColumn indicando el nombre de la columna en la BD
@@ -29,9 +31,6 @@ public class PlanRehabilitacion {
     @JoinColumn(name="asignacion_id")
     private Asignacion asignacion;
 
-    // ENVÍA SU ID A ESTADISTICA (Es la tabla "Padre" en esta relación, tiene la PK)
-    // Se usa mappedBy, FetchType.EAGER y una Lista según el ejemplo de tu clase
-    @OneToMany(mappedBy = "planRehabilitacion", fetch = FetchType.EAGER)
-    private List<Estadistica> estadistica;
+
 
 }

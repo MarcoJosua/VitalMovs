@@ -13,19 +13,19 @@ public interface EstadisticaService {
 
     public EstadisticaDTO addDTO(EstadisticaDTO estadisticaDTO);
 
-    public EstadisticaDTO findById(Long id);
+    public Estadistica findById(Long id);
 
     public List<Estadistica> findAll();
-    public List<EstadisticaDTO> listAllDTO();
 
+    public List<EstadisticaDTO> listAllDTO();
 
     public EstadisticaDTO update(EstadisticaDTO estadisticaDTO);
 
     public Estadistica delete(Long id);
 
-    List<Estadistica> findByPlanNative(Long idPlan);
+     // List<Estadistica> findByPlanNative(Long idPlan);
 
-    List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan);
+    // List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan);
 
 
 }

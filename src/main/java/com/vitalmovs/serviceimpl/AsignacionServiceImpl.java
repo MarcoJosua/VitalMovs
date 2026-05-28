@@ -60,9 +60,9 @@ public class AsignacionServiceImpl implements AsignacionService {
                 asignacionDTO.getMensaje(),
                 asignacionDTO.getFecha(),
                 asignacionDTO.getEstado(),
-                null,                            // planRehabilitacion (se asigna aparte si aplica)
                 paciente,
-                fisioterapeuta
+                fisioterapeuta,
+                null                          // planRehabilitacion (se asigna aparte si aplica)
         );
 
         nuevaAsignacion = add(nuevaAsignacion);
@@ -73,12 +73,8 @@ public class AsignacionServiceImpl implements AsignacionService {
     // ─── findById ────────────────────────────────────────────────────────────
 
     @Override
-    public AsignacionDTO findById(Long id) {
-        Asignacion asignacion = asignacionRepository.findById(id).orElse(null);
-        if (asignacion == null) {
-            throw new ResourceNotFoundException("No se encontro la asignacion con id: " + id.toString());
-        }
-        return toDTO(asignacion);
+    public Asignacion findById(Long id) {
+        return asignacionRepository.findById(id).orElse(null);
     }
 
     // ─── update (mismo patrón que foro.update) ───────────────────────────────

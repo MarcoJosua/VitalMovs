@@ -46,12 +46,6 @@ public class AsignacionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // GET http://localhost:8080/vitalmovs/asignaciones/1
-    @GetMapping("/asignaciones/{asignacionId}")
-    public ResponseEntity<AsignacionDTO> findById(@PathVariable("asignacionId") Long id) {
-        AsignacionDTO foundAsignacion = asignacionService.findById(id);
-        return new ResponseEntity<>(foundAsignacion, HttpStatus.FOUND);
-    }
 
     // GET http://localhost:8080/vitalmovs/asignaciones/paciente/1
     @GetMapping("/asignaciones/paciente/{pacienteId}")

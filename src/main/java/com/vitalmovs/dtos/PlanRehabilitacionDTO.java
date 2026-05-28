@@ -16,6 +16,8 @@ public class PlanRehabilitacionDTO {
     private String nombre;
     private String descripcion;
     private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
+    private String estado;
 
     private Long asignacionId;
 

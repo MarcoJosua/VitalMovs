@@ -36,6 +36,27 @@ public class ExceptionController {
         );
     }
 
+    @ExceptionHandler(IncompleteDataException.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ExceptionMessage incompleteDataException(IncompleteDataException e, WebRequest request) {
+        return new ExceptionMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                "IncompleteDataException",
+                e.getMessage(),
+                request.getDescription(false),
+                LocalDateTime.now()
+        );
+    }
 
-
+    @ExceptionHandler(KeyRepeatedDataExeception.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ExceptionMessage notFoundException(KeyRepeatedDataExeception e, WebRequest request) {
+        return new ExceptionMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                "KeyRepeatedDataExeception",
+                e.getMessage(),
+                request.getDescription(false),
+                LocalDateTime.now()
+        );
+    }
 }

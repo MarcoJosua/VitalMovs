@@ -3,6 +3,9 @@ package com.vitalmovs.serviceimpl;
 import com.vitalmovs.dtos.UserDTO;
 import com.vitalmovs.entities.Authority;
 import com.vitalmovs.entities.User;
+import com.vitalmovs.exceptions.IncompleteDataException;
+import com.vitalmovs.exceptions.KeyRepeatedDataExeception;
+import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.UserRepository;
 import com.vitalmovs.services.AuthorityService;
 import com.vitalmovs.services.UserService;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,12 +30,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        User userFound = userRepository.findById(id).orElse(null);
+        if(userFound == null){
+            throw new ResourceNotFoundException("User with Id: "+ id+" not found");
+        }
+        return userFound;
+    }
+
+    @Override
+    public UserDTO findByIdDTO(Long id) {
+        User user = findById(id);
+        UserDTO userFound = new UserDTO(user.getId(), user.getUsername(), user.getPassword(),
+                user.getAuthorities()
+                        .stream()
+                        .map( a-> a.getName())
+                        .collect(Collectors.joining(";","",""))
+
+        );
+        return userFound;
     }
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        User userFound = userRepository.findByUsername(username);
+        if(userFound == null){
+            throw new ResourceNotFoundException("User with Username: "+ username+" not found");
+        }
+        return userFound;
     }
 
 
@@ -49,16 +74,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO add(UserDTO userDTO) {
+    public User add(UserDTO userDTO) {
+
+        if (userDTO.getUsername()==null || userDTO.getUsername().isBlank()) {
+            throw new IncompleteDataException("Username can not be empty");
+        }
+        if (userDTO.getPassword()==null || userDTO.getPassword().isBlank()) {
+            throw new IncompleteDataException("Password can not be empty");
+        }
+        if (userDTO.getAuthorities()==null||userDTO.getAuthorities().isBlank()) {
+            throw new IncompleteDataException("Authorities can not be empty");
+        }
+        User newUser = new User(
+                null, userDTO.getUsername(), userDTO.getPassword(), true, null
+        );
 
         List<Authority> authorityList = authoritiesFromString(userDTO.getAuthorities());
+        newUser.setAuthorities(authorityList);
 
-        User newUser = new User(null, userDTO.getUsername(),
-                new BCryptPasswordEncoder().encode(userDTO.getPassword()),
-                true, authorityList);
+        return add(newUser);
+    }
 
-        newUser = userRepository.save(newUser);
-        userDTO.setId(newUser.getId());
-        return userDTO;
+    @Override
+    public User add(User user) {
+
+        User userFound = userRepository.findByUsername(user.getUsername());
+        if(userFound != null){
+            throw new KeyRepeatedDataExeception("Username: "+ user.getUsername()+" is already registeted");
+        }
+
+        //Paso 1: Validar si el username y el password cumplen con los requisitos: minimo, maximo, tipos carecteres
+
+        //Paso 2: Encriptar el password
+        user.setPassword( new BCryptPasswordEncoder().encode(user.getPassword())  );
+
+        //Paso 3: Actualizar los campos adicionales segun tu logica de negocio
+        user.setEnabled(true);
+
+        return userRepository.save(user);
     }
 }

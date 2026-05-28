@@ -2,9 +2,9 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.PlanRehabilitacionDTO;
 import com.vitalmovs.entities.Asignacion;
-import com.vitalmovs.entities.Estadistica;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.AsignacionRepository;
+import com.vitalmovs.services.AsignacionService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,20 +22,49 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
     private PlanRehabilitacionRepository planRehabilitacionRepository;
 
     @Autowired
-    private AsignacionRepository asignacionRepository;
+    private AsignacionService asignacionService;
 
     // ─── add ────────────────────────────────────────────────────────────────
 
     @Override
     public PlanRehabilitacion add(PlanRehabilitacion planRehabilitacion) {
-        if (planRehabilitacion.getNombre().isBlank()) {
+
+        if (planRehabilitacion == null) {
+            throw new ValidationException("El plan de rehabilitación no puede ser nulo");
+        }
+
+        if (planRehabilitacion.getNombre() == null || planRehabilitacion.getNombre().isBlank()) {
             throw new ValidationException("El nombre del plan no puede estar en blanco");
         }
-        if (planRehabilitacion.getDescripcion().isBlank()) {
-            throw new ValidationException("La descripcion del plan no puede estar en blanco");
+
+        if (planRehabilitacion.getDescripcion() == null || planRehabilitacion.getDescripcion().isBlank()) {
+            throw new ValidationException("La descripción del plan no puede estar en blanco");
         }
+
         if (planRehabilitacion.getFecha_inicio() == null) {
             throw new ValidationException("La fecha de inicio del plan no puede estar en blanco");
+        }
+
+        if (planRehabilitacion.getFecha_fin() == null) {
+            throw new ValidationException("La fecha de fin del plan no puede estar en blanco");
+        }
+
+        if (planRehabilitacion.getFecha_fin().isBefore(planRehabilitacion.getFecha_inicio())) {
+            throw new ValidationException("La fecha de fin no puede ser anterior a la fecha de inicio");
+        }
+
+        if (planRehabilitacion.getEstado() == null || planRehabilitacion.getEstado().isBlank()) {
+            throw new ValidationException("El estado del plan no puede estar en blanco");
+        }
+
+        if (!planRehabilitacion.getEstado().equalsIgnoreCase("ACTIVO") &&
+                !planRehabilitacion.getEstado().equalsIgnoreCase("FINALIZADO") &&
+                !planRehabilitacion.getEstado().equalsIgnoreCase("CANCELADO")) {
+            throw new ValidationException("El estado del plan debe ser ACTIVO, FINALIZADO o CANCELADO");
+        }
+
+        if (planRehabilitacion.getAsignacion() == null || planRehabilitacion.getAsignacion().getId() == null) {
+            throw new ValidationException("El plan debe estar asociado a una asignación");
         }
         return planRehabilitacionRepository.save(planRehabilitacion);
     }
@@ -44,16 +73,16 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
 
     @Override
     public PlanRehabilitacionDTO addDTO(PlanRehabilitacionDTO planRehabilitacionDTO) {
-        Asignacion asignacion = asignacionRepository
-                .findById(planRehabilitacionDTO.getAsignacionId()).orElse(null);
+        Asignacion asignacion = asignacionService.findById(planRehabilitacionDTO.getAsignacionId());
 
         PlanRehabilitacion nuevoPlan = new PlanRehabilitacion(
                 null,                                    // id autogenerado
                 planRehabilitacionDTO.getNombre(),
                 planRehabilitacionDTO.getDescripcion(),
                 planRehabilitacionDTO.getFecha_inicio(),
-                asignacion,
-                null                                     // estadistica se agrega aparte
+                planRehabilitacionDTO.getFecha_fin(),
+                planRehabilitacionDTO.getEstado(),
+                asignacion
         );
 
         nuevoPlan = add(nuevoPlan);
@@ -64,12 +93,8 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
     // ─── findById ────────────────────────────────────────────────────────────
 
     @Override
-    public PlanRehabilitacionDTO findById(Long id) {
-        PlanRehabilitacion plan = planRehabilitacionRepository.findById(id).orElse(null);
-        if (plan == null) {
-            throw new ResourceNotFoundException("No se encontro el plan con id: " + id.toString());
-        }
-        return toDTO(plan);
+    public PlanRehabilitacion findById(Long id) {
+        return planRehabilitacionRepository.findById(id).orElse(null);
     }
 
     // ─── update ──────────────────────────────────────────────────────────────
@@ -95,8 +120,6 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
         return toDTO(foundPlan);
     }
 
-    // ─── delete ──────────────────────────────────────────────────────────────
-
     @Override
     public PlanRehabilitacion delete(Long id) {
         PlanRehabilitacion plan = planRehabilitacionRepository.findById(id).orElse(null);
@@ -106,24 +129,6 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
         planRehabilitacionRepository.delete(plan);
         return plan;
     }
-
-    // ─── findAll ─────────────────────────────────────────────────────────────
-
-    @Override
-    public List<Estadistica> findAll() {
-        // Según tu interface retorna List<Estadistica>, delegamos al repositorio de plan
-        // y extraemos las estadísticas de cada uno
-        List<PlanRehabilitacion> planes = planRehabilitacionRepository.findAll();
-        List<Estadistica> estadisticas = new ArrayList<>();
-        for (PlanRehabilitacion p : planes) {
-            if (p.getEstadistica() != null) {
-                estadisticas.addAll(p.getEstadistica());
-            }
-        }
-        return estadisticas;
-    }
-
-    // ─── listAllDTO ──────────────────────────────────────────────────────────
 
     @Override
     public List<PlanRehabilitacionDTO> listAllDTO() {
@@ -135,14 +140,14 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
         return planDTOList;
     }
 
-    // ─── Helper: entidad → DTO ───────────────────────────────────────────────
-
     private PlanRehabilitacionDTO toDTO(PlanRehabilitacion p) {
         return new PlanRehabilitacionDTO(
                 p.getId(),
                 p.getNombre(),
                 p.getDescripcion(),
                 p.getFecha_inicio(),
+                p.getFecha_fin(),
+                p.getEstado(),
                 p.getAsignacion() != null ? p.getAsignacion().getId() : null
         );
     }

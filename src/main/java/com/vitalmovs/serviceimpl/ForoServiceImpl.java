@@ -31,7 +31,6 @@ public class ForoServiceImpl implements ForoService {
         if (foro.getDescripcion().isBlank()) {
             throw new ValidationException("La descripcion del foro no puede estar en blanco");
         }
-
         if (!foroRepository.findByTitulo(foro.getTitulo()).isEmpty()) {
             //return null;
             throw new ValidationException("El titulo: "+ foro.getTitulo() + " ya esta registrado");
@@ -83,6 +82,9 @@ public class ForoServiceImpl implements ForoService {
 
     @Override
     public Foro update(Foro foro) {
+        if (foro.getId() == null) {
+            throw new ResourceNotFoundException("El id del foro es obligatorio para actualizar");
+        }
         Foro foundForo = findById(foro.getId());
         if (foundForo==null) {
             throw new ResourceNotFoundException("No se encontro el foro con id: "+ foro.getId().toString());

@@ -13,7 +13,10 @@ import java.time.LocalDate;
 public class EstadisticaDTO {
     private Long id;
     private LocalDate fecha;
-    private int nivelDolor;
+    private Integer nivelDolor;
+    private Integer nivelDificultad;
+    private Integer repeticionesRealizadas;
+    private Integer duracionRealizada;
     private String observacion;
-    private Long planRehabilitacionId;
+    private Long planEjercicioId;
 }

@@ -1,5 +1,6 @@
 package com.vitalmovs.controllers;
 
+import com.vitalmovs.dtos.ForoDTO;
 import com.vitalmovs.dtos.PublicacionDTO;
 import com.vitalmovs.entities.Publicacion;
 import com.vitalmovs.services.PublicacionService;
@@ -17,31 +18,37 @@ public class PublicacionController {
     @Autowired
     PublicacionService publicacionService;
 
-    @PostMapping("/publicaciones") //http://localhost:8080/vitalmovs/publicacion
+    @GetMapping("/publicaciones")   //http://localhost:8080/vitalmovs/publicaciones
+    public ResponseEntity<List<PublicacionDTO>> listAll() {
+        List<PublicacionDTO> foundPublicaciones = publicacionService.listAllDTO();
+        return new ResponseEntity<>(foundPublicaciones, HttpStatus.OK);
+    }
+
+    @PostMapping("/publicaciones") //http://localhost:8080/vitalmovs/publicaciones
     public ResponseEntity<PublicacionDTO> add(@RequestBody PublicacionDTO publicacionDTO){
         PublicacionDTO newPublicacionDto = publicacionService.addDTO(publicacionDTO);
         return new ResponseEntity<>(newPublicacionDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/publicaciones") //http://localhost:8080/vitalmovs/publicacion
+    @PutMapping("/publicaciones") //http://localhost:8080/vitalmovs/publicaciones
     public ResponseEntity<Publicacion> update(@RequestBody Publicacion publicacion){
         Publicacion updatedPublicacion = publicacionService.update(publicacion);
         return new ResponseEntity<>(updatedPublicacion, HttpStatus.OK);
     }
 
-    @DeleteMapping("/publicaciones/{publicacionId}")  //http://localhost:8080/vitalmovs/publicacion/1
+    @DeleteMapping("/publicaciones/{publicacionId}")  //http://localhost:8080/vitalmovs/publicaciones/1
     public ResponseEntity<HttpStatus> delete(@PathVariable("publicacionId") Long id) {
         publicacionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/publicaciones/{foroId}")   //http://localhost:8080/vitalmovs/foro/1/publicacion  <- un id en particular
+    @GetMapping("/publicaciones/{foroId}")   //http://localhost:8080/vitalmovs/publicaciones/1  <- un id en particular
     public ResponseEntity<List<PublicacionDTO>> listarPublicacionesPorForoFecha(@PathVariable("foroId") Long id) {
         List<PublicacionDTO> foundPublicaciones = publicacionService.listarPublicacionesPorForoFechaDTO(id);
-        return new ResponseEntity<>(foundPublicaciones, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundPublicaciones, HttpStatus.OK);
     }
 
-    @GetMapping("/publicaciones/relevancia/{foroId}")     //http://localhost:8080/vitalmovs/foro/1/publicaciones/relevancia
+    @GetMapping("/publicaciones/relevancia/{foroId}")     //http://localhost:8080/vitalmovs/publicaciones/relevancia/1
     public ResponseEntity<List<PublicacionDTO>> listarPublicacionesPorRelevancia(@PathVariable Long foroId) {
         List<PublicacionDTO> publicaciones =
                 publicacionService.listarPublicacionesPorRelevanciaDTO(foroId);

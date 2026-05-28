@@ -13,11 +13,9 @@ public interface PlanRehabilitacionService {
 
     public PlanRehabilitacionDTO addDTO(PlanRehabilitacionDTO planRehabilitacionDTO);
 
-    public PlanRehabilitacionDTO findById(Long id);
+    public PlanRehabilitacion findById(Long id);
 
-    public List<Estadistica> findAll();
     public List<PlanRehabilitacionDTO> listAllDTO();
-
 
     public PlanRehabilitacionDTO update(PlanRehabilitacionDTO planRehabilitacionDTO);
 

@@ -14,6 +14,8 @@ public interface PublicacionService {
     public Publicacion update(Publicacion publicacion);
     public void delete(Long id);
     List<PublicacionDTO> listarPublicacionesPorRelevanciaDTO(Long foroId);
+    public List<Publicacion> listAll();
+    public List<PublicacionDTO> listAllDTO();
 
 
 }

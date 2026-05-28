@@ -1,5 +1,6 @@
 package com.vitalmovs.serviceimpl;
 
+import com.vitalmovs.dtos.ForoDTO;
 import com.vitalmovs.dtos.PublicacionDTO;
 import com.vitalmovs.entities.Foro;
 import com.vitalmovs.entities.Paciente;
@@ -13,6 +14,7 @@ import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +38,9 @@ public class PublicacionServiceImpl implements PublicacionService {
         if (publicacion.getContenido().isBlank()) {
             throw new ValidationException("El contenido de la publicacion no puede estar en blanco");
         }
-        if (publicacion.getFechaPublicacion() == null) {
-            throw new ValidationException("La fecha de publicacion no puede estar en blanco");
-        }
+
+        // Fecha automática
+        publicacion.setFechaPublicacion(LocalDate.now());
 
         publicacion = publicacionRepository.save(publicacion);
         return publicacion;
@@ -53,7 +55,7 @@ public class PublicacionServiceImpl implements PublicacionService {
                 null,
                 publicacionDTO.getTitulo(),
                 publicacionDTO.getContenido(),
-                publicacionDTO.getFechaPublicacion(),
+                null,
                 foro,
                 paciente,
                 null
@@ -61,6 +63,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 
         newPublicacion = add(newPublicacion);
         publicacionDTO.setId(newPublicacion.getId());
+        publicacionDTO.setFechaPublicacion(newPublicacion.getFechaPublicacion());
         return publicacionDTO;
     }
 
@@ -69,10 +72,35 @@ public class PublicacionServiceImpl implements PublicacionService {
         return publicacionRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Publicacion> listAll() {
+        return publicacionRepository.findAll();
+    }
 
+    @Override
+    public List<PublicacionDTO> listAllDTO() {
+        List<Publicacion> publicacionList = listAll();
+        List<PublicacionDTO> publicacionDTOList = new ArrayList<>();
+
+        for (Publicacion p : publicacionList) {
+            publicacionDTOList.add(new PublicacionDTO(
+                    p.getId(),
+                    p.getTitulo(),
+                    p.getContenido(),
+                    p.getFechaPublicacion(),
+                    p.getForo() != null ? p.getForo().getId() : null,
+                    p.getPaciente() != null ? p.getPaciente().getId() : null
+            ));
+        }
+
+        return publicacionDTOList;
+    }
 
     @Override
     public Publicacion update(Publicacion publicacion) {
+        if (publicacion.getId() == null) {
+            throw new ResourceNotFoundException("El id de la publicacion es obligatoria para actualizar");
+        }
         Publicacion oldPublicacion = findById(publicacion.getId());
         if(oldPublicacion == null){
             throw new ResourceNotFoundException("No se encontro la publicacion con id: "+ publicacion.getId().toString());
@@ -83,10 +111,6 @@ public class PublicacionServiceImpl implements PublicacionService {
         if (publicacion.getContenido() != null && !publicacion.getContenido().isBlank()) {
             oldPublicacion.setContenido(publicacion.getContenido());
         }
-        if (publicacion.getFechaPublicacion() != null) {
-            oldPublicacion.setFechaPublicacion(publicacion.getFechaPublicacion());
-        }
-
         publicacion = publicacionRepository.save(oldPublicacion);
         return publicacion;
     }

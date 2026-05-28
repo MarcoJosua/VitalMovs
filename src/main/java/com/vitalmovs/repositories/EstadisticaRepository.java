@@ -11,14 +11,22 @@ import java.util.List;
 
 @Repository
 public interface EstadisticaRepository extends JpaRepository<Estadistica, Long> {
+
+    /*
     @Query("SELECT new com.vitalmovs.dtos.HistorialDolorDTO(p.nombre,e.fecha, e.nivelDolor,e.observacion) " +
             "FROM Estadistica e JOIN e.planRehabilitacion p " +
             "WHERE p.id = :idPlan " +
             "ORDER BY e.fecha DESC")
     List<HistorialDolorDTO> obtenerHistorialPorPlan(@Param("idPlan") Long idPlan);
 
+     */
+
+    /*
+
     @Query(value = "SELECT * FROM estadistica WHERE plan_rehabilitacion_id = :idPlan " +
             "ORDER BY fecha DESC", nativeQuery = true)
     List<Estadistica> findByPlanNative(@Param("idPlan") Long idPlan);
+
+     */
 
 }

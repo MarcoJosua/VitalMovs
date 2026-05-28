@@ -49,13 +49,8 @@ public class EstadisticaController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // GET http://localhost:8080/vitalmovs/estadisticas/1
-    @GetMapping("/estadisticas/{estadisticaId}")
-    public ResponseEntity<EstadisticaDTO> findById(@PathVariable("estadisticaId") Long id) {
-        EstadisticaDTO foundEstadistica = estadisticaService.findById(id);
-        return new ResponseEntity<>(foundEstadistica, HttpStatus.FOUND);
-    }
 
+    /*
     // GET http://localhost:8080/vitalmovs/estadisticas/plan/1
     @GetMapping("/estadisticas/plan/{planId}")
     public ResponseEntity<List<Estadistica>> findByPlan(@PathVariable Long planId) {
@@ -69,5 +64,7 @@ public class EstadisticaController {
         List<HistorialDolorDTO> historial = estadisticaService.obtenerHistorialPorPlan(planId);
         return new ResponseEntity<>(historial, HttpStatus.OK);
     }
+
+     */
 
 }

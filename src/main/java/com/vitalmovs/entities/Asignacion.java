@@ -18,16 +18,9 @@ public class Asignacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //siempre para que se autogenere las ids
     private Long id;
 
-
     private String mensaje;
     private LocalDate fecha;
     private String estado;
-
-    // Relación de Uno a Uno con PlanRehabilitacion (La PK está en esta tabla)
-    // Se usa mappedBy y FetchType.EAGER según el ejemplo de tu compañero para el lado de la PK
-    @OneToOne(mappedBy = "asignacion", fetch = FetchType.EAGER)
-    private PlanRehabilitacion planRehabilitacion;
-
 
     @ManyToOne
     @JoinColumn(name="paciente_id")
@@ -36,5 +29,10 @@ public class Asignacion {
     @ManyToOne
     @JoinColumn(name="fisioterapeuta_id")
     private Fisioterapeuta fisioterapeuta;
+
+    // Relación de Uno a Uno con PlanRehabilitacion (La PK está en esta tabla)
+    // Se usa mappedBy y FetchType.EAGER según el ejemplo de tu compañero para el lado de la PK
+    @OneToOne(mappedBy = "asignacion", fetch = FetchType.EAGER)
+    private PlanRehabilitacion planRehabilitacion;
 
 }

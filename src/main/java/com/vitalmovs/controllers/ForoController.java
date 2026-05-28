@@ -18,31 +18,31 @@ public class ForoController {
     @Autowired
     ForoService foroService;
 
-    @GetMapping("/foros")   //http://localhost:8080/vitalmovs/foros  <- un id en particular
+    @GetMapping("/foros")   //http://localhost:8080/vitalmovs/foros
     public ResponseEntity<List<ForoDTO>> listAll() {
         List<ForoDTO> foundForos = foroService.listAllDTO();
-        return new ResponseEntity<>(foundForos, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundForos, HttpStatus.OK);
     }
 
-    @PostMapping("/foros") //http://localhost:8080/vitalmovs/foro
+    @PostMapping("/foros") //http://localhost:8080/vitalmovs/foros
     public ResponseEntity<ForoDTO> add(@RequestBody ForoDTO foroDTO){
         ForoDTO newForoDto = foroService.addDTO(foroDTO);
         return new ResponseEntity<>(newForoDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/foros") //http://localhost:8080/vitalmovs/foro
+    @PutMapping("/foros") //http://localhost:8080/vitalmovs/foros
     public ResponseEntity<Foro> update(@RequestBody Foro foro){
         Foro updatedForo = foroService.update(foro);
         return new ResponseEntity<>(updatedForo, HttpStatus.OK);
     }
 
-    @DeleteMapping("/foros/{ForoId}")  //http://localhost:8080/vitalmovs/foro/1
+    @DeleteMapping("/foros/{ForoId}")  //http://localhost:8080/vitalmovs/foros/1
     public ResponseEntity<HttpStatus> delete(@PathVariable("ForoId") Long id) {
         foroService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/foros/{pacienteId}")  // http://localhost:8080/vitalmovs/3/foros
+    @GetMapping("/foros/{pacienteId}")  // http://localhost:8080/vitalmovs/foros/3
     public ResponseEntity<List<ForoVistaDTO>> listarForosVisiblesConResumenPorPaciente(@PathVariable Long pacienteId) {
         List<ForoVistaDTO> foros = foroService.listarForosVisiblesConResumenPorPaciente(pacienteId);
         return new ResponseEntity<>(foros, HttpStatus.OK);

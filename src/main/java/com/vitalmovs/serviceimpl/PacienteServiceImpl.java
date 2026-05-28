@@ -3,6 +3,7 @@ package com.vitalmovs.serviceimpl;
 import com.vitalmovs.dtos.PacienteDTO;
 import com.vitalmovs.entities.Paciente;
 import com.vitalmovs.entities.User;
+import com.vitalmovs.exceptions.KeyRepeatedDataExeception;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.PacienteRepository;
 import com.vitalmovs.services.PacienteService;
@@ -41,6 +42,7 @@ public class PacienteServiceImpl implements PacienteService {
         if (paciente.getUser() == null) {
             throw new ValidationException("El usuario asociado al paciente no puede estar en blanco");
         }
+
         paciente = pacienteRepository.save(paciente);
         return paciente;
     }

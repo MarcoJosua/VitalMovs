@@ -13,7 +13,7 @@ public interface AsignacionService {
 
     public AsignacionDTO addDTO(AsignacionDTO asignacionDTO);
 
-    public AsignacionDTO findById(Long id);
+    public Asignacion findById(Long id);
     public AsignacionDTO update(Asignacion asignacion);
     public void delete(Long id);
     public List<Asignacion> listAll();

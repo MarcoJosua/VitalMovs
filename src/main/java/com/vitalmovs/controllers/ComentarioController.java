@@ -17,25 +17,25 @@ public class ComentarioController {
     @Autowired
     ComentarioService comentarioService;
 
-    @GetMapping("/comentarios/publicacion/{publicacionId}")   //http://localhost:8080/vitalmovs/comentario/publicacion/2  <- un id en particular
+    @GetMapping("/comentarios/{publicacionId}")   //http://localhost:8080/vitalmovs/comentarios/1  <- un id en particular
     public ResponseEntity<List<ComentarioDTO>> findByPublicacionId(@PathVariable("publicacionId") Long id) {
         List<ComentarioDTO> foundComentarios = comentarioService.listByPublicacionIdDTO(id);
-        return new ResponseEntity<>(foundComentarios, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundComentarios, HttpStatus.OK);
     }
 
-    @PostMapping("/comentarios") //http://localhost:8080/vitalmovs/comentario
+    @PostMapping("/comentarios") //http://localhost:8080/vitalmovs/comentarios
     public ResponseEntity<ComentarioDTO> add(@RequestBody ComentarioDTO comentarioDTO){
         ComentarioDTO newComentarioDto = comentarioService.addDTO(comentarioDTO);
         return new ResponseEntity<>(newComentarioDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/comentarios") //http://localhost:8080/vitalmovs/comentario
+    @PutMapping("/comentarios") //http://localhost:8080/vitalmovs/comentarios
     public ResponseEntity<Comentario> update(@RequestBody Comentario comentario){
         Comentario updatedComentario = comentarioService.update(comentario);
         return new ResponseEntity<>(updatedComentario, HttpStatus.OK);
     }
 
-    @DeleteMapping("/comentarios/{comentarioId}")  //http://localhost:8080/vitalmovs/comentario/1
+    @DeleteMapping("/comentarios/{comentarioId}")  //http://localhost:8080/comentarios/1
     public ResponseEntity<HttpStatus> delete(@PathVariable("comentarioId") Long id) {
         comentarioService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

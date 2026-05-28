@@ -46,12 +46,4 @@ public class PlanRehabilitacionController {
         planRehabilitacionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    // GET http://localhost:8080/vitalmovs/planes/1
-    @GetMapping("/planes/{planId}")
-    public ResponseEntity<PlanRehabilitacionDTO> findById(@PathVariable("planId") Long id) {
-        PlanRehabilitacionDTO foundPlan = planRehabilitacionService.findById(id);
-        return new ResponseEntity<>(foundPlan, HttpStatus.FOUND);
-    }
-
 }

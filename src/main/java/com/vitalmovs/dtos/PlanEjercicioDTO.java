@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class PlanEjercicioDTO {
 
     private Long id;
+    private Integer series;
     private Integer repeticiones;
-    private String dias;
+    private Integer duracionRecomendada;
+    private String diaSemana;
     private Integer orden;
-    private Long planId;
+    private Long planRehabilitacionId;
     private Long ejercicioId;
 }

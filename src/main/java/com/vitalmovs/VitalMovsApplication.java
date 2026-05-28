@@ -363,6 +363,207 @@ public class VitalMovsApplication {
                     )
             );
 
+            // =========================
+            // 15. Crear asignaciones
+            // =========================
+
+            Asignacion asignacion1 = asignacionService.add(
+                    new Asignacion(
+                            null,
+                            "Solicito iniciar rehabilitación por lesión de muñeca.",
+                            LocalDate.of(2025, 1, 5),
+                            "ACEPTADO",
+                            paciente1,
+                            fisio1,
+                            null
+                    )
+            );
+
+            Asignacion asignacion2 = asignacionService.add(
+                    new Asignacion(
+                            null,
+                            "Necesito apoyo para recuperar movilidad de la pierna.",
+                            LocalDate.of(2025, 1, 6),
+                            "ACEPTADO",
+                            paciente3,
+                            fisio2,
+                            null
+                    )
+            );
+
+
+            // =========================
+            // 16. Crear planes de rehabilitación
+            // =========================
+
+            PlanRehabilitacion planMano = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
+                            null,
+                            "Plan de rehabilitación de muñeca",
+                            "Plan orientado a reducir dolor y mejorar la movilidad de la muñeca.",
+                            LocalDate.of(2025, 1, 7),
+                            LocalDate.of(2025, 2, 7),
+                            "ACTIVO",
+                            asignacion1
+                    )
+            );
+
+            PlanRehabilitacion planPierna = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
+                            null,
+                            "Plan de rehabilitación de pierna",
+                            "Plan orientado a fortalecer la pierna y mejorar la estabilidad al caminar.",
+                            LocalDate.of(2025, 1, 8),
+                            LocalDate.of(2025, 2, 8),
+                            "ACTIVO",
+                            asignacion2
+                    )
+            );
+
+
+            // =========================
+            // 17. Crear plan ejercicios
+            // =========================
+
+            PlanEjercicio planEjercicio1 = planEjercicioService.add(
+                    new PlanEjercicio(
+                            null,
+                            3,
+                            12,
+                            10,
+                            "LUNES",
+                            1,
+                            planMano,
+                            ejercicio1,
+                            null
+                    )
+            );
+
+            PlanEjercicio planEjercicio2 = planEjercicioService.add(
+                    new PlanEjercicio(
+                            null,
+                            3,
+                            10,
+                            8,
+                            "MIERCOLES",
+                            2,
+                            planMano,
+                            ejercicio2,
+                            null
+                    )
+            );
+
+            PlanEjercicio planEjercicio3 = planEjercicioService.add(
+                    new PlanEjercicio(
+                            null,
+                            3,
+                            15,
+                            12,
+                            "LUNES",
+                            1,
+                            planPierna,
+                            ejercicio3,
+                            null
+                    )
+            );
+
+            PlanEjercicio planEjercicio4 = planEjercicioService.add(
+                    new PlanEjercicio(
+                            null,
+                            2,
+                            10,
+                            15,
+                            "VIERNES",
+                            2,
+                            planPierna,
+                            ejercicio4,
+                            null
+                    )
+            );
+
+
+            // =========================
+            // 18. Crear estadísticas
+            // =========================
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 13),
+                            7,
+                            8,
+                            28,
+                            8,
+                            "Me costó completar todas las repeticiones por dolor en la muñeca.",
+                            planEjercicio1
+                    )
+            );
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 20),
+                            5,
+                            6,
+                            34,
+                            9,
+                            "Sentí menos dolor y pude realizar más repeticiones.",
+                            planEjercicio1
+                    )
+            );
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 15),
+                            6,
+                            7,
+                            25,
+                            7,
+                            "Tuve dificultad al cerrar la mano completamente.",
+                            planEjercicio2
+                    )
+            );
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 13),
+                            6,
+                            7,
+                            38,
+                            10,
+                            "Sentí cansancio al elevar la pierna, pero completé gran parte del ejercicio.",
+                            planEjercicio3
+                    )
+            );
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 20),
+                            4,
+                            5,
+                            45,
+                            12,
+                            "Mejoré la resistencia y tuve menos dolor al realizar el ejercicio.",
+                            planEjercicio3
+                    )
+            );
+
+            estadisticaService.add(
+                    new Estadistica(
+                            null,
+                            LocalDate.of(2025, 1, 17),
+                            5,
+                            6,
+                            18,
+                            13,
+                            "La marcha fue más estable, aunque todavía sentí algo de dificultad.",
+                            planEjercicio4
+                    )
+            );
+
 
         };
     }

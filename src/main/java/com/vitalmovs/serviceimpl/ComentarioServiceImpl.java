@@ -13,6 +13,7 @@ import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,8 @@ public class ComentarioServiceImpl implements ComentarioService {
         if (comentario.getContenido().isBlank()) {
             throw new ValidationException("El comentario en la publicacion no puede estar en blanco");
         }
-        if (comentario.getFechaComentario() == null) {
-            throw new ValidationException("La fecha de comentario no puede estar en blanco");
-        }
+        // Fecha automática
+        comentario.setFechaComentario(LocalDate.now());
         comentario = comentarioRepository.save(comentario);
         return comentario;
     }
@@ -47,13 +47,14 @@ public class ComentarioServiceImpl implements ComentarioService {
         Comentario newComentario = new Comentario(
                 null,
                 comentarioDTO.getContenido(),
-                comentarioDTO.getFechaComentario(),
+                null,
                 publicacion,
                 paciente
         );
 
         newComentario = add(newComentario);
         comentarioDTO.setId(newComentario.getId());
+        comentarioDTO.setFechaComentario(newComentario.getFechaComentario());
         return comentarioDTO;
     }
 
@@ -85,15 +86,15 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     public Comentario update(Comentario comentario) {
+        if (comentario.getId() == null) {
+            throw new ResourceNotFoundException("El id del comentario es obligatorio para actualizar");
+        }
         Comentario foundComentario = findById(comentario.getId());
         if(foundComentario == null){
             throw new ResourceNotFoundException("No se encontro el comentario con id: "+ comentario.getId().toString());
         }
         if (comentario.getContenido() != null && !comentario.getContenido().isBlank()) {
             foundComentario.setContenido(comentario.getContenido());
-        }
-        if (comentario.getFechaComentario() != null) {
-            foundComentario.setFechaComentario(comentario.getFechaComentario());
         }
         comentario = comentarioRepository.save(foundComentario);
         return comentario;
