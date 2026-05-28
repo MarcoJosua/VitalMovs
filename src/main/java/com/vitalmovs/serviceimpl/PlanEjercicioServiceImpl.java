@@ -6,7 +6,6 @@ import com.vitalmovs.entities.PlanEjercicio;
 import com.vitalmovs.entities.PlanRehabilitacion;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.PlanEjercicioRepository;
-import com.vitalmovs.repositories.PlanRehabilitacionRepository;
 import com.vitalmovs.services.EjercicioService;
 import com.vitalmovs.services.PlanEjercicioService;
 import com.vitalmovs.services.PlanRehabilitacionService;

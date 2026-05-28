@@ -31,8 +31,6 @@ public class AsignacionServiceImpl implements AsignacionService {
     @Autowired
     private FisioterapeutaService fisioterapeutaService;
 
-    // ─── add (entidad directa, igual que foro.add) ───────────────────────────
-
     @Override
     public Asignacion add(Asignacion asignacion) {
         if (asignacion.getMensaje().isBlank()) {
@@ -46,8 +44,6 @@ public class AsignacionServiceImpl implements AsignacionService {
         }
         return asignacionRepository.save(asignacion);
     }
-
-    // ─── addDTO (igual que foro.addDTO) ──────────────────────────────────────
 
     @Override
     public AsignacionDTO addDTO(AsignacionDTO asignacionDTO) {
@@ -70,14 +66,11 @@ public class AsignacionServiceImpl implements AsignacionService {
         return asignacionDTO;
     }
 
-    // ─── findById ────────────────────────────────────────────────────────────
 
     @Override
     public Asignacion findById(Long id) {
         return asignacionRepository.findById(id).orElse(null);
     }
-
-    // ─── update (mismo patrón que foro.update) ───────────────────────────────
 
     @Override
     public AsignacionDTO update(Asignacion asignacion) {
@@ -98,7 +91,6 @@ public class AsignacionServiceImpl implements AsignacionService {
         return toDTO(foundAsignacion);
     }
 
-    // ─── delete (mismo patrón que foro.delete) ───────────────────────────────
 
     @Override
     public void delete(Long id) {
@@ -109,14 +101,11 @@ public class AsignacionServiceImpl implements AsignacionService {
         asignacionRepository.delete(asignacion);
     }
 
-    // ─── listAll ─────────────────────────────────────────────────────────────
 
     @Override
     public List<Asignacion> listAll() {
         return asignacionRepository.findAll();
     }
-
-    // ─── listAllDTO (mismo patrón que foro.listAllDTO) ───────────────────────
 
     @Override
     public List<AsignacionDTO> listAllDTO() {
@@ -127,8 +116,6 @@ public class AsignacionServiceImpl implements AsignacionService {
         }
         return asignacionDTOList;
     }
-
-    // ─── Helper: entidad → DTO ───────────────────────────────────────────────
 
     private AsignacionDTO toDTO(Asignacion a) {
         return new AsignacionDTO(

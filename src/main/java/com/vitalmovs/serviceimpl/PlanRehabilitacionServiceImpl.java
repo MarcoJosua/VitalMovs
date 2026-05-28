@@ -3,7 +3,6 @@ package com.vitalmovs.serviceimpl;
 import com.vitalmovs.dtos.PlanRehabilitacionDTO;
 import com.vitalmovs.entities.Asignacion;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
-import com.vitalmovs.repositories.AsignacionRepository;
 import com.vitalmovs.services.AsignacionService;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
