@@ -19,11 +19,14 @@ public class PlanRehabilitacionController {
     @Autowired
     PlanRehabilitacionService planRehabilitacionService;
 
+    //Listar por id de paciente
+    //Listar por id de fisioterapeuta
+
     // GET http://localhost:8080/vitalmovs/planes
     @GetMapping("/planes")
     public ResponseEntity<List<PlanRehabilitacionDTO>> listAll() {
         List<PlanRehabilitacionDTO> foundPlanes = planRehabilitacionService.listAllDTO();
-        return new ResponseEntity<>(foundPlanes, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundPlanes, HttpStatus.OK);
     }
 
     // POST http://localhost:8080/vitalmovs/planes
@@ -45,5 +48,18 @@ public class PlanRehabilitacionController {
     public ResponseEntity<HttpStatus> delete(@PathVariable("planId") Long id) {
         planRehabilitacionService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/planes/usuario/{userId}")
+    public ResponseEntity<List<PlanRehabilitacionDTO>> listByUserId(@PathVariable Long userId) {
+        List<PlanRehabilitacionDTO> planes = planRehabilitacionService.listByUserIdDTO(userId);
+        return new ResponseEntity<>(planes, HttpStatus.OK);
+    }
+
+    // GET http://localhost:8080/vitalmovs/planes/1
+    @GetMapping("/planes/{planId}")
+    public ResponseEntity<PlanRehabilitacionDTO> findById(@PathVariable Long planId) {
+        PlanRehabilitacionDTO plan = planRehabilitacionService.findByIdDTO(planId);
+        return new ResponseEntity<>(plan, HttpStatus.OK);
     }
 }

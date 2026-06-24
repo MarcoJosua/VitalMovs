@@ -47,10 +47,10 @@ public class AsignacionController {
     }
 
 
-    // GET http://localhost:8080/vitalmovs/asignaciones/paciente/1
-    @GetMapping("/asignaciones/paciente/{pacienteId}")
-    public ResponseEntity<List<Asignacion>> findByPaciente(@PathVariable Long pacienteId) {
-        List<Asignacion> asignaciones = asignacionService.findByPacienteId(pacienteId);
+    // GET http://localhost:8080/vitalmovs/asignaciones/fisioterapeuta/2
+    @GetMapping("/asignaciones/fisioterapeuta/{fisioterapeutaId}")
+    public ResponseEntity<List<AsignacionDTO>> findByFisioterapeuta(@PathVariable Long fisioterapeutaId) {
+        List<AsignacionDTO> asignaciones = asignacionService.findByFisioterapeutaId(fisioterapeutaId);
         return new ResponseEntity<>(asignaciones, HttpStatus.OK);
     }
 

@@ -17,4 +17,6 @@ public class AsignacionDTO {
     private Long pacienteId;
     private Long fisioterapeutaId;
     private Long planRehabilitacionId;
+    private String nombrePaciente;
+    private String nombreFisioterapeuta;
 }

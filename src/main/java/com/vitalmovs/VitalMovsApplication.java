@@ -364,39 +364,69 @@ public class VitalMovsApplication {
             );
 
             // =========================
-            // 15. Crear asignaciones
-            // =========================
+// 15. Crear asignaciones
+// =========================
 
+// FISIO 1 - asignaciones aceptadas con plan
             Asignacion asignacion1 = asignacionService.add(
-                    new Asignacion(
-                            null,
-                            "Solicito iniciar rehabilitación por lesión de muñeca.",
-                            LocalDate.of(2025, 1, 5),
-                            "ACEPTADO",
-                            paciente1,
-                            fisio1,
-                            null
-                    )
+                    new Asignacion(null, "Solicito rehabilitación por lesión de muñeca.", LocalDate.of(2025, 1, 5), "ACEPTADO", paciente1, fisio1, null)
             );
 
             Asignacion asignacion2 = asignacionService.add(
-                    new Asignacion(
-                            null,
-                            "Necesito apoyo para recuperar movilidad de la pierna.",
-                            LocalDate.of(2025, 1, 6),
-                            "ACEPTADO",
-                            paciente3,
-                            fisio2,
-                            null
-                    )
+                    new Asignacion(null, "Necesito recuperar fuerza en la mano derecha.", LocalDate.of(2025, 1, 6), "ACEPTADO", paciente2, fisio1, null)
+            );
+
+            Asignacion asignacion3 = asignacionService.add(
+                    new Asignacion(null, "Tengo dolor al mover los dedos después de una caída.", LocalDate.of(2025, 1, 7), "ACEPTADO", paciente1, fisio1, null)
+            );
+
+// FISIO 1 - aceptadas sin plan, deben aparecer en tu pantalla /planes
+            Asignacion asignacion4 = asignacionService.add(
+                    new Asignacion(null, "Solicito evaluación para iniciar terapia de muñeca.", LocalDate.of(2025, 1, 10), "ACEPTADO", paciente2, fisio1, null)
+            );
+
+            Asignacion asignacion5 = asignacionService.add(
+                    new Asignacion(null, "Necesito apoyo para mejorar movilidad de la mano.", LocalDate.of(2025, 1, 11), "ACEPTADO", paciente1, fisio1, null)
+            );
+
+// FISIO 1 - pendientes y rechazadas, no deben salir como aceptadas sin plan
+            Asignacion asignacion6 = asignacionService.add(
+                    new Asignacion(null, "Solicitud pendiente para evaluación inicial.", LocalDate.of(2025, 1, 12), "PENDIENTE", paciente2, fisio1, null)
+            );
+
+            Asignacion asignacion7 = asignacionService.add(
+                    new Asignacion(null, "Solicitud rechazada por disponibilidad.", LocalDate.of(2025, 1, 13), "RECHAZADO", paciente1, fisio1, null)
+            );
+
+// FISIO 2 - asignaciones con plan
+            Asignacion asignacion8 = asignacionService.add(
+                    new Asignacion(null, "Necesito apoyo para recuperar movilidad de la pierna.", LocalDate.of(2025, 1, 6), "ACEPTADO", paciente3, fisio2, null)
+            );
+
+            Asignacion asignacion9 = asignacionService.add(
+                    new Asignacion(null, "Busco fortalecer la pierna después de una lesión.", LocalDate.of(2025, 1, 8), "ACEPTADO", paciente3, fisio2, null)
+            );
+
+// FISIO 2 - aceptada sin plan
+            Asignacion asignacion10 = asignacionService.add(
+                    new Asignacion(null, "Deseo iniciar terapia de marcha controlada.", LocalDate.of(2025, 1, 14), "ACEPTADO", paciente3, fisio2, null)
+            );
+
+// FISIO 3 - mezcla general
+            Asignacion asignacion11 = asignacionService.add(
+                    new Asignacion(null, "Necesito una segunda evaluación por dolor de mano.", LocalDate.of(2025, 1, 15), "ACEPTADO", paciente2, fisio3, null)
+            );
+
+            Asignacion asignacion12 = asignacionService.add(
+                    new Asignacion(null, "Solicitud pendiente para terapia general.", LocalDate.of(2025, 1, 16), "PENDIENTE", paciente3, fisio3, null)
             );
 
 
-            // =========================
-            // 16. Crear planes de rehabilitación
-            // =========================
+// =========================
+// 16. Crear planes de rehabilitación
+// =========================
 
-            PlanRehabilitacion planMano = planRehabilitacionService.add(
+            PlanRehabilitacion plan1 = planRehabilitacionService.add(
                     new PlanRehabilitacion(
                             null,
                             "Plan de rehabilitación de muñeca",
@@ -408,7 +438,31 @@ public class VitalMovsApplication {
                     )
             );
 
-            PlanRehabilitacion planPierna = planRehabilitacionService.add(
+            PlanRehabilitacion plan2 = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
+                            null,
+                            "Plan de fortalecimiento de mano",
+                            "Plan para recuperar fuerza y coordinación en la mano derecha.",
+                            LocalDate.of(2025, 1, 9),
+                            LocalDate.of(2025, 2, 9),
+                            "ACTIVO",
+                            asignacion2
+                    )
+            );
+
+            PlanRehabilitacion plan3 = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
+                            null,
+                            "Plan de movilidad de dedos",
+                            "Plan enfocado en mejorar apertura, cierre y control de los dedos.",
+                            LocalDate.of(2025, 1, 10),
+                            LocalDate.of(2025, 2, 10),
+                            "FINALIZADO",
+                            asignacion3
+                    )
+            );
+
+            PlanRehabilitacion plan4 = planRehabilitacionService.add(
                     new PlanRehabilitacion(
                             null,
                             "Plan de rehabilitación de pierna",
@@ -416,153 +470,141 @@ public class VitalMovsApplication {
                             LocalDate.of(2025, 1, 8),
                             LocalDate.of(2025, 2, 8),
                             "ACTIVO",
-                            asignacion2
+                            asignacion8
                     )
             );
 
-
-            // =========================
-            // 17. Crear plan ejercicios
-            // =========================
-
-            PlanEjercicio planEjercicio1 = planEjercicioService.add(
-                    new PlanEjercicio(
+            PlanRehabilitacion plan5 = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
                             null,
-                            3,
-                            12,
-                            10,
-                            "LUNES",
-                            1,
-                            planMano,
-                            ejercicio1,
-                            null
+                            "Plan de fortalecimiento muscular de pierna",
+                            "Plan progresivo para mejorar resistencia y fuerza en miembros inferiores.",
+                            LocalDate.of(2025, 1, 12),
+                            LocalDate.of(2025, 2, 12),
+                            "ACTIVO",
+                            asignacion9
                     )
             );
 
-            PlanEjercicio planEjercicio2 = planEjercicioService.add(
-                    new PlanEjercicio(
+            PlanRehabilitacion plan6 = planRehabilitacionService.add(
+                    new PlanRehabilitacion(
                             null,
-                            3,
-                            10,
-                            8,
-                            "MIERCOLES",
-                            2,
-                            planMano,
-                            ejercicio2,
-                            null
-                    )
-            );
-
-            PlanEjercicio planEjercicio3 = planEjercicioService.add(
-                    new PlanEjercicio(
-                            null,
-                            3,
-                            15,
-                            12,
-                            "LUNES",
-                            1,
-                            planPierna,
-                            ejercicio3,
-                            null
-                    )
-            );
-
-            PlanEjercicio planEjercicio4 = planEjercicioService.add(
-                    new PlanEjercicio(
-                            null,
-                            2,
-                            10,
-                            15,
-                            "VIERNES",
-                            2,
-                            planPierna,
-                            ejercicio4,
-                            null
-                    )
-            );
-
-
-            // =========================
-            // 18. Crear estadísticas
-            // =========================
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
-                            LocalDate.of(2025, 1, 13),
-                            7,
-                            8,
-                            28,
-                            8,
-                            "Me costó completar todas las repeticiones por dolor en la muñeca.",
-                            planEjercicio1
-                    )
-            );
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
-                            LocalDate.of(2025, 1, 20),
-                            5,
-                            6,
-                            34,
-                            9,
-                            "Sentí menos dolor y pude realizar más repeticiones.",
-                            planEjercicio1
-                    )
-            );
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
-                            LocalDate.of(2025, 1, 15),
-                            6,
-                            7,
-                            25,
-                            7,
-                            "Tuve dificultad al cerrar la mano completamente.",
-                            planEjercicio2
-                    )
-            );
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
-                            LocalDate.of(2025, 1, 13),
-                            6,
-                            7,
-                            38,
-                            10,
-                            "Sentí cansancio al elevar la pierna, pero completé gran parte del ejercicio.",
-                            planEjercicio3
-                    )
-            );
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
-                            LocalDate.of(2025, 1, 20),
-                            4,
-                            5,
-                            45,
-                            12,
-                            "Mejoré la resistencia y tuve menos dolor al realizar el ejercicio.",
-                            planEjercicio3
-                    )
-            );
-
-            estadisticaService.add(
-                    new Estadistica(
-                            null,
+                            "Plan de recuperación funcional de mano",
+                            "Plan para recuperar función básica de la mano y reducir molestias.",
                             LocalDate.of(2025, 1, 17),
-                            5,
-                            6,
-                            18,
-                            13,
-                            "La marcha fue más estable, aunque todavía sentí algo de dificultad.",
-                            planEjercicio4
+                            LocalDate.of(2025, 2, 17),
+                            "ACTIVO",
+                            asignacion11
                     )
             );
+
+
+// =========================
+// 17. Crear plan ejercicios
+// =========================
+
+// Plan 1 - muñeca
+            PlanEjercicio pe1 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 10, "LUNES", 1, plan1, ejercicio1, null)
+            );
+
+            PlanEjercicio pe2 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan1, ejercicio2, null)
+            );
+
+            PlanEjercicio pe3 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 15, 10, "VIERNES", 1, plan1, ejercicio1, null)
+            );
+
+// Plan 2 - mano
+            PlanEjercicio pe4 = planEjercicioService.add(
+                    new PlanEjercicio(null, 4, 10, 12, "MARTES", 1, plan2, ejercicio2, null)
+            );
+
+            PlanEjercicio pe5 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 10, "JUEVES", 1, plan2, ejercicio1, null)
+            );
+
+// Plan 3 - dedos finalizado
+            PlanEjercicio pe6 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 8, 8, "LUNES", 1, plan3, ejercicio2, null)
+            );
+
+            PlanEjercicio pe7 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 9, "MIERCOLES", 1, plan3, ejercicio2, null)
+            );
+
+// Plan 4 - pierna
+            PlanEjercicio pe8 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 15, 12, "LUNES", 1, plan4, ejercicio3, null)
+            );
+
+            PlanEjercicio pe9 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 10, 15, "MIERCOLES", 1, plan4, ejercicio4, null)
+            );
+
+            PlanEjercicio pe10 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 14, "VIERNES", 1, plan4, ejercicio3, null)
+            );
+
+// Plan 5 - fortalecimiento pierna
+            PlanEjercicio pe11 = planEjercicioService.add(
+                    new PlanEjercicio(null, 4, 12, 15, "MARTES", 1, plan5, ejercicio3, null)
+            );
+
+            PlanEjercicio pe12 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 18, "JUEVES", 1, plan5, ejercicio4, null)
+            );
+
+// Plan 6 - mano fisio 3
+            PlanEjercicio pe13 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 10, "LUNES", 1, plan6, ejercicio1, null)
+            );
+
+            PlanEjercicio pe14 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan6, ejercicio2, null)
+            );
+
+            PlanEjercicio pe15 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 12, 10, "SABADO", 1, plan6, ejercicio1, null)
+            );
+
+
+// =========================
+// 18. Crear estadísticas
+// =========================
+
+// Estadísticas plan 1
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 13), 7, 8, 28, 8, "Me costó completar todas las repeticiones por dolor en la muñeca.", pe1));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 20), 5, 6, 34, 9, "Sentí menos dolor y pude realizar más repeticiones.", pe1));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 15), 6, 7, 25, 7, "Tuve dificultad al cerrar la mano completamente.", pe2));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 22), 4, 5, 29, 8, "La movilidad mejoró durante la sesión.", pe2));
+
+// Estadísticas plan 2
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 16), 6, 7, 30, 10, "Sentí cansancio en los dedos al terminar.", pe4));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 23), 5, 6, 35, 11, "Pude completar más repeticiones que la semana anterior.", pe4));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 18), 4, 5, 32, 9, "Ejercicio tolerable, con poca molestia.", pe5));
+
+// Estadísticas plan 3
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 13), 6, 6, 22, 7, "Todavía hay rigidez en los dedos.", pe6));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 20), 3, 4, 28, 8, "Mejoré el cierre de la mano.", pe6));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 22), 2, 3, 30, 9, "Pude completar la rutina sin dolor fuerte.", pe7));
+
+// Estadísticas plan 4
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 13), 6, 7, 38, 10, "Sentí cansancio al elevar la pierna.", pe8));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 20), 4, 5, 45, 12, "Mejoré la resistencia y tuve menos dolor.", pe8));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 17), 5, 6, 18, 13, "La marcha fue más estable, aunque con dificultad.", pe9));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 24), 3, 4, 22, 15, "Pude caminar con mayor control.", pe9));
+
+// Estadísticas plan 5
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 21), 5, 6, 40, 14, "Sentí fatiga muscular moderada.", pe11));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 28), 3, 4, 48, 15, "La fuerza mejoró en comparación con la sesión anterior.", pe11));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 23), 4, 5, 25, 16, "La marcha controlada fue más fluida.", pe12));
+
+// Estadísticas plan 6
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 24), 6, 7, 26, 8, "Dolor moderado al iniciar la rutina.", pe13));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 31), 4, 5, 33, 9, "Mejor respuesta al ejercicio de muñeca.", pe13));
+            estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 29), 5, 6, 24, 7, "Dificultad leve al abrir y cerrar la mano.", pe14));
 
 
         };

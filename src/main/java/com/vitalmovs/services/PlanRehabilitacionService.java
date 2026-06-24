@@ -15,9 +15,13 @@ public interface PlanRehabilitacionService {
 
     public PlanRehabilitacion findById(Long id);
 
+    public PlanRehabilitacionDTO findByIdDTO(Long id);
+
     public List<PlanRehabilitacionDTO> listAllDTO();
 
     public PlanRehabilitacionDTO update(PlanRehabilitacionDTO planRehabilitacionDTO);
 
     public PlanRehabilitacion delete(Long id);
+
+    List<PlanRehabilitacionDTO> listByUserIdDTO(Long userId);
 }

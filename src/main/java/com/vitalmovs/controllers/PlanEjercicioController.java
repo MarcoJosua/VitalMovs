@@ -17,11 +17,33 @@ public class PlanEjercicioController {
     @Autowired
     PlanEjercicioService planEjercicioService;
 
-    @GetMapping("/planEjercicio/planEjercicios")
+    //Debe haber uno listar por plan rehabilitacion
+
+
+    @PostMapping("/planEjercicio")
+    public ResponseEntity<PlanEjercicioDTO> add(@RequestBody PlanEjercicioDTO planEjercicioDTO) {
+        PlanEjercicioDTO newPlanEjercicioDTO = planEjercicioService.addDTO(planEjercicioDTO);
+        return new ResponseEntity<>(newPlanEjercicioDTO, HttpStatus.CREATED);
+    }
+    @PutMapping("/planEjercicio")
+    public ResponseEntity<PlanEjercicio> update(@RequestBody PlanEjercicio planEjercicio) {
+        PlanEjercicio updatedPlanEjercicio = planEjercicioService.update(planEjercicio);
+        return new ResponseEntity<>(updatedPlanEjercicio, HttpStatus.OK);
+    }
+    @DeleteMapping("/planEjercicio/{planEjercicioId}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("planEjercicioId") Long id) {
+        planEjercicioService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/planEjercicio")
     public ResponseEntity<List<PlanEjercicioDTO>> listAll() {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listAllDTO();
         return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.OK);
     }
+
     @GetMapping("/planEjercicio/plan/{planId}")
     public ResponseEntity<List<PlanEjercicioDTO>> listByPlanId(@PathVariable("planId") Long planId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByPlanIdDTO(planId);
@@ -31,21 +53,6 @@ public class PlanEjercicioController {
     public ResponseEntity<List<PlanEjercicioDTO>> listByEjercicioId(@PathVariable("ejercicioId") Long ejercicioId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByEjercicioIdDTO(ejercicioId);
         return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.FOUND);
-    }
-    @PostMapping("/PlanEjercicio")
-    public ResponseEntity<PlanEjercicioDTO> add(@RequestBody PlanEjercicioDTO planEjercicioDTO) {
-        PlanEjercicioDTO newPlanEjercicioDTO = planEjercicioService.addDTO(planEjercicioDTO);
-        return new ResponseEntity<>(newPlanEjercicioDTO, HttpStatus.CREATED);
-    }
-    @PutMapping("/PlanEjercicio")
-    public ResponseEntity<PlanEjercicio> update(@RequestBody PlanEjercicio planEjercicio) {
-        PlanEjercicio updatedPlanEjercicio = planEjercicioService.update(planEjercicio);
-        return new ResponseEntity<>(updatedPlanEjercicio, HttpStatus.OK);
-    }
-    @DeleteMapping("/PlanEjercicio/{PlanEjercicioId}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("PlanEjercicioId") Long id) {
-        planEjercicioService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/planEjercicio/repeticiones/{repeticiones}")
     public ResponseEntity<List<PlanEjercicioDTO>> buscarPorRepeticionesMayoresOIguales(@PathVariable("repeticiones") Integer repeticiones) {
@@ -67,4 +74,5 @@ public class PlanEjercicioController {
         List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorDiaNativeDTO(dia);
         return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
     }
+
 }

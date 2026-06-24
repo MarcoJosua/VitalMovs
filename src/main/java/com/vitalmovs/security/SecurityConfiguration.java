@@ -80,8 +80,9 @@ public class SecurityConfiguration {
 
                 (auth) -> auth
 
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        //.anyRequest().permitAll()
+                        //.requestMatchers(AUTH_WHITELIST).permitAll()
+                        .anyRequest().permitAll()
+                        /*
                         //Authorization Foro
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/foros/{pacienteId}").hasAnyAuthority("ROLE_ADMIN","ROLE_PACIENTE")
                         .requestMatchers(HttpMethod.GET,"/vitalmovs/foros/**").hasAnyAuthority("ROLE_ADMIN")
@@ -184,6 +185,9 @@ public class SecurityConfiguration {
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_FISIOTERAPEUTA","ROLE_PACIENTE")
             
                         .anyRequest().authenticated()
+
+
+                         */
 
         );
 

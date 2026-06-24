@@ -96,27 +96,55 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
         return planRehabilitacionRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public PlanRehabilitacionDTO findByIdDTO(Long id) {
+        PlanRehabilitacion plan = planRehabilitacionRepository.findById(id).orElse(null);
+
+        if (plan == null) {
+            throw new ResourceNotFoundException("No se encontró el plan con id: " + id);
+        }
+
+        return toDTO(plan);
+    }
+
     // ─── update ──────────────────────────────────────────────────────────────
 
     @Override
     public PlanRehabilitacionDTO update(PlanRehabilitacionDTO planRehabilitacionDTO) {
+
         PlanRehabilitacion foundPlan = planRehabilitacionRepository
-                .findById(planRehabilitacionDTO.getId()).orElse(null);
+                .findById(planRehabilitacionDTO.getId())
+                .orElse(null);
+
         if (foundPlan == null) {
-            throw new ResourceNotFoundException("No se encontro el plan con id: " + planRehabilitacionDTO.getId().toString());
+            throw new ResourceNotFoundException(
+                    "No se encontró el plan con id: " + planRehabilitacionDTO.getId()
+            );
         }
+
         if (planRehabilitacionDTO.getNombre() != null && !planRehabilitacionDTO.getNombre().isBlank()) {
             foundPlan.setNombre(planRehabilitacionDTO.getNombre());
         }
+
         if (planRehabilitacionDTO.getDescripcion() != null && !planRehabilitacionDTO.getDescripcion().isBlank()) {
             foundPlan.setDescripcion(planRehabilitacionDTO.getDescripcion());
         }
+
         if (planRehabilitacionDTO.getFecha_inicio() != null) {
             foundPlan.setFecha_inicio(planRehabilitacionDTO.getFecha_inicio());
         }
 
-        planRehabilitacionRepository.save(foundPlan);
-        return toDTO(foundPlan);
+        if (planRehabilitacionDTO.getFecha_fin() != null) {
+            foundPlan.setFecha_fin(planRehabilitacionDTO.getFecha_fin());
+        }
+
+        if (planRehabilitacionDTO.getEstado() != null && !planRehabilitacionDTO.getEstado().isBlank()) {
+            foundPlan.setEstado(planRehabilitacionDTO.getEstado());
+        }
+
+        PlanRehabilitacion updatedPlan = planRehabilitacionRepository.save(foundPlan);
+
+        return toDTO(updatedPlan);
     }
 
     @Override
@@ -127,6 +155,29 @@ public class PlanRehabilitacionServiceImpl implements PlanRehabilitacionService 
         }
         planRehabilitacionRepository.delete(plan);
         return plan;
+    }
+
+    @Override
+    public List<PlanRehabilitacionDTO> listByUserIdDTO(Long userId) {
+
+        List<PlanRehabilitacion> planes =
+                planRehabilitacionRepository.findByUserId(userId);
+
+        List<PlanRehabilitacionDTO> planesDTO = new ArrayList<>();
+
+        for (PlanRehabilitacion p : planes) {
+            planesDTO.add(new PlanRehabilitacionDTO(
+                    p.getId(),
+                    p.getNombre(),
+                    p.getDescripcion(),
+                    p.getFecha_inicio(),
+                    p.getFecha_fin(),
+                    p.getEstado(),
+                    p.getAsignacion() != null ? p.getAsignacion().getId() : null
+            ));
+        }
+
+        return planesDTO;
     }
 
     @Override

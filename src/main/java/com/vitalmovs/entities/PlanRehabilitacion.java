@@ -30,7 +30,4 @@ public class PlanRehabilitacion {
     @OneToOne
     @JoinColumn(name="asignacion_id")
     private Asignacion asignacion;
-
-
-
 }

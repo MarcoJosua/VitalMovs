@@ -18,7 +18,7 @@ public interface AsignacionService {
     public void delete(Long id);
     public List<Asignacion> listAll();
     public List<AsignacionDTO> listAllDTO();
-    List<Asignacion> findByPacienteId(Long pacienteId);
+    List<AsignacionDTO> findByFisioterapeutaId(Long fisioterapeutaId);
 
 
 }
