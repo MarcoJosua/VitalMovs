@@ -19,6 +19,11 @@ public class PlanEjercicioController {
 
     //Debe haber uno listar por plan rehabilitacion
 
+    @GetMapping("/planEjercicio")
+    public ResponseEntity<List<PlanEjercicioDTO>> listAll() {
+        List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listAllDTO();
+        return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.OK);
+    }
 
     @PostMapping("/planEjercicio")
     public ResponseEntity<PlanEjercicioDTO> add(@RequestBody PlanEjercicioDTO planEjercicioDTO) {
@@ -36,19 +41,25 @@ public class PlanEjercicioController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-    @GetMapping("/planEjercicio")
-    public ResponseEntity<List<PlanEjercicioDTO>> listAll() {
-        List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listAllDTO();
-        return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.OK);
+    @GetMapping("/planEjercicio/planOrdenado/{planId}")
+    public ResponseEntity<List<PlanEjercicioDTO>> buscarEjerciciosDePlanOrdenados(@PathVariable("planId") Long planId) {
+        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarEjerciciosDePlanOrdenadosDTO(planId);
+        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/planEjercicio/plan/{planId}")
     public ResponseEntity<List<PlanEjercicioDTO>> listByPlanId(@PathVariable("planId") Long planId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByPlanIdDTO(planId);
         return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.FOUND);
     }
+
+
+
+
+
+    // No utiles
     @GetMapping("/planEjercicio/ejercicio/{ejercicioId}")
     public ResponseEntity<List<PlanEjercicioDTO>> listByEjercicioId(@PathVariable("ejercicioId") Long ejercicioId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByEjercicioIdDTO(ejercicioId);
@@ -59,11 +70,7 @@ public class PlanEjercicioController {
         List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorRepeticionesMayoresOIgualesDTO(repeticiones);
         return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
     }
-    @GetMapping("/planEjercicio/planOrdenado/{planId}")
-    public ResponseEntity<List<PlanEjercicioDTO>> buscarEjerciciosDePlanOrdenados(@PathVariable("planId") Long planId) {
-        List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarEjerciciosDePlanOrdenadosDTO(planId);
-        return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
-    }
+
     @GetMapping("/planEjercicio/orden/{orden}")
     public ResponseEntity<List<PlanEjercicioDTO>> buscarPorOrdenNative(@PathVariable("orden") Integer orden) {
         List<PlanEjercicioDTO> planEjercicios = planEjercicioService.buscarPorOrdenNativeDTO(orden);

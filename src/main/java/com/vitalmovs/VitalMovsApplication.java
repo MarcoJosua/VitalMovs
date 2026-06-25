@@ -509,66 +509,138 @@ public class VitalMovsApplication {
             );
 
             PlanEjercicio pe2 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan1, ejercicio2, null)
+                    new PlanEjercicio(null, 2, 10, 8, "LUNES", 2, plan1, ejercicio2, null)
             );
 
             PlanEjercicio pe3 = planEjercicioService.add(
-                    new PlanEjercicio(null, 2, 15, 10, "VIERNES", 1, plan1, ejercicio1, null)
+                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan1, ejercicio2, null)
             );
 
-// Plan 2 - mano
             PlanEjercicio pe4 = planEjercicioService.add(
-                    new PlanEjercicio(null, 4, 10, 12, "MARTES", 1, plan2, ejercicio2, null)
+                    new PlanEjercicio(null, 3, 15, 10, "MIERCOLES", 2, plan1, ejercicio1, null)
             );
 
             PlanEjercicio pe5 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 12, 10, "JUEVES", 1, plan2, ejercicio1, null)
+                    new PlanEjercicio(null, 2, 15, 10, "VIERNES", 1, plan1, ejercicio1, null)
             );
 
-// Plan 3 - dedos finalizado
             PlanEjercicio pe6 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 8, 8, "LUNES", 1, plan3, ejercicio2, null)
+                    new PlanEjercicio(null, 2, 12, 9, "VIERNES", 2, plan1, ejercicio2, null)
             );
 
+
+// Plan 2 - mano
             PlanEjercicio pe7 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 10, 9, "MIERCOLES", 1, plan3, ejercicio2, null)
+                    new PlanEjercicio(null, 4, 10, 12, "MARTES", 1, plan2, ejercicio2, null)
             );
 
-// Plan 4 - pierna
             PlanEjercicio pe8 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 15, 12, "LUNES", 1, plan4, ejercicio3, null)
+                    new PlanEjercicio(null, 3, 12, 10, "MARTES", 2, plan2, ejercicio1, null)
             );
 
             PlanEjercicio pe9 = planEjercicioService.add(
-                    new PlanEjercicio(null, 2, 10, 15, "MIERCOLES", 1, plan4, ejercicio4, null)
+                    new PlanEjercicio(null, 3, 12, 10, "JUEVES", 1, plan2, ejercicio1, null)
             );
 
             PlanEjercicio pe10 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 12, 14, "VIERNES", 1, plan4, ejercicio3, null)
+                    new PlanEjercicio(null, 2, 15, 8, "JUEVES", 2, plan2, ejercicio2, null)
             );
 
-// Plan 5 - fortalecimiento pierna
             PlanEjercicio pe11 = planEjercicioService.add(
-                    new PlanEjercicio(null, 4, 12, 15, "MARTES", 1, plan5, ejercicio3, null)
+                    new PlanEjercicio(null, 3, 10, 9, "VIERNES", 1, plan2, ejercicio1, null)
             );
 
+
+// Plan 3 - dedos finalizado
             PlanEjercicio pe12 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 10, 18, "JUEVES", 1, plan5, ejercicio4, null)
+                    new PlanEjercicio(null, 3, 8, 8, "LUNES", 1, plan3, ejercicio2, null)
             );
 
-// Plan 6 - mano fisio 3
             PlanEjercicio pe13 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 12, 10, "LUNES", 1, plan6, ejercicio1, null)
+                    new PlanEjercicio(null, 2, 10, 7, "LUNES", 2, plan3, ejercicio1, null)
             );
 
             PlanEjercicio pe14 = planEjercicioService.add(
-                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan6, ejercicio2, null)
+                    new PlanEjercicio(null, 3, 10, 9, "MIERCOLES", 1, plan3, ejercicio2, null)
             );
 
             PlanEjercicio pe15 = planEjercicioService.add(
-                    new PlanEjercicio(null, 2, 12, 10, "SABADO", 1, plan6, ejercicio1, null)
+                    new PlanEjercicio(null, 2, 12, 8, "VIERNES", 1, plan3, ejercicio1, null)
             );
 
+
+// Plan 4 - pierna
+            PlanEjercicio pe16 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 15, 12, "LUNES", 1, plan4, ejercicio3, null)
+            );
+
+            PlanEjercicio pe17 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 12, 10, "LUNES", 2, plan4, ejercicio4, null)
+            );
+
+            PlanEjercicio pe18 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 10, 15, "MIERCOLES", 1, plan4, ejercicio4, null)
+            );
+
+            PlanEjercicio pe19 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 14, "MIERCOLES", 2, plan4, ejercicio3, null)
+            );
+
+            PlanEjercicio pe20 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 14, "VIERNES", 1, plan4, ejercicio3, null)
+            );
+
+            PlanEjercicio pe21 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 10, 12, "VIERNES", 2, plan4, ejercicio4, null)
+            );
+
+
+// Plan 5 - fortalecimiento pierna
+            PlanEjercicio pe22 = planEjercicioService.add(
+                    new PlanEjercicio(null, 4, 12, 15, "MARTES", 1, plan5, ejercicio3, null)
+            );
+
+            PlanEjercicio pe23 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 12, "MARTES", 2, plan5, ejercicio4, null)
+            );
+
+            PlanEjercicio pe24 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 18, "JUEVES", 1, plan5, ejercicio4, null)
+            );
+
+            PlanEjercicio pe25 = planEjercicioService.add(
+                    new PlanEjercicio(null, 4, 8, 14, "JUEVES", 2, plan5, ejercicio3, null)
+            );
+
+            PlanEjercicio pe26 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 15, "VIERNES", 1, plan5, ejercicio3, null)
+            );
+
+
+// Plan 6 - mano fisio 3
+            PlanEjercicio pe27 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 10, "LUNES", 1, plan6, ejercicio1, null)
+            );
+
+            PlanEjercicio pe28 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 10, 8, "LUNES", 2, plan6, ejercicio2, null)
+            );
+
+            PlanEjercicio pe29 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 10, 8, "MIERCOLES", 1, plan6, ejercicio2, null)
+            );
+
+            PlanEjercicio pe30 = planEjercicioService.add(
+                    new PlanEjercicio(null, 3, 12, 10, "MIERCOLES", 2, plan6, ejercicio1, null)
+            );
+
+            PlanEjercicio pe31 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 12, 10, "VIERNES", 1, plan6, ejercicio1, null)
+            );
+
+            PlanEjercicio pe32 = planEjercicioService.add(
+                    new PlanEjercicio(null, 2, 10, 9, "VIERNES", 2, plan6, ejercicio2, null)
+            );
 
 // =========================
 // 18. Crear estadísticas

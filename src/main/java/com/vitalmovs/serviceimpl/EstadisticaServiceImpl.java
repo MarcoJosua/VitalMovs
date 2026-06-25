@@ -1,6 +1,7 @@
 package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.EstadisticaDTO;
+import com.vitalmovs.dtos.EstadisticaGraficoDTO;
 import com.vitalmovs.entities.PlanEjercicio;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
 import com.vitalmovs.repositories.PlanEjercicioRepository;
@@ -23,6 +24,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 
     @Autowired
     private PlanEjercicioRepository planEjercicioRepository;
+
 
     @Override
     public Estadistica add(Estadistica estadistica) {
@@ -114,24 +116,48 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         return estadisticaRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public EstadisticaDTO findByIdDTO(Long id) {
+        if (id == null) {
+            throw new ValidationException("Debe ingresar el id de la estadística");
+        }
+
+        Estadistica estadistica = findById(id);
+
+        if (estadistica == null) {
+            throw new ResourceNotFoundException("No se encontró la estadística con id: " + id);
+        }
+
+        return toDTO(estadistica);
+    }
+
     // ─── update ──────────────────────────────────────────────────────────────
 
     @Override
     public EstadisticaDTO update(EstadisticaDTO estadisticaDTO) {
+
         Estadistica foundEstadistica = estadisticaRepository.findById(estadisticaDTO.getId()).orElse(null);
+
         if (foundEstadistica == null) {
-            throw new ResourceNotFoundException("No se encontro la estadistica con id: " + estadisticaDTO.getId().toString());
+            throw new ResourceNotFoundException("No se encontro la estadistica con id: " + estadisticaDTO.getId());
         }
-        if (estadisticaDTO.getFecha() != null) {
-            foundEstadistica.setFecha(estadisticaDTO.getFecha());
+
+        List<Estadistica> estadisticasDelEjercicio = estadisticaRepository.findByPlanEjercicio_Id(foundEstadistica.getPlanEjercicio().getId());
+
+        for (Estadistica e : estadisticasDelEjercicio) {
+            if (e.getFecha().equals(estadisticaDTO.getFecha()) &&  !e.getId().equals(estadisticaDTO.getId())
+            ) { throw new ValidationException("Ya existe un progreso registrado para este ejercicio en esa fecha");}
         }
-        if (estadisticaDTO.getObservacion() != null && !estadisticaDTO.getObservacion().isBlank()) {
-            foundEstadistica.setObservacion(estadisticaDTO.getObservacion());
-        }
-        // nivelDolor es int (primitivo), siempre se actualiza si viene en el DTO
+
+        foundEstadistica.setFecha(estadisticaDTO.getFecha());
         foundEstadistica.setNivelDolor(estadisticaDTO.getNivelDolor());
+        foundEstadistica.setNivelDificultad(estadisticaDTO.getNivelDificultad());
+        foundEstadistica.setRepeticionesRealizadas(estadisticaDTO.getRepeticionesRealizadas());
+        foundEstadistica.setDuracionRealizada(estadisticaDTO.getDuracionRealizada());
+        foundEstadistica.setObservacion(estadisticaDTO.getObservacion());
 
         estadisticaRepository.save(foundEstadistica);
+
         return toDTO(foundEstadistica);
     }
 
@@ -145,6 +171,71 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         }
         estadisticaRepository.delete(estadistica);
         return estadistica;
+    }
+
+
+    // ESTADÍSTICAS NORMALES
+    @Override
+    public List<EstadisticaDTO> listByPlanEjercicioId(Long planEjercicioId) {
+        if (planEjercicioId == null) {
+            throw new ValidationException("Debe ingresar el id del plan ejercicio");
+        }
+
+        List<Estadistica> estadisticas = estadisticaRepository.findByPlanEjercicio_Id(planEjercicioId);
+
+        List<EstadisticaDTO> estadisticaDTOList = new ArrayList<>();
+
+        for (Estadistica e : estadisticas) {
+            estadisticaDTOList.add(toDTO(e));
+        }
+
+        return estadisticaDTOList;
+    }
+
+    @Override
+    public List<EstadisticaDTO> listByPlanRehabilitacionId(Long planId) {
+        if (planId == null) {
+            throw new ValidationException("Debe ingresar el id del plan de rehabilitación");
+        }
+
+        List<Estadistica> estadisticas = estadisticaRepository.listarPorPlanRehabilitacion(planId);
+
+        List<EstadisticaDTO> estadisticaDTOList = new ArrayList<>();
+
+        for (Estadistica e : estadisticas) {
+            estadisticaDTOList.add(toDTO(e));
+        }
+
+        return estadisticaDTOList;
+    }
+
+    // DASHBOARDS
+    @Override
+    public EstadisticaGraficoDTO resumenGeneralPorPlan(Long planId) {
+        if (planId == null) {
+            throw new ValidationException("Debe ingresar el id del plan de rehabilitación");
+        }
+        EstadisticaGraficoDTO resumen = estadisticaRepository.resumenGeneralPorPlan(planId);
+        if (resumen == null) {
+            return new EstadisticaGraficoDTO(planId, 0.0, 0.0, 0L, 0L, 0L);
+        }
+        return resumen;
+    }
+
+    @Override
+    public List<EstadisticaGraficoDTO> evolucionPorFecha(Long planId) {
+        if (planId == null) {
+            throw new ValidationException("Debe ingresar el id del plan de rehabilitación");
+        }
+        return estadisticaRepository.evolucionPorFecha(planId);
+    }
+
+    @Override
+    public List<EstadisticaGraficoDTO> resumenPorEjercicio(Long planId) {
+        if (planId == null) {
+            throw new ValidationException("Debe ingresar el id del plan de rehabilitación");
+        }
+        return estadisticaRepository.resumenPorEjercicio(planId);
     }
 
     // ─── findAll ─────────────────────────────────────────────────────────────
@@ -180,17 +271,4 @@ public class EstadisticaServiceImpl implements EstadisticaService {
         );
     }
 
-    /*
-
-    @Override
-    public List<Estadistica> findByPlanNative(Long idPlan) {
-        return estadisticaRepository.findByPlanNative(idPlan);
-    }
-
-    @Override
-    public List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan) {
-        return estadisticaRepository.obtenerHistorialPorPlan(idPlan);
-    }
-
-    */
 }

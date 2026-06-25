@@ -16,4 +16,5 @@ public class PlanEjercicioDTO {
     private Integer orden;
     private Long planRehabilitacionId;
     private Long ejercicioId;
+    private String nombreEjercicio;
 }

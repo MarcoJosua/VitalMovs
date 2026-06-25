@@ -1,6 +1,7 @@
 package com.vitalmovs.services;
 import com.vitalmovs.dtos.AsignacionDTO;
 import com.vitalmovs.dtos.EstadisticaDTO;
+import com.vitalmovs.dtos.EstadisticaGraficoDTO;
 import com.vitalmovs.dtos.HistorialDolorDTO;
 import com.vitalmovs.entities.Estadistica;
 
@@ -15,6 +16,8 @@ public interface EstadisticaService {
 
     public Estadistica findById(Long id);
 
+    public EstadisticaDTO findByIdDTO(Long id);
+
     public List<Estadistica> findAll();
 
     public List<EstadisticaDTO> listAllDTO();
@@ -23,9 +26,14 @@ public interface EstadisticaService {
 
     public Estadistica delete(Long id);
 
-     // List<Estadistica> findByPlanNative(Long idPlan);
+    // ESTADÍSTICAS NORMALES
+    List<EstadisticaDTO> listByPlanEjercicioId(Long planEjercicioId);
+    List<EstadisticaDTO> listByPlanRehabilitacionId(Long planId);
 
-    // List<HistorialDolorDTO> obtenerHistorialPorPlan(Long idPlan);
+    // DASHBOARD
+    EstadisticaGraficoDTO resumenGeneralPorPlan(Long planId);
+    List<EstadisticaGraficoDTO> evolucionPorFecha(Long planId);
+    List<EstadisticaGraficoDTO> resumenPorEjercicio(Long planId);
 
 
 }

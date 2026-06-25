@@ -112,7 +112,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -136,7 +137,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -161,7 +163,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -220,10 +223,14 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
         if (id == null) {
             throw new ValidationException("Debe ingresar el id del plan ejercicio");
         }
-        if (findById(id) == null) {
+
+        PlanEjercicio planEjercicio = findById(id);
+
+        if (planEjercicio == null) {
             throw new ResourceNotFoundException("No se encontro el plan ejercicio con id: " + id);
         }
-        planEjercicioRepository.deleteById(id);
+
+        planEjercicioRepository.delete(planEjercicio);
     }
 
     @Override
@@ -242,7 +249,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -264,7 +272,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -286,7 +295,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;
@@ -308,7 +318,8 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
                     pe.getDiaSemana(),
                     pe.getOrden(),
                     pe.getPlanRehabilitacion() != null ? pe.getPlanRehabilitacion().getId() : null,
-                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null
+                    pe.getEjercicio() != null ? pe.getEjercicio().getId() : null,
+                    pe.getEjercicio() != null ? pe.getEjercicio().getNombre() : null
             ));
         }
         return planEjercicioDTOList;

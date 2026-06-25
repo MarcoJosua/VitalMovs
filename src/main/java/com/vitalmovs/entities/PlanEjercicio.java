@@ -30,8 +30,6 @@ public class PlanEjercicio {
     @JoinColumn(name = "ejercicio_id")
     private Ejercicio ejercicio;
 
-    // ENVÍA SU ID A ESTADISTICA (Es la tabla "Padre" en esta relación, tiene la PK)
-    // Se usa mappedBy, FetchType.EAGER y una Lista según el ejemplo de tu clase
-    @OneToMany(mappedBy = "planEjercicio", fetch = FetchType.EAGER)
+    @OneToMany( mappedBy = "planEjercicio", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Estadistica> estadistica;
 }

@@ -17,22 +17,22 @@ public class EjercicioController {
     @Autowired
     EjercicioService ejercicioService;
 
-    @GetMapping("/ejercicio/ejercicios")
+    @GetMapping("/ejercicio")
     public ResponseEntity<List<EjercicioDTO>> listAll() {
         List<EjercicioDTO> foundEjercicios = ejercicioService.listAllDTO();
-        return new ResponseEntity<>(foundEjercicios, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundEjercicios, HttpStatus.OK);
     }
-    @PostMapping("/Ejercicio")
+    @PostMapping("/ejercicio")
     public ResponseEntity<EjercicioDTO> add(@RequestBody EjercicioDTO ejercicioDTO) {
         EjercicioDTO newEjercicioDTO = ejercicioService.addDTO(ejercicioDTO);
         return new ResponseEntity<>(newEjercicioDTO, HttpStatus.CREATED);
     }
-    @PutMapping("/Ejercicio")
+    @PutMapping("/ejercicio")
     public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
         Ejercicio updatedEjercicio = ejercicioService.update(ejercicio);
         return new ResponseEntity<>(updatedEjercicio, HttpStatus.OK);
     }
-    @DeleteMapping("/Ejercicio/{EjercicioId}")
+    @DeleteMapping("/ejercicio/{EjercicioId}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("EjercicioId") Long id) {
         ejercicioService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
