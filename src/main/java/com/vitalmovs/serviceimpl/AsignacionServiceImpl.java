@@ -134,7 +134,7 @@ public class AsignacionServiceImpl implements AsignacionService {
     @Override
     public List<AsignacionDTO> findByFisioterapeutaId(Long fisioterapeutaId) {
 
-        List<Asignacion> asignacionList =  asignacionRepository.findByFisioterapeutaId(fisioterapeutaId);
+        List<Asignacion> asignacionList =  asignacionRepository.findByFisioterapeuta_User_Id(fisioterapeutaId);
 
         List<AsignacionDTO> asignacionDTOList = new ArrayList<>();
 
