@@ -22,7 +22,7 @@ public class FisioterapeutaDiscapacidadController {
     public ResponseEntity<List<FisioterapeutaDiscapacidadDTO>> findByFisioterapeutaId(
             @PathVariable("fisioterapeutaId") Long id) {
         List<FisioterapeutaDiscapacidadDTO> list = fdService.listByFisioterapeutaIdDTO(id);
-        return new ResponseEntity<>(list, HttpStatus.FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/fisioterapeutaDiscapacidad")

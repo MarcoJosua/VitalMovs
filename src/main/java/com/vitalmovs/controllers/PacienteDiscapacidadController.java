@@ -25,7 +25,7 @@ public class PacienteDiscapacidadController {
     @GetMapping("/pacienteDiscapacidad/paciente/{pacienteId}")   //http://localhost:8080/vitalmovs/pacienteDiscapacidad/paciente/1
     public ResponseEntity<List<PacienteDiscapacidadDTO>> findByPacienteId(@PathVariable("pacienteId") Long id) {
         List<PacienteDiscapacidadDTO> foundPDs = pacienteDiscapacidadService.listByPacienteIdDTO(id);
-        return new ResponseEntity<>(foundPDs, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundPDs, HttpStatus.OK);
     }
 
     @PostMapping("/PacienteDiscapacidad")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad

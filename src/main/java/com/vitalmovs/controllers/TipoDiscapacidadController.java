@@ -25,7 +25,7 @@ public class TipoDiscapacidadController {
     @GetMapping("/tipoDiscapacidad/tipos")   //http://localhost:8080/vitalmovs/tipoDiscapacidad/tipos
     public ResponseEntity<List<TipoDiscapacidadDTO>> listAll() {
         List<TipoDiscapacidadDTO> foundTipos = tipoDiscapacidadService.listAllDTO();
-        return new ResponseEntity<>(foundTipos, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundTipos, HttpStatus.OK);
     }
 
     @PostMapping("/TipoDiscapacidad")   //http://localhost:8080/vitalmovs/TipoDiscapacidad

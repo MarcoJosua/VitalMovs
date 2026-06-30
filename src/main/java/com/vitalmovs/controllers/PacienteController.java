@@ -25,7 +25,7 @@ public class PacienteController {
     @GetMapping("/paciente/pacientes")
     public ResponseEntity<List<PacienteDTO>> listAll() {
         List<PacienteDTO> foundPacientes = pacienteService.listAllDTO();
-        return new ResponseEntity<>(foundPacientes, HttpStatus.FOUND);
+        return new ResponseEntity<>(foundPacientes, HttpStatus.OK);
     }
 
     @PostMapping("/Paciente")

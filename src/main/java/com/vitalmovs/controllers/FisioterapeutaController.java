@@ -22,7 +22,7 @@ public class FisioterapeutaController {
     // http://localhost:8080/vitalmovs/fisioterapeuta/fisioterapeutas
     public ResponseEntity<List<FisioterapeutaDTO>> listAll() {
         List<FisioterapeutaDTO> list = fisioterapeutaService.listAllDTO();
-        return new ResponseEntity<>(list, HttpStatus.FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/fisioterapeuta")
