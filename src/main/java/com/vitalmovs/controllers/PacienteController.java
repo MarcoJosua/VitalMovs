@@ -28,6 +28,11 @@ public class PacienteController {
         return new ResponseEntity<>(foundPacientes, HttpStatus.OK);
     }
 
+    @GetMapping("/paciente/user/{userId}")
+    public PacienteDTO findByUserId(@PathVariable Long userId) {
+        return pacienteService.findByUserId(userId);
+    }
+
     @PostMapping("/Paciente")
     public ResponseEntity<PacienteDTO> add(@RequestBody PacienteDTO pacienteDTO) {
         PacienteDTO newPacienteDTO = pacienteService.addDTO(pacienteDTO);

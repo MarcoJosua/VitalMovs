@@ -8,6 +8,7 @@ import java.util.List;
 public interface PacienteService {
     Paciente add(Paciente paciente);
     PacienteDTO addDTO(PacienteDTO pacienteDTO);
+    PacienteDTO findByUserId(Long userId);
     Paciente findById(Long id);
     List<Paciente> listAll();
     List<PacienteDTO> listAllDTO();

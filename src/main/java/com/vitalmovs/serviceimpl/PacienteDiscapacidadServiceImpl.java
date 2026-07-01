@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PacienteDiscapacidadServiceImpl implements PacienteDiscapacidadService {
@@ -60,16 +61,15 @@ public class PacienteDiscapacidadServiceImpl implements PacienteDiscapacidadServ
 
     @Override
     public List<PacienteDiscapacidadDTO> listByPacienteIdDTO(Long pacienteId) {
-        List<PacienteDiscapacidad> pdList = listByPacienteId(pacienteId);
-        List<PacienteDiscapacidadDTO> pdDTOList = new ArrayList<>();
-        for (PacienteDiscapacidad pd : pdList) {
-            pdDTOList.add(new PacienteDiscapacidadDTO(
-                    pd.getId(),
-                    pd.getTipoDiscapacidad().getId(),
-                    pd.getPaciente().getId()
-            ));
-        }
-        return pdDTOList;
+
+        List<PacienteDiscapacidad> lista = pacienteDiscapacidadRepository.findByPaciente_Id(pacienteId);
+
+        return lista.stream().map(pd -> new PacienteDiscapacidadDTO(
+                pd.getId(),
+                pd.getTipoDiscapacidad().getId(),
+                pd.getPaciente().getId(),
+                pd.getTipoDiscapacidad().getNombre()
+        )).collect(Collectors.toList());
     }
 
     @Override

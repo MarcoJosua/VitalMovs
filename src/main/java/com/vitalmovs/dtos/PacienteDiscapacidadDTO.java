@@ -12,4 +12,5 @@ public class PacienteDiscapacidadDTO {
     private Long id;
     private Long tipoDiscapacidadId;
     private Long pacienteId;
+    private String tipoDiscapacidadNombre;
 }

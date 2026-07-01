@@ -57,6 +57,23 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
     }
 
     @Override
+    public FisioterapeutaDTO findByUserId(Long userId) {
+
+        Fisioterapeuta f = fisioterapeutaRepository.findByUser_Id(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No se encontró fisioterapeuta para el usuario con id: " + userId
+                ));
+
+        return new FisioterapeutaDTO(
+                f.getId(),
+                f.getNombre(),
+                f.getApellido(),
+                f.getEspecialidad(),
+                f.getUser().getId()
+        );
+    }
+
+    @Override
     public List<Fisioterapeuta> listAll() {
         return fisioterapeutaRepository.findAll();
     }

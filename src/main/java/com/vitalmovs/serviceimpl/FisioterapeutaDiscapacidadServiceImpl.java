@@ -78,12 +78,25 @@ public class FisioterapeutaDiscapacidadServiceImpl implements FisioterapeutaDisc
 
     @Override
     public List<FisioterapeutaDiscapacidadDTO> listByFisioterapeutaIdDTO(Long fisioterapeutaId) {
+
         List<FisioterapeutaDiscapacidadDTO> dtoList = new ArrayList<>();
         for (FisioterapeutaDiscapacidad fd : listByFisioterapeutaId(fisioterapeutaId)) {
-            // Validar que los objetos relacionados no sean null antes de llamar getId()
-            Long fId = (fd.getFisioterapeuta() != null) ? fd.getFisioterapeuta().getId() : null;
-            Long tId = (fd.getTipoDiscapacidad() != null) ? fd.getTipoDiscapacidad().getId() : null;
-            dtoList.add(new FisioterapeutaDiscapacidadDTO(fd.getId(), fId, tId));
+            Long fId = null;
+            Long tId = null;
+            String tNombre = null;
+            if (fd.getFisioterapeuta() != null) {
+                fId = fd.getFisioterapeuta().getId();
+            }
+            if (fd.getTipoDiscapacidad() != null) {
+                tId = fd.getTipoDiscapacidad().getId();
+                tNombre = fd.getTipoDiscapacidad().getNombre();
+            }
+            dtoList.add(new FisioterapeutaDiscapacidadDTO(
+                    fd.getId(),
+                    fId,
+                    tId,
+                    tNombre
+            ));
         }
         return dtoList;
     }
@@ -131,7 +144,9 @@ public class FisioterapeutaDiscapacidadServiceImpl implements FisioterapeutaDisc
         for (FisioterapeutaDiscapacidad fd : fdRepository.findByTipoDiscapacidadId(tipoDiscapacidadId)) {
             Long fId = (fd.getFisioterapeuta() != null) ? fd.getFisioterapeuta().getId() : null;
             Long tId = (fd.getTipoDiscapacidad() != null) ? fd.getTipoDiscapacidad().getId() : null;
-            dtoList.add(new FisioterapeutaDiscapacidadDTO(fd.getId(), fId, tId));
+            String tNombre = fd.getTipoDiscapacidad().getNombre();
+
+            dtoList.add(new FisioterapeutaDiscapacidadDTO(fd.getId(), fId, tId,tNombre));
         }
 
         return dtoList;

@@ -9,6 +9,7 @@ import java.util.List;
 public interface FisioterapeutaService {
     Fisioterapeuta add(Fisioterapeuta fisioterapeuta);
     FisioterapeutaDTO addDTO(FisioterapeutaDTO fisioterapeutaDTO);
+    FisioterapeutaDTO findByUserId(Long userId);
     List<Fisioterapeuta> listAll();
     List<FisioterapeutaDTO> listAllDTO();
     Fisioterapeuta findById(Long id);

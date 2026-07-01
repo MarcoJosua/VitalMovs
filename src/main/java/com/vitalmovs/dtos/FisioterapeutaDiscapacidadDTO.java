@@ -11,4 +11,5 @@ public class FisioterapeutaDiscapacidadDTO {
     private Long id;
     private Long fisioterapeutaId;
     private Long tipoDiscapacidadId;
+    private String tipoDiscapacidadNombre;
 }

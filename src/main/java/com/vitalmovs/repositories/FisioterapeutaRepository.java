@@ -1,18 +1,22 @@
 package com.vitalmovs.repositories;
 
 import com.vitalmovs.entities.Fisioterapeuta;
+import com.vitalmovs.entities.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FisioterapeutaRepository extends JpaRepository<Fisioterapeuta, Long> {
     // 1. METHOD QUERY — Spring genera la query automáticamente por el nombre del método
     // Busca fisioterapeutas por especialidad (ignorando mayúsculas/minúsculas)
     List<Fisioterapeuta> findByEspecialidadIgnoreCase(String especialidad);
+
+    Optional<Fisioterapeuta> findByUser_Id(Long userId);
 
     boolean existsByUser_Id(Long userid);
 

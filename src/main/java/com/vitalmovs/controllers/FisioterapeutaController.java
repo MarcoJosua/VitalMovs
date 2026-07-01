@@ -25,6 +25,11 @@ public class FisioterapeutaController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/fisioterapeuta/user/{userId}")
+    public FisioterapeutaDTO findByUserId(@PathVariable Long userId) {
+        return fisioterapeutaService.findByUserId(userId);
+    }
+
     @PostMapping("/fisioterapeuta")
     // http://localhost:8080/vitalmovs/fisioterapeuta
     public ResponseEntity<FisioterapeutaDTO> add(@RequestBody FisioterapeutaDTO dto) {

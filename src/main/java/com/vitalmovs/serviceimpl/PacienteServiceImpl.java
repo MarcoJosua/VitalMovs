@@ -63,7 +63,22 @@ public class PacienteServiceImpl implements PacienteService {
         pacienteDTO.setId(newPaciente.getId());
         return pacienteDTO;
     }
- 
+
+    @Override
+    public PacienteDTO findByUserId(Long userId) {
+
+        Paciente paciente = pacienteRepository.findByUser_Id(userId)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado para el usuario: " + userId));
+
+        return new PacienteDTO(
+                paciente.getId(),
+                paciente.getNombre(),
+                paciente.getApellido(),
+                paciente.getEdad(),
+                paciente.getSexo(),
+                paciente.getUser().getId()
+        );
+    }
     @Override
     public Paciente findById(Long id) {
         return pacienteRepository.findById(id).orElse(null);
