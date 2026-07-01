@@ -127,14 +127,29 @@ public class AsignacionServiceImpl implements AsignacionService {
                 a.getFisioterapeuta()     != null ? a.getFisioterapeuta().getId()       : null,
                 a.getPlanRehabilitacion() != null ? a.getPlanRehabilitacion().getId()   : null,
                 a.getPaciente() != null ? a.getPaciente().getNombre() : null,
-                a.getFisioterapeuta() != null ? a.getFisioterapeuta().getNombre() : null
+                a.getFisioterapeuta() != null ? a.getFisioterapeuta().getNombre() : null,
+                a.getPaciente() != null ? a.getPaciente().getApellido() : null,
+                a.getFisioterapeuta() != null ? a.getFisioterapeuta().getApellido() : null
         );
     }
 
     @Override
-    public List<AsignacionDTO> findByFisioterapeutaId(Long fisioterapeutaId) {
+    public List<AsignacionDTO> findByFisioterapeutaId(Long userId) {
 
-        List<Asignacion> asignacionList =  asignacionRepository.findByFisioterapeuta_User_Id(fisioterapeutaId);
+        List<Asignacion> asignacionList =  asignacionRepository.findByFisioterapeuta_User_Id(userId);
+
+        List<AsignacionDTO> asignacionDTOList = new ArrayList<>();
+
+        for (Asignacion a : asignacionList) {
+            asignacionDTOList.add(toDTO(a));
+        }
+
+        return asignacionDTOList;
+    }
+
+    @Override
+    public List<AsignacionDTO> findByPacienteUserId(Long userId) {
+        List<Asignacion> asignacionList =  asignacionRepository.findByPaciente_User_Id(userId);
 
         List<AsignacionDTO> asignacionDTOList = new ArrayList<>();
 

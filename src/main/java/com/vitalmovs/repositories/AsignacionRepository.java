@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface AsignacionRepository extends JpaRepository<Asignacion, Long> {
     List<Asignacion> findByFisioterapeuta_User_Id(Long userId);
+    List<Asignacion> findByPaciente_User_Id(Long userId);
 
 }
