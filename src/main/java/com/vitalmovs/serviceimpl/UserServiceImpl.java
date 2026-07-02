@@ -2,10 +2,14 @@ package com.vitalmovs.serviceimpl;
 
 import com.vitalmovs.dtos.UserDTO;
 import com.vitalmovs.entities.Authority;
+import com.vitalmovs.entities.Fisioterapeuta;
+import com.vitalmovs.entities.Paciente;
 import com.vitalmovs.entities.User;
 import com.vitalmovs.exceptions.IncompleteDataException;
 import com.vitalmovs.exceptions.KeyRepeatedDataExeception;
 import com.vitalmovs.exceptions.ResourceNotFoundException;
+import com.vitalmovs.repositories.FisioterapeutaRepository;
+import com.vitalmovs.repositories.PacienteRepository;
 import com.vitalmovs.repositories.UserRepository;
 import com.vitalmovs.services.AuthorityService;
 import com.vitalmovs.services.UserService;
@@ -27,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     AuthorityService authorityService;
+
+    @Autowired
+    PacienteRepository pacienteRepository;
+
+    @Autowired
+    FisioterapeutaRepository fisioterapeutaRepository;
 
     @Override
     public User findById(Long id) {
@@ -111,6 +121,22 @@ public class UserServiceImpl implements UserService {
         //Paso 3: Actualizar los campos adicionales segun tu logica de negocio
         user.setEnabled(true);
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        for (Authority authority : savedUser.getAuthorities()) {
+            if ("ROLE_PACIENTE".equals(authority.getName())) {
+                Paciente paciente = new Paciente();
+                paciente.setNombre(savedUser.getUsername());
+                paciente.setUser(savedUser);
+                pacienteRepository.save(paciente);
+            } else if ("ROLE_FISIOTERAPEUTA".equals(authority.getName())) {
+                Fisioterapeuta fisio = new Fisioterapeuta();
+                fisio.setNombre(savedUser.getUsername());
+                fisio.setUser(savedUser);
+                fisioterapeutaRepository.save(fisio);
+            }
+        }
+
+        return savedUser;
     }
 }

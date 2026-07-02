@@ -24,6 +24,10 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority add(Authority authority) {
+        Authority existing = authorityRepository.findByName(authority.getName());
+        if (existing != null) {
+            return existing;
+        }
         return authorityRepository.save(authority);
     }
 }

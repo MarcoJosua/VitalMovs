@@ -45,7 +45,7 @@ public class VitalMovsApplication {
         return args -> {
 
             // =========================
-            // 1. Crear autoridades
+            // 1. Crear autoridades (solo si no existen)
             // =========================
 
             authorityService.add(new Authority(null, "ROLE_ADMIN", null));
@@ -54,23 +54,23 @@ public class VitalMovsApplication {
 
 
             // =========================
-            // 2. Crear usuarios
+            // 2. Crear usuarios y datos semilla (solo si no existen)
             // =========================
 
-            userService.add(new UserDTO(null, "admin", "pass", "ROLE_ADMIN"));
+            try {
+                userService.findByUsername("paciente1@gmail.com");
+            } catch (Exception e) {
 
-            userService.add(new UserDTO(null, "paciente1@gmail.com", "pass", "ROLE_PACIENTE"));
-            userService.add(new UserDTO(null, "paciente2@gmail.com", "pass", "ROLE_PACIENTE"));
-            userService.add(new UserDTO(null, "paciente3@gmail.com", "pass", "ROLE_PACIENTE"));
+                userService.add(new UserDTO(null, "admin", "pass", "ROLE_ADMIN"));
 
-            userService.add(new UserDTO(null, "fisioterapeuta1@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
-            userService.add(new UserDTO(null, "fisioterapeuta2@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
-            userService.add(new UserDTO(null, "fisioterapeuta3@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
+                userService.add(new UserDTO(null, "paciente1@gmail.com", "pass", "ROLE_PACIENTE"));
+                userService.add(new UserDTO(null, "paciente2@gmail.com", "pass", "ROLE_PACIENTE"));
+                userService.add(new UserDTO(null, "paciente3@gmail.com", "pass", "ROLE_PACIENTE"));
 
+                userService.add(new UserDTO(null, "fisioterapeuta1@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
+                userService.add(new UserDTO(null, "fisioterapeuta2@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
+                userService.add(new UserDTO(null, "fisioterapeuta3@gmail.com", "pass", "ROLE_FISIOTERAPEUTA"));
 
-            // =========================
-            // 3. Recuperar usuarios creados
-            // =========================
 
             User userPaciente1 = userService.findByUsername("paciente1@gmail.com");
             User userPaciente2 = userService.findByUsername("paciente2@gmail.com");
@@ -80,10 +80,6 @@ public class VitalMovsApplication {
             User userFisio2 = userService.findByUsername("fisioterapeuta2@gmail.com");
             User userFisio3 = userService.findByUsername("fisioterapeuta3@gmail.com");
 
-
-            // =========================
-            // 4. Crear pacientes
-            // =========================
 
             Paciente paciente1 = pacienteService.add(
                     new Paciente(null, "Karin", "Ugarte", 22, "Femenino", userPaciente1, null)
@@ -98,10 +94,6 @@ public class VitalMovsApplication {
             );
 
 
-            // =========================
-            // 5. Crear fisioterapeutas
-            // =========================
-
             Fisioterapeuta fisio1 = fisioterapeutaService.add(
                     new Fisioterapeuta(null, "Cris", "Vargas", "Fisioterapia clínica", userFisio1, null)
             );
@@ -115,10 +107,6 @@ public class VitalMovsApplication {
             );
 
 
-            // =========================
-            // 6. Crear tipos de discapacidad
-            // =========================
-
             TipoDiscapacidad lesionMano = tipoDiscapacidadService.add(
                     new TipoDiscapacidad(null, "Lesión de mano", "Todo tipo de lesiones de mano", null)
             );
@@ -127,10 +115,6 @@ public class VitalMovsApplication {
                     new TipoDiscapacidad(null, "Lesión de piernas", "Todo tipo de lesiones de piernas", null)
             );
 
-
-            // =========================
-            // 7. Relacionar pacientes con discapacidades
-            // =========================
 
             pacienteDiscapacidadService.add(
                     new PacienteDiscapacidad(null, lesionMano, paciente1)
@@ -678,7 +662,7 @@ public class VitalMovsApplication {
             estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 31), 4, 5, 33, 9, "Mejor respuesta al ejercicio de muñeca.", pe13));
             estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 29), 5, 6, 24, 7, "Dificultad leve al abrir y cerrar la mano.", pe14));
 
-
+            }
         };
     }
 
