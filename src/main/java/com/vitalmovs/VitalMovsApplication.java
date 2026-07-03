@@ -111,6 +111,37 @@ public class VitalMovsApplication {
                     new TipoDiscapacidad(null, "Lesión de piernas", "Todo tipo de lesiones de piernas", null)
             );
 
+            TipoDiscapacidad lesionColumna = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Lesión de columna", "Lesiones cervicales, dorsales o lumbares que requieren rehabilitación", null)
+            );
+
+            TipoDiscapacidad discapacidadNeurologica = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Discapacidad neurológica", "Alteraciones del sistema nervioso que afectan el movimiento o la coordinación", null)
+            );
+
+            TipoDiscapacidad discapacidadMotora = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Discapacidad motora", "Dificultades para la movilidad, fuerza muscular o coordinación corporal", null)
+            );
+
+            TipoDiscapacidad lesionHombro = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Lesión de hombro", "Lesiones musculares, articulares o tendinosas del hombro", null)
+            );
+
+            TipoDiscapacidad lesionRodilla = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Lesión de rodilla", "Lesiones ligamentarias, musculares o articulares de rodilla", null)
+            );
+
+            TipoDiscapacidad lesionCadera = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Lesión de cadera", "Limitaciones funcionales o lesiones relacionadas con la cadera", null)
+            );
+
+            TipoDiscapacidad rehabilitacionPostOperatoria = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Rehabilitación postoperatoria", "Recuperación física posterior a una cirugía o procedimiento médico", null)
+            );
+
+            TipoDiscapacidad adultoMayor = tipoDiscapacidadService.add(
+                    new TipoDiscapacidad(null, "Limitación funcional en adulto mayor", "Dificultades de movilidad, equilibrio o fuerza asociadas al envejecimiento", null)
+            );
 
             pacienteDiscapacidadService.add(
                     new PacienteDiscapacidad(null, lesionMano, paciente1)

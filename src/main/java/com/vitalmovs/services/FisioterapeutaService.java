@@ -19,5 +19,6 @@ public interface FisioterapeutaService {
     List<Fisioterapeuta> buscarPorNombreOApellido(String texto);
     List<Fisioterapeuta> findByEspecialidad(String especialidad);
     List<Fisioterapeuta> findByEspecialidadNative(String especialidad);
+    List<FisioterapeutaDTO> findCompatiblesByPacienteId(Long pacienteId);
 
 }

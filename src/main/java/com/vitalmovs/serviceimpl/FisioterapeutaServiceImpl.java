@@ -151,5 +151,27 @@ public class FisioterapeutaServiceImpl implements FisioterapeutaService {
     public List<Fisioterapeuta> findByEspecialidadNative(String especialidad) {
         return fisioterapeutaRepository.findByEspecialidadNative(especialidad);
     }
+
+    @Override
+    public List<FisioterapeutaDTO> findCompatiblesByPacienteId(Long pacienteId) {
+
+        List<Fisioterapeuta> fisioterapeutas =
+                fisioterapeutaRepository.findByPacienteDiscapacidadesJPQL(pacienteId);
+
+        List<FisioterapeutaDTO> dtoList = new ArrayList<>();
+
+        for (Fisioterapeuta f : fisioterapeutas) {
+            dtoList.add(new FisioterapeutaDTO(
+                    f.getId(),
+                    f.getNombre(),
+                    f.getApellido(),
+                    f.getEspecialidad(),
+                    f.getUser() != null ? f.getUser().getId() : null
+            ));
+        }
+
+        return dtoList;
+    }
+
 }
 
