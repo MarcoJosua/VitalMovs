@@ -121,22 +121,6 @@ public class UserServiceImpl implements UserService {
         //Paso 3: Actualizar los campos adicionales segun tu logica de negocio
         user.setEnabled(true);
 
-        User savedUser = userRepository.save(user);
-
-        for (Authority authority : savedUser.getAuthorities()) {
-            if ("ROLE_PACIENTE".equals(authority.getName())) {
-                Paciente paciente = new Paciente();
-                paciente.setNombre(savedUser.getUsername());
-                paciente.setUser(savedUser);
-                pacienteRepository.save(paciente);
-            } else if ("ROLE_FISIOTERAPEUTA".equals(authority.getName())) {
-                Fisioterapeuta fisio = new Fisioterapeuta();
-                fisio.setNombre(savedUser.getUsername());
-                fisio.setUser(savedUser);
-                fisioterapeutaRepository.save(fisio);
-            }
-        }
-
-        return savedUser;
+        return userRepository.save(user);
     }
 }

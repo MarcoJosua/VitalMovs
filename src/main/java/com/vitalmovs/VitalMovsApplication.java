@@ -57,10 +57,6 @@ public class VitalMovsApplication {
             // 2. Crear usuarios y datos semilla (solo si no existen)
             // =========================
 
-            try {
-                userService.findByUsername("paciente1@gmail.com");
-            } catch (Exception e) {
-
                 userService.add(new UserDTO(null, "admin", "pass", "ROLE_ADMIN"));
 
                 userService.add(new UserDTO(null, "paciente1@gmail.com", "pass", "ROLE_PACIENTE"));
@@ -662,7 +658,7 @@ public class VitalMovsApplication {
             estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 31), 4, 5, 33, 9, "Mejor respuesta al ejercicio de muñeca.", pe13));
             estadisticaService.add(new Estadistica(null, LocalDate.of(2025, 1, 29), 5, 6, 24, 7, "Dificultad leve al abrir y cerrar la mano.", pe14));
 
-            }
+
         };
     }
 
