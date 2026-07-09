@@ -37,20 +37,6 @@ public interface EstadisticaRepository extends JpaRepository<Estadistica, Long> 
 
     @Query("SELECT new com.vitalmovs.dtos.EstadisticaGraficoDTO(" +
             "e.planEjercicio.planRehabilitacion.id, " +
-            "e.fecha, " +
-            "AVG(e.nivelDolor), " +
-            "AVG(e.nivelDificultad), " +
-            "SUM(e.repeticionesRealizadas), " +
-            "SUM(e.duracionRealizada), " +
-            "COUNT(e)) " +
-            "FROM Estadistica e " +
-            "WHERE e.planEjercicio.planRehabilitacion.id = :planId " +
-            "GROUP BY e.planEjercicio.planRehabilitacion.id, e.fecha " +
-            "ORDER BY e.fecha ASC")
-    List<EstadisticaGraficoDTO> evolucionPorFecha(@Param("planId") Long planId);
-
-    @Query("SELECT new com.vitalmovs.dtos.EstadisticaGraficoDTO(" +
-            "e.planEjercicio.planRehabilitacion.id, " +
             "e.planEjercicio.id, " +
             "e.planEjercicio.ejercicio.nombre, " +
             "AVG(e.nivelDolor), " +

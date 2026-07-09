@@ -56,7 +56,7 @@ public class EstadisticaController {
         return new ResponseEntity<>(estadistica, HttpStatus.OK);
     }
 
-    // GENERAL
+    // DASHBOARD Y ESTADISTICAd
     @GetMapping("/estadistica/planEjercicio/{planEjercicioId}")
     public ResponseEntity<java.util.List<EstadisticaDTO>> listByPlanEjercicioId(@PathVariable Long planEjercicioId) {
         java.util.List<EstadisticaDTO> estadisticas = estadisticaService.listByPlanEjercicioId(planEjercicioId);
@@ -69,17 +69,10 @@ public class EstadisticaController {
         return new ResponseEntity<>(estadisticas, HttpStatus.OK);
     }
 
-    // DASHBOARD
     @GetMapping("/estadistica/dashboard/resumen/{planId}")
     public ResponseEntity<EstadisticaGraficoDTO> resumenGeneralPorPlan(@PathVariable Long planId) {
         EstadisticaGraficoDTO resumen = estadisticaService.resumenGeneralPorPlan(planId);
         return new ResponseEntity<>(resumen, HttpStatus.OK);
-    }
-
-    @GetMapping("/estadistica/dashboard/evolucion/{planId}")
-    public ResponseEntity<java.util.List<EstadisticaGraficoDTO>> evolucionPorFecha(@PathVariable Long planId) {
-        java.util.List<EstadisticaGraficoDTO> evolucion = estadisticaService.evolucionPorFecha(planId);
-        return new ResponseEntity<>(evolucion, HttpStatus.OK);
     }
 
     @GetMapping("/estadistica/dashboard/ejercicios/{planId}")

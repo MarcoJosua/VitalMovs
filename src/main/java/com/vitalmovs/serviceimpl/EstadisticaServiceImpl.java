@@ -223,14 +223,6 @@ public class EstadisticaServiceImpl implements EstadisticaService {
     }
 
     @Override
-    public List<EstadisticaGraficoDTO> evolucionPorFecha(Long planId) {
-        if (planId == null) {
-            throw new ValidationException("Debe ingresar el id del plan de rehabilitación");
-        }
-        return estadisticaRepository.evolucionPorFecha(planId);
-    }
-
-    @Override
     public List<EstadisticaGraficoDTO> resumenPorEjercicio(Long planId) {
         if (planId == null) {
             throw new ValidationException("Debe ingresar el id del plan de rehabilitación");

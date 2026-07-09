@@ -32,7 +32,6 @@ public interface EstadisticaService {
 
     // DASHBOARD
     EstadisticaGraficoDTO resumenGeneralPorPlan(Long planId);
-    List<EstadisticaGraficoDTO> evolucionPorFecha(Long planId);
     List<EstadisticaGraficoDTO> resumenPorEjercicio(Long planId);
 
 
