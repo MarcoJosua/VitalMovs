@@ -45,6 +45,7 @@ public class FisioterapeutaDiscapacidadController {
         fdService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/fisioterapeutaDiscapacidad/tipo/{tipoDiscapacidadId}")
     public ResponseEntity<List<FisioterapeutaDiscapacidadDTO>> findByTipoDiscapacidad(
             @PathVariable("tipoDiscapacidadId") Long tipoDiscapacidadId) {

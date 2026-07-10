@@ -29,6 +29,19 @@ public class PlanRehabilitacionController {
         return new ResponseEntity<>(foundPlanes, HttpStatus.OK);
     }
 
+    @GetMapping("/planes/usuario/{userId}")
+    public ResponseEntity<List<PlanRehabilitacionDTO>> listByUserId(@PathVariable Long userId) {
+        List<PlanRehabilitacionDTO> planes = planRehabilitacionService.listByUserIdDTO(userId);
+        return new ResponseEntity<>(planes, HttpStatus.OK);
+    }
+
+    // GET http://localhost:8080/vitalmovs/planes/1
+    @GetMapping("/planes/{planId}")
+    public ResponseEntity<PlanRehabilitacionDTO> findById(@PathVariable Long planId) {
+        PlanRehabilitacionDTO plan = planRehabilitacionService.findByIdDTO(planId);
+        return new ResponseEntity<>(plan, HttpStatus.OK);
+    }
+
     // POST http://localhost:8080/vitalmovs/planes
     @PostMapping("/planes")
     public ResponseEntity<PlanRehabilitacionDTO> add(@RequestBody PlanRehabilitacionDTO planRehabilitacionDTO) {
@@ -50,16 +63,5 @@ public class PlanRehabilitacionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/planes/usuario/{userId}")
-    public ResponseEntity<List<PlanRehabilitacionDTO>> listByUserId(@PathVariable Long userId) {
-        List<PlanRehabilitacionDTO> planes = planRehabilitacionService.listByUserIdDTO(userId);
-        return new ResponseEntity<>(planes, HttpStatus.OK);
-    }
 
-    // GET http://localhost:8080/vitalmovs/planes/1
-    @GetMapping("/planes/{planId}")
-    public ResponseEntity<PlanRehabilitacionDTO> findById(@PathVariable Long planId) {
-        PlanRehabilitacionDTO plan = planRehabilitacionService.findByIdDTO(planId);
-        return new ResponseEntity<>(plan, HttpStatus.OK);
-    }
 }

@@ -33,19 +33,19 @@ public class PacienteController {
         return pacienteService.findByUserId(userId);
     }
 
-    @PostMapping("/Paciente")
+    @PostMapping("/paciente")
     public ResponseEntity<PacienteDTO> add(@RequestBody PacienteDTO pacienteDTO) {
         PacienteDTO newPacienteDTO = pacienteService.addDTO(pacienteDTO);
         return new ResponseEntity<>(newPacienteDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/Paciente")
+    @PutMapping("/paciente")
     public ResponseEntity<Paciente> update(@RequestBody Paciente paciente) {
         Paciente updatedPaciente = pacienteService.update(paciente);
         return new ResponseEntity<>(updatedPaciente, HttpStatus.OK);
     }
 
-    @DeleteMapping("/Paciente/{PacienteId}")
+    @DeleteMapping("/paciente/{PacienteId}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("PacienteId") Long id) {
         pacienteService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

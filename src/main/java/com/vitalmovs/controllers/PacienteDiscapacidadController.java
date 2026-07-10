@@ -28,19 +28,19 @@ public class PacienteDiscapacidadController {
         return new ResponseEntity<>(foundPDs, HttpStatus.OK);
     }
 
-    @PostMapping("/PacienteDiscapacidad")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad
+    @PostMapping("/pacienteDiscapacidad")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad
     public ResponseEntity<PacienteDiscapacidadDTO> add(@RequestBody PacienteDiscapacidadDTO pacienteDiscapacidadDTO) {
         PacienteDiscapacidadDTO newPDDTO = pacienteDiscapacidadService.addDTO(pacienteDiscapacidadDTO);
         return new ResponseEntity<>(newPDDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/PacienteDiscapacidad")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad
+    @PutMapping("/pacienteDiscapacidad")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad
     public ResponseEntity<PacienteDiscapacidad> update(@RequestBody PacienteDiscapacidad pacienteDiscapacidad) {
         PacienteDiscapacidad updatedPD = pacienteDiscapacidadService.update(pacienteDiscapacidad);
         return new ResponseEntity<>(updatedPD, HttpStatus.OK);
     }
 
-    @DeleteMapping("/PacienteDiscapacidad/{PacienteDiscapacidadId}")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad/1
+    @DeleteMapping("/pacienteDiscapacidad/{PacienteDiscapacidadId}")   //http://localhost:8080/vitalmovs/PacienteDiscapacidad/1
     public ResponseEntity<HttpStatus> delete(@PathVariable("PacienteDiscapacidadId") Long id) {
         pacienteDiscapacidadService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -42,6 +42,7 @@ public class PublicacionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @GetMapping("/publicaciones/{foroId}")   //http://localhost:8080/vitalmovs/publicaciones/1  <- un id en particular
     public ResponseEntity<List<PublicacionDTO>> listarPublicacionesPorForoFecha(@PathVariable("foroId") Long id) {
         List<PublicacionDTO> foundPublicaciones = publicacionService.listarPublicacionesPorForoFechaDTO(id);

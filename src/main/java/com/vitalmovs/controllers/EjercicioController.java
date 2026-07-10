@@ -22,29 +22,35 @@ public class EjercicioController {
         List<EjercicioDTO> foundEjercicios = ejercicioService.listAllDTO();
         return new ResponseEntity<>(foundEjercicios, HttpStatus.OK);
     }
-    @PostMapping("/ejercicio")
-    public ResponseEntity<EjercicioDTO> add(@RequestBody EjercicioDTO ejercicioDTO) {
-        EjercicioDTO newEjercicioDTO = ejercicioService.addDTO(ejercicioDTO);
-        return new ResponseEntity<>(newEjercicioDTO, HttpStatus.CREATED);
-    }
-    @PutMapping("/ejercicio")
-    public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
-        Ejercicio updatedEjercicio = ejercicioService.update(ejercicio);
-        return new ResponseEntity<>(updatedEjercicio, HttpStatus.OK);
-    }
-    @DeleteMapping("/ejercicio/{EjercicioId}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("EjercicioId") Long id) {
-        ejercicioService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+
     @GetMapping("/ejercicio/buscar/{texto}")
     public ResponseEntity<List<EjercicioDTO>> buscarPorNombreODescripcion(@PathVariable("texto") String texto) {
         List<EjercicioDTO> ejercicios = ejercicioService.buscarPorNombreODescripcionDTO(texto);
         return new ResponseEntity<>(ejercicios, HttpStatus.OK);
     }
+
     @GetMapping("/ejercicio/buscarNative/{nombre}")
     public ResponseEntity<List<EjercicioDTO>> buscarPorNombreNative(@PathVariable("nombre") String nombre) {
         List<EjercicioDTO> ejercicios = ejercicioService.buscarPorNombreNativeDTO(nombre);
         return new ResponseEntity<>(ejercicios, HttpStatus.OK);
     }
+
+    @PostMapping("/ejercicio")
+    public ResponseEntity<EjercicioDTO> add(@RequestBody EjercicioDTO ejercicioDTO) {
+        EjercicioDTO newEjercicioDTO = ejercicioService.addDTO(ejercicioDTO);
+        return new ResponseEntity<>(newEjercicioDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/ejercicio")
+    public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
+        Ejercicio updatedEjercicio = ejercicioService.update(ejercicio);
+        return new ResponseEntity<>(updatedEjercicio, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/ejercicio/{EjercicioId}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable("EjercicioId") Long id) {
+        ejercicioService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -28,19 +28,19 @@ public class TipoDiscapacidadController {
         return new ResponseEntity<>(foundTipos, HttpStatus.OK);
     }
 
-    @PostMapping("/TipoDiscapacidad")   //http://localhost:8080/vitalmovs/TipoDiscapacidad
+    @PostMapping("/tipoDiscapacidad")   //http://localhost:8080/vitalmovs/TipoDiscapacidad
     public ResponseEntity<TipoDiscapacidadDTO> add(@RequestBody TipoDiscapacidadDTO tipoDiscapacidadDTO) {
         TipoDiscapacidadDTO newTipoDTO = tipoDiscapacidadService.addDTO(tipoDiscapacidadDTO);
         return new ResponseEntity<>(newTipoDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/TipoDiscapacidad")   //http://localhost:8080/vitalmovs/TipoDiscapacidad
+    @PutMapping("/tipoDiscapacidad")   //http://localhost:8080/vitalmovs/TipoDiscapacidad
     public ResponseEntity<TipoDiscapacidad> update(@RequestBody TipoDiscapacidad tipoDiscapacidad) {
         TipoDiscapacidad updatedTipo = tipoDiscapacidadService.update(tipoDiscapacidad);
         return new ResponseEntity<>(updatedTipo, HttpStatus.OK);
     }
 
-    @DeleteMapping("/TipoDiscapacidad/{TipoDiscapacidadId}")   //http://localhost:8080/vitalmovs/TipoDiscapacidad/1
+    @DeleteMapping("/tipoDiscapacidad/{TipoDiscapacidadId}")   //http://localhost:8080/vitalmovs/TipoDiscapacidad/1
     public ResponseEntity<HttpStatus> delete(@PathVariable("TipoDiscapacidadId") Long id) {
         tipoDiscapacidadService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

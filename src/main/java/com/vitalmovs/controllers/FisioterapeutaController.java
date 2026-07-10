@@ -50,6 +50,9 @@ public class FisioterapeutaController {
         fisioterapeutaService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
     @GetMapping("/fisioterapeuta/buscar")
     public ResponseEntity<List<Fisioterapeuta>> buscarPorNombreOApellido(@RequestParam String texto) {
         List<Fisioterapeuta> result = fisioterapeutaService.buscarPorNombreOApellido(texto);
@@ -60,14 +63,17 @@ public class FisioterapeutaController {
         List<Fisioterapeuta> result = fisioterapeutaService.findByEspecialidad(especialidad);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    @GetMapping("/fisioterapeuta/especialidad-native")
-    public ResponseEntity<List<Fisioterapeuta>> findByEspecialidadNative(@RequestParam String especialidad) {
-        List<Fisioterapeuta> result = fisioterapeutaService.findByEspecialidadNative(especialidad);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+
     @GetMapping("/fisioterapeuta/compatibles/paciente/{pacienteId}")
     public ResponseEntity<List<FisioterapeutaDTO>> findCompatiblesByPacienteId(@PathVariable Long pacienteId) {
         List<FisioterapeutaDTO> result = fisioterapeutaService.findCompatiblesByPacienteId(pacienteId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/fisioterapeuta/especialidad-native")
+    public ResponseEntity<List<Fisioterapeuta>> findByEspecialidadNative(@RequestParam String especialidad) {
+        List<Fisioterapeuta> result = fisioterapeutaService.findByEspecialidadNative(especialidad);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

@@ -47,8 +47,6 @@ public class PlanEjercicioController {
         return new ResponseEntity<>(planEjercicios, HttpStatus.OK);
     }
 
-
-
     @GetMapping("/planEjercicio/plan/{planId}")
     public ResponseEntity<List<PlanEjercicioDTO>> listByPlanId(@PathVariable("planId") Long planId) {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByPlanIdDTO(planId);
