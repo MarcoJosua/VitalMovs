@@ -69,27 +69,43 @@ public class EjercicioServiceImpl implements EjercicioService {
         }
         return ejercicioRepository.findById(id).orElse(null);
     }
+
     @Override
-    public Ejercicio update(Ejercicio ejercicio) {
-        if (ejercicio.getId() == null) {
-            throw new ValidationException("Debe ingresar el id del ejercicio");
+    public EjercicioDTO update(EjercicioDTO ejercicioDTO) {
+        if (ejercicioDTO.getId() == null) {
+            throw new ValidationException( "Debe ingresar el id del ejercicio");
         }
-        Ejercicio foundEjercicio = findById(ejercicio.getId());
+
+        Ejercicio foundEjercicio = findById(ejercicioDTO.getId());
+
         if (foundEjercicio == null) {
-            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + ejercicio.getId());
+            throw new ResourceNotFoundException("No se encontro el ejercicio con id: " + ejercicioDTO.getId());
         }
-        if (ejercicio.getNombre() != null && !ejercicio.getNombre().isBlank()) {
-            List<Ejercicio> ejerciciosConMismoNombre = ejercicioRepository.findByNombre(ejercicio.getNombre());
-            if (!ejerciciosConMismoNombre.isEmpty()
-                    && !ejerciciosConMismoNombre.get(0).getId().equals(ejercicio.getId())) {
-                throw new ValidationException("El ejercicio: " + ejercicio.getNombre() + " ya esta registrado");
+
+        if (ejercicioDTO.getNombre() != null  && !ejercicioDTO.getNombre().isBlank()) {
+
+            List<Ejercicio> ejerciciosConMismoNombre = ejercicioRepository.findByNombre(ejercicioDTO.getNombre());
+
+            boolean nombreDuplicado = ejerciciosConMismoNombre.stream().anyMatch(e -> !e.getId().equals(ejercicioDTO.getId()));
+
+            if (nombreDuplicado) {
+                throw new ValidationException("El ejercicio: " + ejercicioDTO.getNombre() + " ya esta registrado");
             }
-            foundEjercicio.setNombre(ejercicio.getNombre());
+
+            foundEjercicio.setNombre(ejercicioDTO.getNombre());
         }
-        if (ejercicio.getDescripcion() != null && !ejercicio.getDescripcion().isBlank()) {
-            foundEjercicio.setDescripcion(ejercicio.getDescripcion());
+
+        if (ejercicioDTO.getDescripcion() != null && !ejercicioDTO.getDescripcion().isBlank()) {
+            foundEjercicio.setDescripcion(ejercicioDTO.getDescripcion());
         }
-        return ejercicioRepository.save(foundEjercicio);
+
+        Ejercicio updatedEjercicio = ejercicioRepository.save(foundEjercicio);
+
+        return new EjercicioDTO(
+                updatedEjercicio.getId(),
+                updatedEjercicio.getNombre(),
+                updatedEjercicio.getDescripcion()
+        );
     }
     @Override
     public void delete(Long id) {

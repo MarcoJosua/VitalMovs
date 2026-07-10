@@ -42,8 +42,8 @@ public class EjercicioController {
     }
 
     @PutMapping("/ejercicio")
-    public ResponseEntity<Ejercicio> update(@RequestBody Ejercicio ejercicio) {
-        Ejercicio updatedEjercicio = ejercicioService.update(ejercicio);
+    public ResponseEntity<EjercicioDTO> update(@RequestBody EjercicioDTO ejercicio) {
+        EjercicioDTO updatedEjercicio = ejercicioService.update(ejercicio);
         return new ResponseEntity<>(updatedEjercicio, HttpStatus.OK);
     }
 

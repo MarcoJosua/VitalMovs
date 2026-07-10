@@ -10,7 +10,7 @@ public interface EjercicioService {
     List<Ejercicio> listAll();
     List<EjercicioDTO> listAllDTO();
     Ejercicio findById(Long id);
-    Ejercicio update(Ejercicio ejercicio);
+    EjercicioDTO update(EjercicioDTO ejercicioDTO);
     void delete(Long id);
     List<EjercicioDTO> buscarPorNombreODescripcionDTO(String texto);
     List<EjercicioDTO> buscarPorNombreNativeDTO(String nombre);
