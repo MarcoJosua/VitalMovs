@@ -171,53 +171,115 @@ public class PlanEjercicioServiceImpl implements PlanEjercicioService {
     }
 
     @Override
-    public PlanEjercicio update(PlanEjercicio planEjercicio) {
-        if (planEjercicio.getId() == null) {
-            throw new ValidationException("Debe ingresar el id del plan ejercicio");
+    public PlanEjercicioDTO update(
+            PlanEjercicioDTO dto) {
+        if (dto.getId() == null) {
+            throw new ValidationException(
+                    "Debe ingresar el id del plan ejercicio"
+            );
         }
-
-        PlanEjercicio oldPlanEjercicio = findById(planEjercicio.getId());
-
-        if (oldPlanEjercicio == null) {
-            throw new ResourceNotFoundException( "No se encontró el plan ejercicio con id: " + planEjercicio.getId());
+        PlanEjercicio actual = findById(dto.getId());
+        if (actual == null) {
+            throw new ResourceNotFoundException(
+                    "No se encontró el plan ejercicio con id: "
+                            + dto.getId()
+            );
         }
-
-        if (planEjercicio.getSeries() != null) {
-            if (planEjercicio.getSeries() <= 0) {
-                throw new ValidationException("Las series deben ser mayores a cero");
-            }
-            oldPlanEjercicio.setSeries(planEjercicio.getSeries());
+        if (
+                dto.getSeries() == null ||
+                        dto.getSeries() <= 0
+        ) {
+            throw new ValidationException(
+                    "Las series deben ser mayores a cero"
+            );
         }
-
-        if (planEjercicio.getRepeticiones() != null) {
-            if (planEjercicio.getRepeticiones() <= 0) {
-                throw new ValidationException("Las repeticiones deben ser mayores a cero");
-            }
-            oldPlanEjercicio.setRepeticiones(planEjercicio.getRepeticiones());
+        if (
+                dto.getRepeticiones() == null ||
+                        dto.getRepeticiones() <= 0
+        ) {
+            throw new ValidationException(
+                    "Las repeticiones deben ser mayores a cero"
+            );
         }
-
-        if (planEjercicio.getDuracionRecomendada() != null) {
-            if (planEjercicio.getDuracionRecomendada() <= 0) {
-                throw new ValidationException("La duración recomendada debe ser mayor a cero");
-            }
-            oldPlanEjercicio.setDuracionRecomendada(planEjercicio.getDuracionRecomendada());
+        if (
+                dto.getDuracionRecomendada() == null ||
+                        dto.getDuracionRecomendada() <= 0
+        ) {
+            throw new ValidationException(
+                    "La duración recomendada debe ser mayor a cero"
+            );
         }
-
-        if (planEjercicio.getDiaSemana() != null) {
-            if (planEjercicio.getDiaSemana().isBlank()) {
-                throw new ValidationException("El día de la semana no puede estar en blanco");
-            }
-            oldPlanEjercicio.setDiaSemana(planEjercicio.getDiaSemana());
+        if (
+                dto.getDiaSemana() == null ||
+                        dto.getDiaSemana().isBlank()
+        ) {
+            throw new ValidationException(
+                    "El día de la semana no puede estar en blanco"
+            );
         }
-
-        if (planEjercicio.getOrden() != null) {
-            if (planEjercicio.getOrden() <= 0) {
-                throw new ValidationException("El orden debe ser mayor a cero");
-            }
-            oldPlanEjercicio.setOrden(planEjercicio.getOrden());
+        if (
+                dto.getOrden() == null ||
+                        dto.getOrden() <= 0
+        ) {
+            throw new ValidationException(
+                    "El orden debe ser mayor a cero"
+            );
         }
-        return planEjercicioRepository.save(oldPlanEjercicio);
+        if (dto.getPlanRehabilitacionId() == null) {
+            throw new ValidationException(
+                    "Debe ingresar el id del plan de rehabilitación"
+            );
+        }
+        PlanRehabilitacion plan =
+                planRehabilitacionService.findById(
+                        dto.getPlanRehabilitacionId()
+                );
+        if (plan == null) {
+            throw new ResourceNotFoundException(
+                    "No se encontró el plan de rehabilitación con id: "
+                            + dto.getPlanRehabilitacionId()
+            );
+        }
+        if (dto.getEjercicioId() == null) {
+            throw new ValidationException(
+                    "Debe ingresar el id del ejercicio"
+            );
+        }
+        Ejercicio ejercicio =
+                ejercicioService.findById(
+                        dto.getEjercicioId()
+                );
+        if (ejercicio == null) {
+            throw new ResourceNotFoundException(
+                    "No se encontró el ejercicio con id: "
+                            + dto.getEjercicioId()
+            );
+        }
+        actual.setSeries(dto.getSeries());
+        actual.setRepeticiones(dto.getRepeticiones());
+        actual.setDuracionRecomendada(
+                dto.getDuracionRecomendada()
+        );
+        actual.setDiaSemana(dto.getDiaSemana());
+        actual.setOrden(dto.getOrden());
+        actual.setPlanRehabilitacion(plan);
+        actual.setEjercicio(ejercicio);
+        PlanEjercicio guardado =
+                planEjercicioRepository.save(actual);
+
+        return new PlanEjercicioDTO(
+                guardado.getId(),
+                guardado.getSeries(),
+                guardado.getRepeticiones(),
+                guardado.getDuracionRecomendada(),
+                guardado.getDiaSemana(),
+                guardado.getOrden(),
+                guardado.getPlanRehabilitacion().getId(),
+                guardado.getEjercicio().getId(),
+                guardado.getEjercicio().getNombre()
+        );
     }
+
     @Override
     public void delete(Long id) {
         if (id == null) {

@@ -1,7 +1,6 @@
 package com.vitalmovs.controllers;
 
 import com.vitalmovs.dtos.PlanEjercicioDTO;
-import com.vitalmovs.entities.PlanEjercicio;
 import com.vitalmovs.services.PlanEjercicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,8 @@ public class PlanEjercicioController {
         return new ResponseEntity<>(newPlanEjercicioDTO, HttpStatus.CREATED);
     }
     @PutMapping("/planEjercicio")
-    public ResponseEntity<PlanEjercicio> update(@RequestBody PlanEjercicio planEjercicio) {
-        PlanEjercicio updatedPlanEjercicio = planEjercicioService.update(planEjercicio);
+    public ResponseEntity<PlanEjercicioDTO> update(@RequestBody PlanEjercicioDTO planEjercicioDTO) {
+        PlanEjercicioDTO updatedPlanEjercicio = planEjercicioService.update(planEjercicioDTO);
         return new ResponseEntity<>(updatedPlanEjercicio, HttpStatus.OK);
     }
     @DeleteMapping("/planEjercicio/{planEjercicioId}")
@@ -52,9 +51,6 @@ public class PlanEjercicioController {
         List<PlanEjercicioDTO> foundPlanEjercicios = planEjercicioService.listByPlanIdDTO(planId);
         return new ResponseEntity<>(foundPlanEjercicios, HttpStatus.FOUND);
     }
-
-
-
 
 
     // No utiles

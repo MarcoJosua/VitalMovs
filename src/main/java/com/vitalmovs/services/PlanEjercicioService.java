@@ -14,7 +14,7 @@ public interface PlanEjercicioService {
     List<PlanEjercicioDTO> listByPlanIdDTO(Long planId);
     List<PlanEjercicio> listByEjercicioId(Long ejercicioId);
     List<PlanEjercicioDTO> listByEjercicioIdDTO(Long ejercicioId);
-    PlanEjercicio update(PlanEjercicio planEjercicio);
+    PlanEjercicioDTO update(PlanEjercicioDTO planEjercicioDTO);
     void delete(Long id);
     List<PlanEjercicioDTO> buscarPorRepeticionesMayoresOIgualesDTO(Integer repeticiones);
     List<PlanEjercicioDTO> buscarEjerciciosDePlanOrdenadosDTO(Long planId);
